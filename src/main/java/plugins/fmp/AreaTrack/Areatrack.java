@@ -87,7 +87,7 @@ import plugins.fmp.fmpTools.EnumThresholdType;
 public class Areatrack extends PluginActionable implements ActionListener, ChangeListener, ViewerListener
 {	
 	// -------------------------------------- interface
-	IcyFrame mainFrame = new IcyFrame("AreaTrack 20-06-2019", true, true, true, true);
+	IcyFrame mainFrame = new IcyFrame("AreaTrack 10-02-2022", true, true, true, true);
 	IcyFrame mainChartFrame = null;
 	JPanel 	mainChartPanel = null;
 	
