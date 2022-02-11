@@ -58,7 +58,7 @@ public class AreaAnalysisThread extends Thread {
 	 
 	// --------------------------------------------------------------------------------------
 		
-	public void setAnalysisThreadParameters (SequenceVirtual virtualSequence, 
+	public void setAnalysisThreadParameters (SequenceVirtual sequenceVirtual, 
 			ArrayList<ROI2D> roiList, 
 			int startFrame, 
 			int endFrame, 
@@ -68,7 +68,7 @@ public class AreaAnalysisThread extends Thread {
 			boolean measureROIsEvolution, 
 			boolean measureROIsMove)
 	{
-		vSequence = virtualSequence;
+		vSequence = sequenceVirtual;
 		this.roiList = roiList;
 		this.startFrame = startFrame;
 		this.endFrame = endFrame;
@@ -78,12 +78,12 @@ public class AreaAnalysisThread extends Thread {
 		this.measureROIsEvolution = measureROIsEvolution;
 		this.measureROIsMove = measureROIsMove;
 		
-		imgOp1 = new ImageOperations (virtualSequence);
+		imgOp1 = new ImageOperations (sequenceVirtual);
 		imgOp1.setTransform(transformop);
 		if (thresholdtype == EnumThresholdType.SINGLE) 
 			imgOp1.setThresholdSingle(thresholdForSurface);
 		
-		imgOp2 = new ImageOperations (virtualSequence);
+		imgOp2 = new ImageOperations (sequenceVirtual);
 		imgOp2.setTransform(EnumImageOp.REF_PREVIOUS);
 		imgOp2.setThresholdSingle(thresholdForHeatMap);
 				
