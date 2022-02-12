@@ -60,8 +60,8 @@ import icy.gui.util.FontUtil;
 import icy.gui.util.GuiUtil;
 import icy.gui.viewer.Viewer;
 import icy.gui.viewer.ViewerEvent;
-import icy.gui.viewer.ViewerListener;
 import icy.gui.viewer.ViewerEvent.ViewerEventType;
+import icy.gui.viewer.ViewerListener;
 import icy.main.Icy;
 import icy.plugin.PluginLauncher;
 import icy.plugin.PluginLoader;
@@ -72,15 +72,16 @@ import icy.sequence.DimensionId;
 import icy.system.thread.ThreadUtil;
 import icy.util.XLSUtil;
 import icy.util.XMLUtil;
+
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 
-import plugins.fmp.fmpSequence.SequencePlus;
-import plugins.fmp.fmpTools.FmpTools;
 import plugins.fmp.fmpTools.ComboBoxColorRenderer;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumThresholdType;
+import plugins.fmp.fmpTools.FmpTools;
+import plugins.fmp.fmpSequence.SequencePlus;
 
 
 
@@ -525,7 +526,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	
 	private void openROIs() {
 		if (vSequence != null) {
-			vSequence.removeAllROI();
+			vSequence.seq.removeAllROI();
 			vSequence.capillaries.xmlReadROIsAndData(vSequence);
 			endFrameTextField.setText( Integer.toString(endFrame));
 			startFrameTextField.setText( Integer.toString(startFrame));
@@ -933,8 +934,8 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private void initInputSeq () {
 	
 		// transfer 1 image to the viewer
-		addSequence(vSequence);
-		Viewer v = vSequence.getFirstViewer();
+		addSequence(vSequence.seq);
+		Viewer v = vSequence.seq.getFirstViewer();
 		v.addListener(Areatrack.this);
 	
 		Rectangle rectv = v.getBoundsInternal();
@@ -942,7 +943,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		rectv.setLocation(rect0.x+ rect0.width, rect0.y);
 		v.setBounds(rectv);
 
-		vSequence.removeAllImages();
+		vSequence.seq.removeAllImages();
 		startstopBufferingThread();
 		checkBufferTimer.start();		
 		
@@ -1056,7 +1057,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		// --------------
 		WritableSheet filteredDataPage = XLSUtil.createNewPage( xlsWorkBook , worksheetname );
 		XLSUtil.setCellString( filteredDataPage , 0, irow, "name:" );
-		XLSUtil.setCellString( filteredDataPage , 1, irow, vSequence.getName() );
+		XLSUtil.setCellString( filteredDataPage , 1, irow, vSequence.seq.getName() );
 		// write  type of data exported
 		irow++;
 		String cs = worksheetname;
@@ -1081,7 +1082,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		XLSUtil.setCellString( filteredDataPage , icol0, irow, "index" );
 		icol0++;
 		int icol1 = icol0;
-		ArrayList<ROI2D> roisList = vSequence.getROI2Ds();
+		ArrayList<ROI2D> roisList = vSequence.seq.getROI2Ds();
 		XLSUtil.setCellString( filteredDataPage, 0, irow, "column");
 		XLSUtil.setCellString( filteredDataPage, 0, irow+1, "roi surface (pixels)");
 		Collections.sort(roisList, new FmpTools.ROI2DNameComparator());

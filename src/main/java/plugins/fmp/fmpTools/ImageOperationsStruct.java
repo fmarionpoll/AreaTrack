@@ -1,12 +1,14 @@
 package plugins.fmp.fmpTools;
 
+
 import java.awt.Color;
 import java.util.ArrayList;
 
 
 
 
-public class ImageOperationsStruct {
+public class ImageOperationsStruct 
+{
 	
 	int 				fromFrame		= -1;
 	int 				colordistanceType 	= 0;

@@ -87,7 +87,7 @@ public class AreaAnalysisThread extends Thread {
 		imgOp2.setTransform(EnumImageOp.REF_PREVIOUS);
 		imgOp2.setThresholdSingle(thresholdForHeatMap);
 				
-		IcyBufferedImage image = vSequence.loadVImage(vSequence.currentFrame);
+		IcyBufferedImage image = vSequence.seq.loadVImage(vSequence.currentFrame);
 		resultOFFImage = new IcyBufferedImage(image.getSizeX(), image.getSizeY(), 1, DataType.DOUBLE);
 		resultOFFSequence = new Sequence(resultOFFImage);
 		resultOFFSequence.setName("Heatmap OFF thresh:"+this.thresholdForHeatMap);
@@ -112,7 +112,7 @@ public class AreaAnalysisThread extends Thread {
 	{
 		// global parameters
 		analyzeStep = vSequence.analysisStep;
-		roiList = vSequence.getROI2Ds();
+		roiList = vSequence.seq.getROI2Ds();
 		Collections.sort(roiList, new FmpTools.ROI2DNameComparator());
 		if ( vSequence.nTotalFrames < endFrame+1 )
 			endFrame = (int) vSequence.nTotalFrames - 1;
@@ -141,10 +141,10 @@ public class AreaAnalysisThread extends Thread {
 		try {
 			Viewer viewer = null;
 			if (measureROIsEvolution)
-				viewer = Icy.getMainInterface().getFirstViewer(vSequence);
+				viewer = Icy.getMainInterface().getFirstViewer(vSequence.seq);
 			else 
 				viewer = resultOFFViewer;
-			vSequence.beginUpdate();
+			vSequence.seq.beginUpdate();
 							
 			// ----------------- loop over all images of the stack
 			for (int t = startFrame ; t <= endFrame && !isInterrupted(); t  += analyzeStep ) {				
@@ -191,7 +191,7 @@ public class AreaAnalysisThread extends Thread {
 		} 
 		finally {
 			progress.close();
-			vSequence.endUpdate();
+			vSequence.seq.endUpdate();
 		}
 
 		chrono.displayInSeconds();
@@ -204,13 +204,13 @@ public class AreaAnalysisThread extends Thread {
 			resultOFFImage.setColorMap (0, new JETColorMap (), true);
 			resultOFFViewer.setVisible(true);
 			resultOFFSequence.removeAllROI();
-			resultOFFSequence.addROIs(vSequence.getROI2Ds(), false);
+			resultOFFSequence.addROIs(vSequence.seq.getROI2Ds(), false);
 			
 			resultONImage.dataChanged();
 			resultONImage.setColorMap (0, new JETColorMap (), true);
 			resultONViewer.setVisible(true);
 			resultONSequence.removeAllROI();
-			resultONSequence.addROIs(vSequence.getROI2Ds(), false);
+			resultONSequence.addROIs(vSequence.seq.getROI2Ds(), false);
 			
 			ArrayList<ROI2D> roiList2 = resultOFFSequence.getROI2Ds();
 			
