@@ -410,8 +410,9 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 				startAnalysisThread(); 
 			} } );		
 		
-		updateChartsButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
-				updateCharts(); 
+		updateChartsButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) {
+				DisplayCharts displayCharts = new DisplayCharts();
+				displayCharts.updateCharts(); 
 			} } );
 		
 		deleteColorButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
@@ -452,8 +453,9 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 				String file = FmpTools.saveFileAs(null, vSequence.getDirectory(), "xls");
 				if (file != null) {
 					ThreadUtil.bgRun( new Runnable() { @Override public void run() { 
+						ExportToXLS exportToXLS = new ExportToXLS();
 						final String filename = file; 
-						exportToXLS(filename);
+						exportToXLS.exportToXLS(filename);
 						}});
 				}
 			} } );
@@ -852,91 +854,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		}
 	}
 	
-	private void filterMeasures_RunningAverage(int span) {
-		int nrois = vSequence.data_raw.length;
-		for (int iroi=0; iroi < nrois; iroi++) {
-			double sum = 0;
-			for (int t= 0; t< span; t++) {
-				sum += vSequence.data_raw[iroi][t];
-				if (t < span/2)
-					vSequence.data_filtered[iroi][t] = vSequence.data_raw[iroi][t];
-			}
-			sum -= vSequence.data_raw[iroi][span] - vSequence.data_raw[iroi][0];
-			
-			for ( int t = endFrame-startFrame-span/2 ; t < endFrame-startFrame;  t++ )
-				vSequence.data_filtered[iroi][t] = vSequence.data_raw[iroi][t];
-			int t0= 0;
-			int t1 =span;
-			for (int t= span/2; t< endFrame-startFrame-span/2; t++, t0++, t1++) {
-				sum += vSequence.data_raw[iroi][t1] - vSequence.data_raw[iroi][t0];
-				vSequence.data_filtered[iroi][t] = sum/span;
-			}
-		}
-	}
-		
-	private void filterMeasures_RunningMedian(int span) {
-		
-		int nrois = vSequence.data_raw.length;
-		int nbspan = span/2;
-		
-		for (int iroi=0; iroi < nrois; iroi++) {
-			
-			int sizeTempArray = nbspan*2+1;
-			int [] tempArraySorted = new int [sizeTempArray];
-			int [] tempArrayCircular = new int [sizeTempArray];
-			for (int t= 0; t< sizeTempArray; t++) {			
-				int value = vSequence.data_raw[iroi][t];
-				tempArrayCircular[t] = value;
-				vSequence.data_filtered[iroi][t] = value;
-			}
-
-			int iarraycircular = sizeTempArray -1;
-			for (int t=nbspan; t< endFrame-startFrame-nbspan; t++) {
-				int newvalue = vSequence.data_raw[iroi][t+nbspan];
-				tempArrayCircular[iarraycircular]= newvalue;
-				tempArraySorted = tempArrayCircular.clone();
-				Arrays.sort(tempArraySorted);
-				int median = tempArraySorted[nbspan];
-				vSequence.data_filtered[iroi][t] = median;
-				
-				iarraycircular++;
-				if (iarraycircular >= sizeTempArray)
-					iarraycircular=0;
-			}
-		}
-	}
-	
-	private void filterMeasures () {
-		int filteroption = filterComboBox.getSelectedIndex();
-		int span = Integer.parseInt(spanTextField.getText());
-		filterMeasures_parameters (filteroption, span);
-		
-	}
-	
-	private void filterMeasures_parameters (int filteroption, int span) {
-		int nrois = vSequence.data_raw.length;
-		if (vSequence.data_filtered == null 
-			|| vSequence.data_filtered.length != vSequence.data_raw.length)
-			vSequence.data_filtered = new double [nrois][endFrame-startFrame+1];
-		
-		System.out.println("data_raw_length="+vSequence.data_raw.length +" data_filtered_length="+vSequence.data_filtered.length);
-		switch (filteroption) {
-			case 1: // running average over "span" points
-				filterMeasures_RunningAverage(span);
-				break;
-			case 2:
-				filterMeasures_RunningMedian(span);
-				break;
-			default:	
-				for (int iroi=0; iroi < nrois; iroi++) {
-					for ( int t = 0 ; t < endFrame-startFrame +1;  t++ ) {
-						vSequence.data_filtered[iroi][t] = vSequence.data_raw[iroi][t];
-					}
-				}
-				break;
-		}
-	}
-	
 	private void updateGuiEndFrame () {
 		endFrame = vSequence.getSizeT()-1;
 		endFrameTextField.setText( Integer.toString(endFrame));
@@ -946,213 +863,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		return vSequence.seq.getROI2Ds();
 	}
 	
-	private void updateCharts() {
-		filterMeasures ();
-		
-		String title = "Measures from " + vSequence.getFileName(0);
-		Point pt = new Point(10, 10);
-		
-		// create window or get handle to it
-		if (mainChartFrame != null)
-		{
-			mainChartFrame.removeAll();
-			mainChartFrame.close();
-		}
-		mainChartFrame = GuiUtil.generateTitleFrame(title, new JPanel(), new Dimension(300, 70), true, true, true, true);
-		mainChartPanel = new JPanel(); 
-		mainChartPanel.setLayout( new BoxLayout( mainChartPanel, BoxLayout.LINE_AXIS ) );
-		mainChartFrame.add(mainChartPanel);
-		
-		mainChartPanel.removeAll();
-		int rows = 1;
-		int cols = 1;
-		XYSeriesCollection xyDataset = new XYSeriesCollection();
-		mainChartPanel.setLayout(new GridLayout(rows, cols));
-		
-		int nrois = vSequence.data_filtered.length;
-		XYSeries [] cropSeries = new XYSeries [nrois];
-		for (int iroi=0; iroi < nrois; iroi++) {
-			cropSeries[iroi] = new XYSeries (vSequence.seriesname[iroi]);
-			cropSeries[iroi].clear();
-			for (int t= startFrame; t <= endFrame; t++) {
-				cropSeries[iroi].add(t, vSequence.data_filtered[iroi][t-startFrame]);
-			}
-		}
-		
-		int ncurves = cropSeries.length;
-		for (int i=0; i< ncurves; i++)
-			xyDataset.addSeries(cropSeries[i]);
-		
-		String TitleString = "Results";
-		boolean displayLegend = false; //true;
-		JFreeChart chart = ChartFactory.createXYLineChart(
-				TitleString, "time", "pixels",
-				xyDataset,
-				PlotOrientation.VERTICAL, displayLegend,true,false ); 
-		
-		int minWidth = 800;
-		int minHeight = 200;
-		int width = 800;
-		int height = 200;
-		int maxWidth = 100000;
-		int maxHeight = 100000;
-		XYPlot plot = chart.getXYPlot();
-		ValueAxis axis = plot.getDomainAxis();
-		axis.setRange(startFrame, endFrame);
-		LegendTitle legendTitle = chart.getLegend();
-
-		if (legendTitle != null)
-			legendTitle.setPosition(RectangleEdge.RIGHT); 
-		mainChartPanel.add( new ChartPanel(  chart, width , height , minWidth, minHeight, maxWidth , maxHeight, false , false, true , true , true, true));
-		mainChartPanel.validate();
-		mainChartPanel.repaint();
-		
-		mainChartFrame.pack();
-		mainChartFrame.setLocation(pt );
-		mainChartFrame.addToDesktopPane ();
-		mainChartFrame.setVisible(true);
-		mainChartFrame.toFront();
-	}
-	
-	private void exportToXLSWorksheet(WritableWorkbook xlsWorkBook, String worksheetname) {
-		
-		// local variables used for exporting to a worksheet
-		int it = 0;
-		int irow = 0;
-		int nrois = vSequence.data_filtered.length;
-		int icol0 = 0;
-		List<String> listofFiles = null;
-		boolean blistofFiles = false;
-		if (vSequence.isFileStack() )
-		{
-			listofFiles = vSequence.getListofFiles();
-			blistofFiles = true;
-		}
-		if (analysisThread != null)
-			resultsHeatMap = analysisThread.results;
-		
-		// xls output
-		// --------------
-		WritableSheet filteredDataPage = XLSUtil.createNewPage( xlsWorkBook , worksheetname );
-		XLSUtil.setCellString( filteredDataPage , 0, irow, "name:" );
-		XLSUtil.setCellString( filteredDataPage , 1, irow, vSequence.seq.getName() );
-		// write  type of data exported
-		irow++;
-		String cs = worksheetname;
-		if (!worksheetname.contains("raw")) {
-			cs = cs + " - over "+spanTextField.getText() +" points - ";
-		}
-		XLSUtil.setCellString(filteredDataPage,  0,  irow, worksheetname);
-		// write filter and threshold applied
-		irow++;
-		//cs = "Detect surface: "+ transformsComboBox.getSelectedItem().toString() + " threshold=" + distance.getValue().toString();
-		cs = "Detect surface: colors array with distance=" + distanceSpinner.getValue().toString();
-		XLSUtil.setCellString(filteredDataPage,  0,  irow, cs);	
-		irow++;
-		cs = "Detect movement using image (n) - (n-1) threshold=" + threshold2Spinner.getValue().toString();
-		XLSUtil.setCellString(filteredDataPage,  0,  irow, cs);	
-		// write table
-		irow=4;
-		// table header
-		icol0 = 0;
-		if (blistofFiles) icol0 = 1;
-		
-		XLSUtil.setCellString( filteredDataPage , icol0, irow, "index" );
-		icol0++;
-		int icol1 = icol0;
-		ArrayList<ROI2D> roisList = vSequence.seq.getROI2Ds();
-		XLSUtil.setCellString( filteredDataPage, 0, irow, "column");
-		XLSUtil.setCellString( filteredDataPage, 0, irow+1, "roi surface (pixels)");
-		Collections.sort(roisList, new FmpTools.ROI2DNameComparator());
-		for (ROI2D roi: roisList) {
-			XLSUtil.setCellString( filteredDataPage, icol1, irow, roi.getName());
-			XLSUtil.setCellNumber( filteredDataPage, icol1, irow+1, roi.getNumberOfPoints());
-			icol1++;
-		}
-		
-		if (measureHeatmapCheckBox.isSelected() ) {
-			icol1 = icol0;
-			XLSUtil.setCellString( filteredDataPage, 0, irow+2, "column");
-			XLSUtil.setCellString( filteredDataPage, 0, irow+3, "activity(npixels>"+threshold2Spinner.getValue()+")");
-			XLSUtil.setCellString( filteredDataPage, 0, irow+4, "count");
-			for (MeasureAndName result: resultsHeatMap) {
-				if (result.name != "background") {
-					XLSUtil.setCellString( filteredDataPage, icol1, irow+2, result.name);
-					XLSUtil.setCellNumber( filteredDataPage, icol1, irow+3, result.data/result.count);
-					XLSUtil.setCellNumber( filteredDataPage, icol1, irow+4, result.count);
-					icol1++;
-				}
-				else {
-					XLSUtil.setCellString( filteredDataPage, icol0-1, irow+2, result.name);
-					XLSUtil.setCellNumber( filteredDataPage, icol0-1, irow+3, result.data/result.count);
-					XLSUtil.setCellNumber( filteredDataPage, icol0-1, irow+4, result.count);
-				}
-			}		
-		}
-		
-		icol1 = icol0;
-		irow+=7;
-		if (blistofFiles)
-			XLSUtil.setCellString( filteredDataPage , 0, irow, "name");
-		for (int iroi=0; iroi < nrois; iroi++, icol1++) 
-			XLSUtil.setCellString( filteredDataPage , icol1, irow, vSequence.seriesname[iroi]);
-		irow++;
-
-		// data
-		it = 1;
-		for ( int t = startFrame ; t < endFrame;  t  += analyzeStep, it++ )
-		{
-			try
-			{
-				icol0 = 0;
-				if (blistofFiles) {
-					XLSUtil.setCellString( filteredDataPage , icol0,   irow, listofFiles.get(it) );
-					icol0++;
-				}
-				double value = t; 
-				XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); // frame number
-				icol0++;
-				
-				for (int iroi=0; iroi < nrois; iroi++) {
-					value = vSequence.data_filtered[iroi][t-startFrame];
-					XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); 
-					icol0++;
-
-				}
-				irow++;
-			} catch( IndexOutOfBoundsException e)
-			{
-				// no mouse Position
-			}
-		}
-	}
-	
-	private void exportToXLS(String filename) {
-		
-		// xls output - successive positions
-		System.out.println("XLS output");
-		int span = Integer.parseInt(spanTextField.getText());
-		
-		try {
-			WritableWorkbook xlsWorkBook = XLSUtil.createWorkbook( filename);
-
-			filterMeasures_parameters (0, span);
-			exportToXLSWorksheet(xlsWorkBook, "raw");
-			filterMeasures_parameters (1, span);
-			exportToXLSWorksheet(xlsWorkBook, "avg");
-			filterMeasures_parameters (2, span);
-			exportToXLSWorksheet(xlsWorkBook, "median");
-			
-			// --------------
-			XLSUtil.saveAndClose( xlsWorkBook );
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (WriteException e) {
-			e.printStackTrace();
-		}
-		System.out.println("XLS output done");
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
