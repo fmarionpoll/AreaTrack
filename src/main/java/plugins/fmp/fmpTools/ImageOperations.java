@@ -42,10 +42,6 @@ public class ImageOperations {
 		imgThresh.setColorArrayThreshold(distanceType, colorthreshold, colorarray);
 	}
 	
-	public IcyBufferedImage run() {
-		return run (seq.currentFrame);
-	}
-	
 	public IcyBufferedImage run (int frame) {	
 		// step 1
 		opTransf.fromFrame = frame;

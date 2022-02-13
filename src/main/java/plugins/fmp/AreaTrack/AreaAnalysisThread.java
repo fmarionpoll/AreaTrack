@@ -118,7 +118,6 @@ public class AreaAnalysisThread extends Thread {
 			endFrame = (int) vSequence.nTotalFrames - 1;
 		int nbframes = endFrame - startFrame +1;
 
-		// verbose output
 		System.out.println("Computation over frames: " + startFrame + " - " + endFrame );
 		Chronometer chrono = new Chronometer("Tracking computation" );
 		ProgressFrame progress = new ProgressFrame("Checking ROIs...");
@@ -155,20 +154,20 @@ public class AreaAnalysisThread extends Thread {
 					// load next image and compute threshold
 					vSequence.currentFrame = t;
 					viewer.setPositionT(t);
-					viewer.setTitle(vSequence.getDecoratedImageName(t));
+//					viewer.setTitle(vSequence.getDecoratedImageName(t));
 
 					// ------------------------ compute global mask
-					IcyBufferedImage binaryMap = imgOp1.run();	
+					IcyBufferedImage binaryMap = imgOp1.run(t);	
 					boolean[] boolMap = imgOp1.convertToBoolean(binaryMap);
 					BooleanMask2D maskAll2D = new BooleanMask2D(binaryMap.getBounds(), boolMap); 
 					
 					// ------------------------ loop over each ROI & count number of pixels above threshold
-					for (int imask = 0; imask < areaMaskList.size(); imask++ )
+					for (int iiroi = 0; iiroi < areaMaskList.size(); iiroi++ )
 					{
-						BooleanMask2D areaMask = areaMaskList.get(imask);
+						BooleanMask2D areaMask = areaMaskList.get(iiroi);
 						BooleanMask2D intersectionMask = maskAll2D.getIntersection( areaMask );
 						int sum = intersectionMask.getNumberOfPoints();
-						vSequence.data_raw[imask][t-startFrame]= sum;
+						vSequence.data_raw[iiroi][t-startFrame] = sum;
 					}
 				}
 				

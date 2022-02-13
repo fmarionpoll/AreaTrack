@@ -67,6 +67,12 @@ public class SequenceVirtual
 	{
 		this.seq = seq;
 		statusSequenceVirtual = EnumStatus.REGULAR;
+		nTotalFrames = seq.getSizeT();
+		analysisEnd = nTotalFrames;
+		String filename = seq.getFilename();
+		Path path = Paths.get(filename); 
+		Path parent = path.getParent();
+		directory = parent.toString();
 	}
 	
 	public SequenceVirtual(String name, IcyBufferedImage image) 
@@ -107,7 +113,7 @@ public class SequenceVirtual
 	
 	public IcyBufferedImage getImageTransf(int t, int z, int c, EnumImageOp transformop) 
 	{
-		IcyBufferedImage image =  loadVImageAndSubtractReference(t, transformop);
+		IcyBufferedImage image = loadVImageAndSubtractReference(t, transformop);
 		if (image != null && c != -1)
 			image = IcyBufferedImageUtil.extractChannel(image, c);
 		return image;
@@ -121,7 +127,7 @@ public class SequenceVirtual
 			case REF_PREVIOUS: // subtract image n-analysisStep
 			{
 				int t0 = t-analysisStep;
-				if (t0 <0)
+				if (t0 < 0)
 					t0 = 0;
 				IcyBufferedImage ibufImage0 = seq.getImage(t0, 0);
 				ibufImage = subtractImages (ibufImage, ibufImage0);
@@ -155,7 +161,7 @@ public class SequenceVirtual
 
 	public int getSizeT() 
 	{
-		if (statusSequenceVirtual == EnumStatus.REGULAR)
+		if (statusSequenceVirtual == EnumStatus.REGULAR  || statusSequenceVirtual == EnumStatus.FILESTACK)
 			return seq.getSizeT();
 		else 
 			return (int) nTotalFrames;

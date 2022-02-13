@@ -104,7 +104,7 @@ public class ImageThresholdTools {
 	
 	public boolean[] getBoolMap_FromBinaryInt(IcyBufferedImage img) 
 	{
-		boolean[]	boolMap = new boolean[ img.getSizeX() * img.getSizeY() ];
+		boolean[] boolMap = new boolean[ img.getSizeX() * img.getSizeY() ];
 		byte [] imageSourceDataBuffer = null;
 		DataType datatype = img.getDataType_();
 		

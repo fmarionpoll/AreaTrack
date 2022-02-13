@@ -76,7 +76,6 @@ public class OpenVirtualSequence {
 					seq = loadV2SequenceFromImagesList(imagesList);
 				}
 			}
-			
 		}
 		else
 		{
@@ -90,7 +89,6 @@ public class OpenVirtualSequence {
 			List <String> imagesList = Arrays.asList(imagesArray);
 			seq = loadV2SequenceFromImagesList(imagesList);
 		}
-		
 		return seq;
 	}
 	

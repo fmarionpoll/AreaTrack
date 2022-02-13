@@ -113,10 +113,10 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 					EnumImageOp.R_RGB, EnumImageOp.G_RGB, EnumImageOp.B_RGB, 
 					EnumImageOp.R2MINUS_GB, EnumImageOp.G2MINUS_RB, EnumImageOp.B2MINUS_RG, EnumImageOp.NORM_BRMINUSG, EnumImageOp.RGB,
 					EnumImageOp.H_HSB, EnumImageOp.S_HSB, EnumImageOp.B_HSB	});
-	private JSpinner 	thresholdSpinner	= new JSpinner(new SpinnerNumberModel(70, 0, 255, 5));
+	private JSpinner 	thresholdSpinner	= new JSpinner(new SpinnerNumberModel(70, 0, 255, 1));
 	private JLabel 		videochannel 		= new JLabel("filter  ");
 	private JLabel 		thresholdLabel 		= new JLabel("threshold ");
-	private JSpinner 	threshold2Spinner	= new JSpinner(new SpinnerNumberModel(20, 0, 255, 5));
+	private JSpinner 	threshold2Spinner	= new JSpinner(new SpinnerNumberModel(20, 0, 255, 1));
 	private JTextField 	analyzeStepTextField= new JTextField("1");
 		
 	//---------------------------------------------------------------------------
@@ -127,12 +127,12 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private String 		textPickAPixel 		= "Pick a pixel";
 	private JButton		pickColorButton		= new JButton(textPickAPixel);
 	private JButton		deleteColorButton	= new JButton("Delete color");
-	private JRadioButton		rbL1		= new JRadioButton("L1");
-	private JRadioButton		rbL2		= new JRadioButton("L2");
+	private JRadioButton rbL1				= new JRadioButton("L1");
+	private JRadioButton rbL2				= new JRadioButton("L2");
 	private JSpinner    distanceSpinner 	= new JSpinner(new SpinnerNumberModel(10, 0, 800, 5));
-	private JRadioButton		rbRGB		= new JRadioButton("RGB");
-	private JRadioButton		rbHSV		= new JRadioButton("HSV");
-	private JRadioButton		rbH1H2H3	= new JRadioButton("H1H2H3");
+	private JRadioButton rbRGB				= new JRadioButton("RGB");
+	private JRadioButton rbHSV				= new JRadioButton("HSV");
+	private JRadioButton rbH1H2H3			= new JRadioButton("H1H2H3");
 	private JLabel 		distanceLabel 		= new JLabel("Distance  ");
 	private JLabel 		colorspaceLabel 	= new JLabel("Color space ");
 	private JButton		openFiltersButton	= new JButton("Load...");
@@ -521,10 +521,11 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		if (path != null) {
 			XMLPreferences guiPrefs = this.getPreferences("gui");
 			guiPrefs.put("lastUsedPath", path);
-			vSequence.capillariesRoi2RoiArray.capillariesArrayList.clear();
-			updateGuiEndFrame();
-			loadParametersFromXMLFile();
 		}
+		
+		vSequence.capillariesRoi2RoiArray.capillariesArrayList.clear();
+		updateGuiEndFrame();
+		loadParametersFromXMLFile();
 	}
 		
 	private void openROIs() {
@@ -797,7 +798,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 			return;
 		
 		boolean activateThreshold = true;
-		int thresholdForOverlay=0;
+		int thresholdForOverlay = 0;
 		EnumImageOp transformOpForOverlay = EnumImageOp.NONE;
 		EnumThresholdType thresholdTypeForOverlay = EnumThresholdType.SINGLE;
 		
@@ -914,9 +915,11 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	
 	private void filterMeasures_parameters (int filteroption, int span) {
 		int nrois = vSequence.data_raw.length;
-		if (vSequence.data_filtered == null || vSequence.data_filtered.length != vSequence.data_raw.length)
+		if (vSequence.data_filtered == null 
+			|| vSequence.data_filtered.length != vSequence.data_raw.length)
 			vSequence.data_filtered = new double [nrois][endFrame-startFrame+1];
 		
+		System.out.println("data_raw_length="+vSequence.data_raw.length +" data_filtered_length="+vSequence.data_filtered.length);
 		switch (filteroption) {
 			case 1: // running average over "span" points
 				filterMeasures_RunningAverage(span);
@@ -926,7 +929,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 				break;
 			default:	
 				for (int iroi=0; iroi < nrois; iroi++) {
-					for ( int t = 0 ; t < endFrame-startFrame;  t++ ) {
+					for ( int t = 0 ; t < endFrame-startFrame +1;  t++ ) {
 						vSequence.data_filtered[iroi][t] = vSequence.data_raw[iroi][t];
 					}
 				}
