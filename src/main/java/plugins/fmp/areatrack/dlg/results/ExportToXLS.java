@@ -1,4 +1,4 @@
-package plugins.fmp.AreaTrack;
+package plugins.fmp.areatrack.dlg.results;
 
 import java.io.IOException;
 import java.util.ArrayList;

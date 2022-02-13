@@ -1,4 +1,4 @@
-package plugins.fmp.AreaTrack;
+package plugins.fmp.areatrack;
 
 import java.awt.Color;
 import java.util.ArrayList;
