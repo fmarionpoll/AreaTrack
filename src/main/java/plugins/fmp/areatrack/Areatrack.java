@@ -3,22 +3,17 @@ package plugins.fmp.areatrack;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-import javax.swing.BoxLayout;
+
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -39,16 +34,6 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.title.LegendTitle;
-import org.jfree.chart.ui.RectangleEdge;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -69,13 +54,7 @@ import icy.preferences.XMLPreferences;
 import icy.roi.ROI2D;
 import icy.sequence.DimensionId;
 import icy.sequence.Sequence;
-import icy.system.thread.ThreadUtil;
-import icy.util.XLSUtil;
 import icy.util.XMLUtil;
-
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
 
 import plugins.fmp.fmpTools.ComboBoxColorRenderer;
 import plugins.fmp.fmpTools.EnumImageOp;
@@ -102,7 +81,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JCheckBox measureSurfacesCheckBox = new JCheckBox("Measure surface of objects over threshold");
 	private JRadioButton rbFilterbyColor	= new JRadioButton("filter by color array");
 	private JRadioButton rbFilterbyFunction	= new JRadioButton("filter by function");
-	private JCheckBox measureHeatmapCheckBox= new JCheckBox("Detect movement and build image heatmap");
+	JCheckBox measureHeatmapCheckBox= new JCheckBox("Detect movement and build image heatmap");
 	// TODO
 	private JButton startComputationButton 	= new JButton("Start");
 	private JButton stopComputationButton	= new JButton("Stop");
@@ -116,7 +95,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JSpinner 	thresholdSpinner	= new JSpinner(new SpinnerNumberModel(70, 0, 255, 1));
 	private JLabel 		videochannel 		= new JLabel("filter  ");
 	private JLabel 		thresholdLabel 		= new JLabel("threshold ");
-	private JSpinner 	threshold2Spinner	= new JSpinner(new SpinnerNumberModel(20, 0, 255, 1));
+	JSpinner threshold2Spinner = new JSpinner(new SpinnerNumberModel(20, 0, 255, 1));
 	private JTextField 	analyzeStepTextField= new JTextField("1");
 		
 	//---------------------------------------------------------------------------
@@ -129,7 +108,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JButton		deleteColorButton	= new JButton("Delete color");
 	private JRadioButton rbL1				= new JRadioButton("L1");
 	private JRadioButton rbL2				= new JRadioButton("L2");
-	private JSpinner    distanceSpinner 	= new JSpinner(new SpinnerNumberModel(10, 0, 800, 5));
+	JSpinner distanceSpinner = new JSpinner(new SpinnerNumberModel(10, 0, 800, 5));
 	private JRadioButton rbRGB				= new JRadioButton("RGB");
 	private JRadioButton rbHSV				= new JRadioButton("HSV");
 	private JRadioButton rbH1H2H3			= new JRadioButton("H1H2H3");
@@ -147,13 +126,11 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JButton		closeAllButton		= new JButton("Close views");
 
 	//------------------------------------------- global variables
-	SequencePlus vSequence 			= null;
-	private ArrayList<MeasureAndName> resultsHeatMap = null;
-
-	private int			analyzeStep 		= 1;
-	int 		startFrame 			= 1;
-	int 		endFrame 			= 99999999;
-	private AreaAnalysisThread analysisThread = null;
+	SequencePlus vSequence = null;
+	int	 analyzeStep = 1;
+	int  startFrame = 1;
+	int  endFrame = 99999999;
+	AreaAnalysisThread analysisThread = null;
 	
 	// parameters saved/read in xml file
 	private EnumThresholdType thresholdtype 	= EnumThresholdType.COLORARRAY; 
@@ -450,14 +427,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 			} } );
 
 		exportToXLSButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) {
-				String file = FmpTools.saveFileAs(null, vSequence.getDirectory(), "xls");
-				if (file != null) {
-					ThreadUtil.bgRun( new Runnable() { @Override public void run() { 
-						ExportToXLS exportToXLS = new ExportToXLS();
-						final String filename = file; 
-						exportToXLS.exportToXLS(filename);
-						}});
-				}
+				exportToXLS();
 			} } );
 		
 		setVideoSourceButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) {
@@ -872,6 +842,16 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private void updateCharts() 
 	{
 		displayCharts.updateCharts(this); 
+	}
+	
+	private void exportToXLS() 
+	{
+		String file = FmpTools.saveFileAs(null, vSequence.getDirectory(), "xls");
+		if (file != null) {	
+			ExportToXLS exportToXLS = new ExportToXLS();
+			final String filename = file; 
+			exportToXLS.exportToXLS(this, filename);
+		}
 	}
 	
 	public static void main(String[] args)

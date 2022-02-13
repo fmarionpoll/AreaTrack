@@ -10,9 +10,22 @@ import icy.util.XLSUtil;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import plugins.fmp.fmpSequence.SequencePlus;
 import plugins.fmp.fmpTools.FmpTools;
 
 public class ExportToXLS {
+
+	Areatrack parent0 = null;
+	SequencePlus vSequence = null;
+	int startFrame= 0;
+	int endFrame = 1;
+	int span = 1;
+	int	analyzeStep = 1;
+	String distanceString;
+	String threshold2String;
+	boolean measureHeatmap = false;
+	private ArrayList<MeasureAndName> resultsHeatMap = null;
+	private AreaAnalysisThread analysisThread = null;
 
 	private void exportToXLSWorksheet(WritableWorkbook xlsWorkBook, String worksheetname) {
 		
@@ -40,16 +53,16 @@ public class ExportToXLS {
 		irow++;
 		String cs = worksheetname;
 		if (!worksheetname.contains("raw")) {
-			cs = cs + " - over "+spanTextField.getText() +" points - ";
+			cs = cs + " - over " + span +" points - ";
 		}
 		XLSUtil.setCellString(filteredDataPage,  0,  irow, worksheetname);
 		// write filter and threshold applied
 		irow++;
 		//cs = "Detect surface: "+ transformsComboBox.getSelectedItem().toString() + " threshold=" + distance.getValue().toString();
-		cs = "Detect surface: colors array with distance=" + distanceSpinner.getValue().toString();
+		cs = "Detect surface: colors array with distance=" + distanceString;
 		XLSUtil.setCellString(filteredDataPage,  0,  irow, cs);	
 		irow++;
-		cs = "Detect movement using image (n) - (n-1) threshold=" + threshold2Spinner.getValue().toString();
+		cs = "Detect movement using image (n) - (n-1) threshold=" + threshold2String;
 		XLSUtil.setCellString(filteredDataPage,  0,  irow, cs);	
 		// write table
 		irow=4;
@@ -70,10 +83,10 @@ public class ExportToXLS {
 			icol1++;
 		}
 		
-		if (measureHeatmapCheckBox.isSelected() ) {
+		if (measureHeatmap ) {
 			icol1 = icol0;
 			XLSUtil.setCellString( filteredDataPage, 0, irow+2, "column");
-			XLSUtil.setCellString( filteredDataPage, 0, irow+3, "activity(npixels>"+threshold2Spinner.getValue()+")");
+			XLSUtil.setCellString( filteredDataPage, 0, irow+3, "activity(npixels>"+threshold2String+")");
 			XLSUtil.setCellString( filteredDataPage, 0, irow+4, "count");
 			for (MeasureAndName result: resultsHeatMap) {
 				if (result.name != "background") {
@@ -127,20 +140,29 @@ public class ExportToXLS {
 		}
 	}
 	
-	public void exportToXLS(String filename) {
+	public void exportToXLS(Areatrack parent0, String filename) {
+		
+		this.parent0 = parent0;
+		vSequence = parent0.vSequence;
+		analysisThread = parent0.analysisThread;
+		span = Integer.parseInt(parent0.spanTextField.getText());
+		analyzeStep = parent0.analyzeStep;
+		distanceString = parent0.distanceSpinner.getValue().toString();
+		threshold2String = parent0.threshold2Spinner.getValue().toString();
+		measureHeatmap = parent0.measureHeatmapCheckBox.isSelected();
 		
 		// xls output - successive positions
 		System.out.println("XLS output");
-		int span = Integer.parseInt(spanTextField.getText());
+		
 		
 		try {
 			WritableWorkbook xlsWorkBook = XLSUtil.createWorkbook( filename);
 
-			filterMeasures_parameters (0, span);
+			FilterMeasures.filterMeasures (parent0, 0);
 			exportToXLSWorksheet(xlsWorkBook, "raw");
-			filterMeasures_parameters (1, span);
+			FilterMeasures.filterMeasures (parent0, 1);
 			exportToXLSWorksheet(xlsWorkBook, "avg");
-			filterMeasures_parameters (2, span);
+			FilterMeasures.filterMeasures (parent0, 2);
 			exportToXLSWorksheet(xlsWorkBook, "median");
 			
 			// --------------
