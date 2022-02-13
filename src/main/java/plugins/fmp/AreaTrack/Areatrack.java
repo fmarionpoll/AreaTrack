@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -36,7 +36,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -69,6 +68,7 @@ import icy.plugin.abstract_.PluginActionable;
 import icy.preferences.XMLPreferences;
 import icy.roi.ROI2D;
 import icy.sequence.DimensionId;
+import icy.sequence.Sequence;
 import icy.system.thread.ThreadUtil;
 import icy.util.XLSUtil;
 import icy.util.XMLUtil;
@@ -81,6 +81,7 @@ import plugins.fmp.fmpTools.ComboBoxColorRenderer;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumThresholdType;
 import plugins.fmp.fmpTools.FmpTools;
+import plugins.fmp.fmpSequence.OpenVirtualSequence;
 import plugins.fmp.fmpSequence.SequencePlus;
 
 
@@ -148,7 +149,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	//------------------------------------------- global variables
 	private SequencePlus vSequence 		= null;
 	private ArrayList<MeasureAndName> resultsHeatMap = null;
-	private Timer 		checkBufferTimer 	= new Timer(1000, this);
+
 	private int			analyzeStep 		= 1;
 	private int 		startFrame 			= 1;
 	private int 		endFrame 			= 99999999;
@@ -376,7 +377,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 					mainChartFrame = null;
 				}
 				vSequence.close();
-				checkBufferTimer.stop(); 
 			} } );
 		
 		rbRGB.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
@@ -510,24 +510,27 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private void openVideoOrStack() {
 		String path = null;
 		if (vSequence != null)
-		{
 			vSequence.close();
-			checkBufferTimer.stop();
-		}
-		vSequence = new SequencePlus();
-		path = vSequence.loadInputVirtualStack(null);
+
+		Sequence seq = OpenVirtualSequence.openImagesOrAvi(null);
+		Viewer v = OpenVirtualSequence.initSequenceViewer(seq);
+		v.addListener(Areatrack.this);
+		vSequence = new SequencePlus(seq);
+		
+		path = vSequence.getDirectory();
 		if (path != null) {
 			XMLPreferences guiPrefs = this.getPreferences("gui");
 			guiPrefs.put("lastUsedPath", path);
-			initInputSeq();
+			vSequence.capillariesRoi2RoiArray.capillariesArrayList.clear();
+			updateGuiEndFrame();
 			loadParametersFromXMLFile();
 		}
 	}
-	
+		
 	private void openROIs() {
 		if (vSequence != null) {
 			vSequence.seq.removeAllROI();
-			vSequence.capillaries.xmlReadROIsAndData(vSequence);
+			vSequence.capillariesRoi2RoiArray.xmlReadROIsAndData(vSequence);
 			endFrameTextField.setText( Integer.toString(endFrame));
 			startFrameTextField.setText( Integer.toString(startFrame));
 		}
@@ -536,12 +539,12 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private void saveROIs() {
 		vSequence.analysisStart = startFrame;
 		vSequence.analysisEnd = endFrame;
-		vSequence.capillaries.xmlWriteROIsAndData("areatrack.xml", vSequence);
+		vSequence.capillariesRoi2RoiArray.xmlWriteROIsAndData("areatrack.xml", vSequence);
 	}
 	
 	private void addROIs( ) {
 		if (vSequence != null) {
-			vSequence.capillaries.xmlReadROIsAndData(vSequence);
+			vSequence.capillariesRoi2RoiArray.xmlReadROIsAndData(vSequence);
 			endFrameTextField.setText( Integer.toString(endFrame));
 			startFrameTextField.setText( Integer.toString(startFrame));
 		}
@@ -931,41 +934,13 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		}
 	}
 	
-	private void initInputSeq () {
-	
-		// transfer 1 image to the viewer
-		addSequence(vSequence.seq);
-		Viewer v = vSequence.seq.getFirstViewer();
-		v.addListener(Areatrack.this);
-	
-		Rectangle rectv = v.getBoundsInternal();
-		Rectangle rect0 = mainFrame.getBoundsInternal();
-		rectv.setLocation(rect0.x+ rect0.width, rect0.y);
-		v.setBounds(rectv);
-
-		vSequence.seq.removeAllImages();
-		startstopBufferingThread();
-		checkBufferTimer.start();		
-		
+	private void updateGuiEndFrame () {
 		endFrame = vSequence.getSizeT()-1;
 		endFrameTextField.setText( Integer.toString(endFrame));
-		vSequence.capillaries.capillariesArrayList.clear();
-	}
-	
-	private void startstopBufferingThread() {
-
-		checkBufferTimer.stop();
-		if (vSequence == null)
-			return;
-
-		vSequence.vImageBufferThread_STOP();
-		vSequence.analysisStep = analyzeStep;
-		vSequence.vImageBufferThread_START(100); //numberOfImageForBuffer);
-		checkBufferTimer.start();
 	}
 	
 	private ArrayList<ROI2D> getROIsToAnalyze() {
-		return vSequence.getROI2Ds();
+		return vSequence.seq.getROI2Ds();
 	}
 	
 	private void updateCharts() {
@@ -1043,7 +1018,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		int irow = 0;
 		int nrois = vSequence.data_filtered.length;
 		int icol0 = 0;
-		String[] listofFiles = null;
+		List<String> listofFiles = null;
 		boolean blistofFiles = false;
 		if (vSequence.isFileStack() )
 		{
@@ -1128,7 +1103,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 			{
 				icol0 = 0;
 				if (blistofFiles) {
-					XLSUtil.setCellString( filteredDataPage , icol0,   irow, listofFiles[it] );
+					XLSUtil.setCellString( filteredDataPage , icol0,   irow, listofFiles.get(it) );
 					icol0++;
 				}
 				double value = t; 

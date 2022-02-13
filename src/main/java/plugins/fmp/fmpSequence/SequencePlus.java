@@ -20,7 +20,7 @@ import org.w3c.dom.Node;
 
 import icy.image.IcyBufferedImage;
 import icy.roi.ROI2D;
-
+import icy.sequence.Sequence;
 import icy.type.geom.Polyline2D;
 import icy.util.XMLUtil;
 import plugins.fmp.fmpTools.FmpTools;
@@ -57,6 +57,10 @@ public class SequencePlus extends SequenceVirtual  {
 	
 	public SequencePlus() {
 		super ();
+	}
+	
+	public  SequencePlus(Sequence seq) {
+		super(seq);
 	}
 	
 	public SequencePlus(String name, IcyBufferedImage image) {
@@ -321,6 +325,7 @@ public class SequencePlus extends SequenceVirtual  {
 	}
 
 	// ----------------------------
+	
 	public void setThresholdOverlay(boolean bActive) {
 		if (bActive) {
 			if (thresholdOverlay == null) 

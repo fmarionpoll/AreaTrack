@@ -56,6 +56,7 @@ public class SequenceVirtual
 	public ImageOperationsStruct 	cacheThresholdOp = new ImageOperationsStruct();
 	
 	// ----------------------------------------
+	
 	public SequenceVirtual () 
 	{
 		seq = new Sequence();

@@ -87,7 +87,7 @@ public class AreaAnalysisThread extends Thread {
 		imgOp2.setTransform(EnumImageOp.REF_PREVIOUS);
 		imgOp2.setThresholdSingle(thresholdForHeatMap);
 				
-		IcyBufferedImage image = vSequence.seq.loadVImage(vSequence.currentFrame);
+		IcyBufferedImage image = vSequence.seq.getImage(vSequence.currentFrame, 0);
 		resultOFFImage = new IcyBufferedImage(image.getSizeX(), image.getSizeY(), 1, DataType.DOUBLE);
 		resultOFFSequence = new Sequence(resultOFFImage);
 		resultOFFSequence.setName("Heatmap OFF thresh:"+this.thresholdForHeatMap);
