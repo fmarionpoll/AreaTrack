@@ -147,14 +147,13 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JButton		closeAllButton		= new JButton("Close views");
 
 	//------------------------------------------- global variables
-	private SequencePlus vSequence 		= null;
+	private SequencePlus vSequence 			= null;
 	private ArrayList<MeasureAndName> resultsHeatMap = null;
 
 	private int			analyzeStep 		= 1;
 	private int 		startFrame 			= 1;
 	private int 		endFrame 			= 99999999;
 	private AreaAnalysisThread analysisThread = null;
-
 	
 	// parameters saved/read in xml file
 	private EnumThresholdType thresholdtype 	= EnumThresholdType.COLORARRAY; 
@@ -171,6 +170,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	final private String filename 			= "areatrack.xml";
 	
 	// --------------------------------------------------------------------------
+	
 	private void panelSetMenuBar (JPanel mainPanel) {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu aboutMenu = new JMenu("About");

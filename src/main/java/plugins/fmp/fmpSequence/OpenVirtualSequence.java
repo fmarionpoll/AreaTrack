@@ -24,19 +24,8 @@ public class OpenVirtualSequence {
 	public static EnumStatus statusSequence = EnumStatus.REGULAR;
 	protected static VideoImporter importer = null;
 	private static final String[] acceptedTypes = {".jpg", ".jpeg", ".bmp", "tiff"};
-	private String directory  = null;
-	/*
-	public SequenceVirtual (String csFile) 
-	{
-		loadSequenceVirtualAVIFromName(csFile);
-	}
 
-	public SequenceVirtual (String [] list, String directory) 
-	{
-		getAcceptedNamesFromImagesList(list, directory);
-		filename = directory + ".xml";
-	}
-	*/
+	
 	public static Viewer initSequenceViewer(Sequence seq) 
 	{
 		if (seq == null)
@@ -45,7 +34,9 @@ public class OpenVirtualSequence {
 		Viewer v = seq.getFirstViewer();
 		if (v != null) 
 			v.close();
+		
 		Icy.getMainInterface().addSequence(seq);
+		v = seq.getFirstViewer();
 		return v;
 	}
 	
@@ -152,7 +143,7 @@ public class OpenVirtualSequence {
 		return imagesList;
 	}
 	
-	public static String[] keepOnlyAcceptedNames(String[] rawlist) 
+	private static String[] keepOnlyAcceptedNames(String[] rawlist) 
 	{
 		// -----------------------------------------------
 		// subroutines borrowed from FolderOpener
@@ -179,7 +170,7 @@ public class OpenVirtualSequence {
 		return list;
 	}
 
-	public static boolean acceptedFileType(String name) 
+	private static boolean acceptedFileType(String name) 
 	{
 		if (name==null) 
 			return false;
@@ -190,57 +181,12 @@ public class OpenVirtualSequence {
 		}
 		return false;
 	}	
-	
-	private Sequence loadSequenceStackFromName(String name) 
-	{
-		File filename = new File (name);
-		Sequence seq = null;
-		if (filename.isDirectory())
-	    	directory = filename.getAbsolutePath();
-	    else {
-	    	directory = filename.getParentFile().getAbsolutePath();
-	    }
-		if (directory == null) {
-			statusSequence = EnumStatus.FAILURE;
-			return seq;
-		}
-		String [] imagesArray;
-		File fdir = new File(directory);
-		boolean flag = fdir.isDirectory();
-		if (!flag)
-			return seq;
-		imagesArray = fdir.list();
-		// TODO: change directory into a pathname
-		if (imagesArray != null) {
-			getAcceptedNamesFromImagesList(imagesArray, directory);
-			List <String> imagesList = Arrays.asList(imagesArray);
-			seq = loadV2SequenceFromImagesList(imagesList);
-		}
-		return seq;
-	}
-	
-	public Sequence loadSequenceVirtualFromName(String name)
-	{
-		Sequence seq = null;
-		if (name.toLowerCase().contains(".avi"))
-			seq = loadSequenceAVI(name);
-		else
-			seq = loadSequenceStackFromName(name);
-		return seq;
-	}
-	
-	public static Sequence loadV2SequenceFromImagesList(List <String> imagesList) 
+
+	private static Sequence loadV2SequenceFromImagesList(List <String> imagesList) 
 	{
 		SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
 		Sequence seq = Loader.loadSequence(seqFileImporter, imagesList, false);
 		return seq;
 	}
 	
-	
-	public String loadInputVirtualFromNameSavedInRoiXML(String csFileName)
-	{
-		if (csFileName != null)
-			loadSequenceVirtualFromName(csFileName);
-		return csFileName;
-	}
 }
