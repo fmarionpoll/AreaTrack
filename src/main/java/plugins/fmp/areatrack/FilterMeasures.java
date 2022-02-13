@@ -11,8 +11,8 @@ public class FilterMeasures {
 	static int startFrame= 0;
 	static int endFrame = 1;
 	
-	public static void filterMeasures (Areatrack parent, int filteroption) {
-		
+	public static void filterMeasures (Areatrack parent, int filteroption) 
+	{	
 		parent0 = parent;
 		vSequence = parent0.vSequence;
 		startFrame = parent0.startFrame;
@@ -22,13 +22,18 @@ public class FilterMeasures {
 		filterMeasures_parameters (filteroption, span);
 	}
 
-	private static void filterMeasures_parameters (int filteroption, int span) {
+	private static void filterMeasures_parameters (int filteroption, int span) 
+	{
 		int nrois = vSequence.data_raw.length;
 		if (vSequence.data_filtered == null 
 			|| vSequence.data_filtered.length != vSequence.data_raw.length)
 			vSequence.data_filtered = new double [nrois][endFrame-startFrame+1];
 		
-		switch (filteroption) {
+		if (span/2 > endFrame - startFrame+1)
+			filteroption = 0;
+		
+		switch (filteroption) 
+		{
 			case 1: // running average over "span" points
 				filterMeasures_RunningAverage(span);
 				break;
@@ -36,20 +41,20 @@ public class FilterMeasures {
 				filterMeasures_RunningMedian(span);
 				break;
 			default:	
-				for (int iroi=0; iroi < nrois; iroi++) {
-					for ( int t = 0 ; t < endFrame-startFrame +1;  t++ ) {
+				for (int iroi = 0; iroi < nrois; iroi++) 
+					for ( int t = 0 ; t < endFrame-startFrame +1;  t++ ) 
 						vSequence.data_filtered[iroi][t] = vSequence.data_raw[iroi][t];
-					}
-				}
 				break;
 		}
 	}
 	
-	private static void filterMeasures_RunningAverage(int span) {
+	private static void filterMeasures_RunningAverage(int span) 
+	{
 		int nrois = vSequence.data_raw.length;
-		for (int iroi=0; iroi < nrois; iroi++) {
+		for (int iroi = 0; iroi < nrois; iroi++) 
+		{
 			double sum = 0;
-			for (int t= 0; t< span; t++) {
+			for (int t = 0; t < span; t++) {
 				sum += vSequence.data_raw[iroi][t];
 				if (t < span/2)
 					vSequence.data_filtered[iroi][t] = vSequence.data_raw[iroi][t];
@@ -67,8 +72,8 @@ public class FilterMeasures {
 		}
 	}
 		
-	private static void filterMeasures_RunningMedian(int span) {
-		
+	private static void filterMeasures_RunningMedian(int span) 
+	{	
 		int nrois = vSequence.data_raw.length;
 		int nbspan = span/2;
 		

@@ -3,7 +3,6 @@ package plugins.fmp.areatrack;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
-import java.util.Arrays;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -25,6 +24,7 @@ import plugins.fmp.fmpSequence.SequencePlus;
 
 
 public class DisplayCharts {
+	
 	IcyFrame mainChartFrame = null;
 	JPanel 	mainChartPanel = null;
 	

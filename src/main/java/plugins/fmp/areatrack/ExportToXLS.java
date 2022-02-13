@@ -25,11 +25,10 @@ public class ExportToXLS {
 	String threshold2String;
 	boolean measureHeatmap = false;
 	private ArrayList<MeasureAndName> resultsHeatMap = null;
-	private AreaAnalysisThread analysisThread = null;
+	
 
 	private void exportToXLSWorksheet(WritableWorkbook xlsWorkBook, String worksheetname) {
 		
-		// local variables used for exporting to a worksheet
 		int it = 0;
 		int irow = 0;
 		int nrois = vSequence.data_filtered.length;
@@ -41,8 +40,6 @@ public class ExportToXLS {
 			listofFiles = vSequence.getListofFiles();
 			blistofFiles = true;
 		}
-		if (analysisThread != null)
-			resultsHeatMap = analysisThread.results;
 		
 		// xls output
 		// --------------
@@ -113,30 +110,22 @@ public class ExportToXLS {
 
 		// data
 		it = 1;
-		for ( int t = startFrame ; t < endFrame;  t  += analyzeStep, it++ )
+		for ( int t = startFrame ; t <= endFrame;  t += analyzeStep, it++, irow++ )
 		{
-			try
-			{
-				icol0 = 0;
-				if (blistofFiles) {
-					XLSUtil.setCellString( filteredDataPage , icol0,   irow, listofFiles.get(it) );
-					icol0++;
-				}
-				double value = t; 
-				XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); // frame number
+			icol0 = 0;
+			if (blistofFiles) {
+				XLSUtil.setCellString( filteredDataPage , icol0,   irow, listofFiles.get(it) );
 				icol0++;
-				
-				for (int iroi=0; iroi < nrois; iroi++) {
-					value = vSequence.data_filtered[iroi][t-startFrame];
-					XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); 
-					icol0++;
-
-				}
-				irow++;
-			} catch( IndexOutOfBoundsException e)
-			{
-				// no mouse Position
 			}
+			double value = t; 
+			XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); 
+			icol0++;
+			for (int iroi=0; iroi < nrois; iroi++, icol0++) 
+			{
+				value = vSequence.data_filtered[iroi][t-startFrame];
+				XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); 
+			}
+			System.out.println("row="+irow);
 		}
 	}
 	
@@ -144,27 +133,30 @@ public class ExportToXLS {
 		
 		this.parent0 = parent0;
 		vSequence = parent0.vSequence;
-		analysisThread = parent0.analysisThread;
+		startFrame = parent0.startFrame;
+		endFrame = parent0.endFrame;
+		if (parent0.analysisThread != null)
+			resultsHeatMap = parent0.analysisThread.results;
 		span = Integer.parseInt(parent0.spanTextField.getText());
 		analyzeStep = parent0.analyzeStep;
 		distanceString = parent0.distanceSpinner.getValue().toString();
 		threshold2String = parent0.threshold2Spinner.getValue().toString();
 		measureHeatmap = parent0.measureHeatmapCheckBox.isSelected();
 		
-		// xls output - successive positions
 		System.out.println("XLS output");
-		
-		
 		try {
 			WritableWorkbook xlsWorkBook = XLSUtil.createWorkbook( filename);
 
 			FilterMeasures.filterMeasures (parent0, 0);
 			exportToXLSWorksheet(xlsWorkBook, "raw");
-			FilterMeasures.filterMeasures (parent0, 1);
-			exportToXLSWorksheet(xlsWorkBook, "avg");
-			FilterMeasures.filterMeasures (parent0, 2);
-			exportToXLSWorksheet(xlsWorkBook, "median");
-			
+			if (span / 2 < (endFrame - startFrame)) 
+			{
+				FilterMeasures.filterMeasures (parent0, 1);
+				exportToXLSWorksheet(xlsWorkBook, "avg");
+				FilterMeasures.filterMeasures (parent0, 2);
+				exportToXLSWorksheet(xlsWorkBook, "median");
+			}
+
 			// --------------
 			XLSUtil.saveAndClose( xlsWorkBook );
 		} catch (IOException e) {

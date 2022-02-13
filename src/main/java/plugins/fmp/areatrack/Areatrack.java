@@ -81,7 +81,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JCheckBox measureSurfacesCheckBox = new JCheckBox("Measure surface of objects over threshold");
 	private JRadioButton rbFilterbyColor	= new JRadioButton("filter by color array");
 	private JRadioButton rbFilterbyFunction	= new JRadioButton("filter by function");
-	JCheckBox measureHeatmapCheckBox= new JCheckBox("Detect movement and build image heatmap");
+	JCheckBox measureHeatmapCheckBox = new JCheckBox("Detect movement and build image heatmap");
 	// TODO
 	private JButton startComputationButton 	= new JButton("Start");
 	private JButton stopComputationButton	= new JButton("Stop");
@@ -328,7 +328,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 //		thresholdOverlay = new OverlayThreshold();
 		filterComboBox.setSelectedIndex(2);
 		measureSurfacesCheckBox.setSelected(true);
-		measureHeatmapCheckBox.setSelected(true);
+		measureHeatmapCheckBox.setSelected(false);
 
 		tabbedPane.setSelectedIndex(3);
 		rbFilterbyColor.setSelected(true);
