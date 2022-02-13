@@ -6,19 +6,17 @@ import plugins.fmp.fmpSequence.SequencePlus;
 
 public class FilterMeasures {
 
-	static Areatrack parent0 = null;
 	static SequencePlus vSequence = null;
 	static int startFrame= 0;
 	static int endFrame = 1;
 	
-	public static void filterMeasures (Areatrack parent, int filteroption) 
+	public static void filterMeasures (SequencePlus sequence, int start, int end, int filteroption, int span) 
 	{	
-		parent0 = parent;
-		vSequence = parent0.vSequence;
-		startFrame = parent0.startFrame;
-		endFrame = parent0.endFrame;
+//		parent0 = parent;
+		vSequence = sequence;
+		startFrame = start;
+		endFrame = end;
 		
-		int span = Integer.parseInt(parent0.spanTextField.getText());
 		filterMeasures_parameters (filteroption, span);
 	}
 

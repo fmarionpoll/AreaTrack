@@ -841,7 +841,9 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	
 	private void updateCharts() 
 	{
-		displayCharts.updateCharts(this); 
+		int span = Integer.parseInt(spanTextField.getText());
+		int filteroption = filterComboBox.getSelectedIndex();
+		displayCharts.updateCharts(vSequence, startFrame, endFrame, filteroption, span); 
 	}
 	
 	private void exportToXLS() 

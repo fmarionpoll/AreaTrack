@@ -28,18 +28,10 @@ public class DisplayCharts {
 	IcyFrame mainChartFrame = null;
 	JPanel 	mainChartPanel = null;
 	
-	Areatrack parent0 = null;
-	SequencePlus vSequence = null;
-	int startFrame= 0;
-	int endFrame = 1;
 	
-	public void updateCharts(Areatrack parent0) {
+	public void updateCharts(SequencePlus vSequence, int startFrame, int endFrame, int filteroption, int span) {
 		
-		vSequence = parent0.vSequence;
-		startFrame = parent0.startFrame;
-		endFrame = parent0.endFrame;
-		int filteroption = parent0.filterComboBox.getSelectedIndex();
-		FilterMeasures.filterMeasures (parent0, filteroption);
+		FilterMeasures.filterMeasures (vSequence, startFrame, endFrame, filteroption, span);
 		
 		String title = "Measures from " + vSequence.getFileName(0);
 		Point pt = new Point(10, 10);

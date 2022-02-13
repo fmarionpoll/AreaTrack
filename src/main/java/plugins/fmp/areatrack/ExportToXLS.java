@@ -146,14 +146,13 @@ public class ExportToXLS {
 		System.out.println("XLS output");
 		try {
 			WritableWorkbook xlsWorkBook = XLSUtil.createWorkbook( filename);
-
-			FilterMeasures.filterMeasures (parent0, 0);
+			FilterMeasures.filterMeasures (vSequence, startFrame, endFrame, 0, span);
 			exportToXLSWorksheet(xlsWorkBook, "raw");
 			if (span / 2 < (endFrame - startFrame)) 
 			{
-				FilterMeasures.filterMeasures (parent0, 1);
+				FilterMeasures.filterMeasures (vSequence, startFrame, endFrame, 1, span);
 				exportToXLSWorksheet(xlsWorkBook, "avg");
-				FilterMeasures.filterMeasures (parent0, 2);
+				FilterMeasures.filterMeasures (vSequence, startFrame, endFrame, 2, span);
 				exportToXLSWorksheet(xlsWorkBook, "median");
 			}
 
