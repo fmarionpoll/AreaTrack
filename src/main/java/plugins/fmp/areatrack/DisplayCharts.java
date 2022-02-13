@@ -1,4 +1,4 @@
-package plugins.fmp.areatrack.dlg.results;
+package plugins.fmp.areatrack;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -19,10 +19,26 @@ import org.jfree.chart.ui.RectangleEdge;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
+import plugins.fmp.fmpSequence.SequencePlus;
+
 
 public class DisplayCharts {
-	public void updateCharts() {
+	IcyFrame mainChartFrame = null;
+	JPanel 	mainChartPanel = null;
+	
+	Areatrack parent0 = null;
+	SequencePlus vSequence = null;
+	int startFrame= 0;
+	int endFrame = 1;
+	
+	public void updateCharts(Areatrack parent0) {
+		
+		vSequence = parent0.vSequence;
+		startFrame = parent0.startFrame;
+		endFrame = parent0.endFrame;
+		
 		filterMeasures ();
 		
 		String title = "Measures from " + vSequence.getFileName(0);
@@ -91,8 +107,8 @@ public class DisplayCharts {
 	}
 	
 	private void filterMeasures () {
-		int filteroption = filterComboBox.getSelectedIndex();
-		int span = Integer.parseInt(spanTextField.getText());
+		int filteroption = parent0.filterComboBox.getSelectedIndex();
+		int span = Integer.parseInt(parent0.spanTextField.getText());
 		filterMeasures_parameters (filteroption, span);
 	}
 
@@ -102,7 +118,8 @@ public class DisplayCharts {
 			|| vSequence.data_filtered.length != vSequence.data_raw.length)
 			vSequence.data_filtered = new double [nrois][endFrame-startFrame+1];
 		
-		System.out.println("data_raw_length="+vSequence.data_raw.length +" data_filtered_length="+vSequence.data_filtered.length);
+//		System.out.println("data_raw_length="+vSequence.data_raw.length 
+//				+" data_filtered_length="+vSequence.data_filtered.length);
 		switch (filteroption) {
 			case 1: // running average over "span" points
 				filterMeasures_RunningAverage(span);
