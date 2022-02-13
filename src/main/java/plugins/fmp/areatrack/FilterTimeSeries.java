@@ -4,7 +4,9 @@ import java.util.Arrays;
 
 import plugins.fmp.fmpSequence.SequencePlus;
 
-public class FilterMeasures {
+
+
+public class FilterTimeSeries {
 
 	static SequencePlus vSequence = null;
 	static int startFrame= 0;
@@ -12,11 +14,9 @@ public class FilterMeasures {
 	
 	public static void filterMeasures (SequencePlus sequence, int start, int end, int filteroption, int span) 
 	{	
-//		parent0 = parent;
 		vSequence = sequence;
 		startFrame = start;
 		endFrame = end;
-		
 		filterMeasures_parameters (filteroption, span);
 	}
 

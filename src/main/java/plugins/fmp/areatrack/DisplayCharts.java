@@ -31,7 +31,7 @@ public class DisplayCharts {
 	
 	public void updateCharts(SequencePlus vSequence, int startFrame, int endFrame, int filteroption, int span) {
 		
-		FilterMeasures.filterMeasures (vSequence, startFrame, endFrame, filteroption, span);
+		FilterTimeSeries.filterMeasures (vSequence, startFrame, endFrame, filteroption, span);
 		
 		String title = "Measures from " + vSequence.getFileName(0);
 		Point pt = new Point(10, 10);
