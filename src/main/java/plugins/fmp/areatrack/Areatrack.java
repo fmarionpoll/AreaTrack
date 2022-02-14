@@ -343,7 +343,8 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	}
 	
 	private void declareActionListeners() {
-		closeAllButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		closeAllButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				if (displayCharts.mainChartFrame != null) 
 				{
 					displayCharts.mainChartFrame.removeAll();
@@ -353,89 +354,116 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 				vSequence.close();
 			} } );
 		
-		rbRGB.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		rbRGB.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				colortransformop = EnumImageOp.NONE;
 				updateThresholdOverlayParameters();
 			} } );
 		
-		rbHSV.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		rbHSV.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				colortransformop = EnumImageOp.RGB_TO_HSV;
 				updateThresholdOverlayParameters();
 			} } );
 		
-		rbH1H2H3.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		rbH1H2H3.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				colortransformop = EnumImageOp.RGB_TO_H1H2H3;
 				updateThresholdOverlayParameters();
 			} } );
 		
-		rbL1.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		rbL1.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				updateThresholdOverlayParameters();
 			} } );
 		
-		rbL2.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		rbL2.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				updateThresholdOverlayParameters();
 			} } );
 		
-		stopComputationButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		stopComputationButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				stopAnalysisThread();
 			} } );
 		
-		startComputationButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) {  
+		startComputationButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {  
 				startAnalysisThread(); 
 			} } );		
 		
-		updateChartsButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) {
+		updateChartsButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
 				updateCharts(); 
 			} } );
 		
-		deleteColorButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		deleteColorButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				if (colorPickCombo.getItemCount() > 0 && colorPickCombo.getSelectedIndex() >= 0)
 					colorPickCombo.removeItemAt(colorPickCombo.getSelectedIndex());
 				updateThresholdOverlayParameters();
 			} } );
 			
-		transformsComboBox.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		transformsComboBox.addActionListener(new ActionListener () {
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				updateThresholdOverlayParameters(); 
 			} } );
 		
-		openFiltersButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		openFiltersButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				loadParametersFromXMLFile(); 
 			} } );
 		
-		saveFiltersButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		saveFiltersButton.addActionListener(new ActionListener () {
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				saveParametersToXMLFile(); 
 			} } );
 		
-		openROIsButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
-				openROIs(); 
+		openROIsButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				LoadRois loadRois = new LoadRois();
+				loadRois.openROIs(vSequence); 
+				updateStartAndEndFrameFromvSequence();
 			} } );
 		
-		saveROIsButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
-				saveROIs(); 
+		saveROIsButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
+				vSequence.analysisStart = startFrame;
+				vSequence.analysisEnd = endFrame;
+				LoadRois loadRois = new LoadRois();
+				loadRois.saveROIs(vSequence); 
 			} } );
 		
-		addROIsButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
-				addROIs(); 
+		addROIsButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
+				LoadRois loadRois = new LoadRois();
+				loadRois.addROIs(vSequence);
+				updateStartAndEndFrameFromvSequence();
 			} } );
 		
-		pickColorButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) { 
+		pickColorButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
 				pickColor(); 
 			} } );
 
-		exportToXLSButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) {
+		exportToXLSButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
 				exportToXLS();
 			} } );
 		
-		setVideoSourceButton.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) {
+		setVideoSourceButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
 				openVideoOrStack();
 			} } );
 		
-		rbFilterbyColor.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) {
+		rbFilterbyColor.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
 			if (rbFilterbyColor.isSelected())
 				selectTab(0);
 		} } );
 		
-		rbFilterbyFunction.addActionListener(new ActionListener () { @Override public void actionPerformed( final ActionEvent e ) {
+		rbFilterbyFunction.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
 			if (rbFilterbyFunction.isSelected())
 				selectTab(1);
 		} } );
@@ -449,6 +477,14 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		    }       
 		}
 		colorPickCombo.addItemListener(new ItemChangeListener());
+	}
+	
+	private void updateStartAndEndFrameFromvSequence()
+	{
+		startFrame = (int) vSequence.analysisStart;
+		endFrame = (int) vSequence.analysisEnd;
+		endFrameTextField.setText( Integer.toString(endFrame));
+		startFrameTextField.setText( Integer.toString(startFrame));
 	}
 	
 	private void selectTab(int index) {
@@ -496,29 +532,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		loadParametersFromXMLFile();
 	}
 		
-	private void openROIs() {
-		if (vSequence != null) {
-			vSequence.seq.removeAllROI();
-			vSequence.capillariesRoi2RoiArray.xmlReadROIsAndData(vSequence);
-			endFrameTextField.setText( Integer.toString(endFrame));
-			startFrameTextField.setText( Integer.toString(startFrame));
-		}
-	}
-	
-	private void saveROIs() {
-		vSequence.analysisStart = startFrame;
-		vSequence.analysisEnd = endFrame;
-		vSequence.capillariesRoi2RoiArray.xmlWriteROIsAndData("areatrack.xml", vSequence);
-	}
-	
-	private void addROIs( ) {
-		if (vSequence != null) {
-			vSequence.capillariesRoi2RoiArray.xmlReadROIsAndData(vSequence);
-			endFrameTextField.setText( Integer.toString(endFrame));
-			startFrameTextField.setText( Integer.toString(startFrame));
-		}
-	}
-	
 	private void loadParametersFromXMLFile() {
 		String directory = vSequence.getDirectory();
 		String fileparameters = directory + File.separator+ filename;

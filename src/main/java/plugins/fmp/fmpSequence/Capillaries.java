@@ -199,11 +199,12 @@ public class Capillaries {
 
 		boolean wasOk = false;
 		String [] filedummy = null;
+		String directory = "";
+		
 		String filename = sequenceVirtual.seq.getName();
 		File file = new File(filename);
-		if (!file.exists()) 
-			return wasOk;
-		String directory = file.getParentFile().getAbsolutePath();
+		if (file.exists()) 
+			directory = file.getParentFile().getAbsolutePath();
 		filedummy = FmpTools.selectFiles(directory, "xml");
 		if (filedummy != null) {
 			for (int i= 0; i< filedummy.length; i++) {

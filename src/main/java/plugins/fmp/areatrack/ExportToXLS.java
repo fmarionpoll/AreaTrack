@@ -125,7 +125,6 @@ public class ExportToXLS {
 				value = vSequence.data_filtered[iroi][t-startFrame];
 				XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); 
 			}
-			System.out.println("row="+irow);
 		}
 	}
 	
