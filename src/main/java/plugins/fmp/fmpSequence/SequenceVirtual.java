@@ -41,6 +41,8 @@ public class SequenceVirtual
 	public boolean			bBufferON 		= false;
 	public EnumStatus 		statusSequenceVirtual = EnumStatus.REGULAR;
 	
+	public Capillaries 		capillariesRoi2RoiArray = new Capillaries();
+	
 	public String [] 		seriesname 		= null;
 	public int [][] 		data_raw 		= null;
 	public double [][] 		data_filtered 	= null;
