@@ -59,15 +59,12 @@ public class DisplayCharts {
 			cropSeries[iroi] = new XYSeries (vSequence.seriesname[iroi]);
 			cropSeries[iroi].clear();
 			for (int t = startFrame; t <= endFrame; t += step) {
-				int bin = (t-startFrame)/ step;
+				int bin = (t-startFrame) / step;
 				cropSeries[iroi].add(t, vSequence.data_filtered[iroi][bin]);
 			}
+			xyDataset.addSeries(cropSeries[iroi]);
 		}
-		
-		int ncurves = cropSeries.length;
-		for (int i = 0; i < ncurves; i++)
-			xyDataset.addSeries(cropSeries[i]);
-		
+				
 		String TitleString = "Results";
 		boolean displayLegend = false; //true;
 		JFreeChart chart = ChartFactory.createXYLineChart(
@@ -84,11 +81,15 @@ public class DisplayCharts {
 		XYPlot plot = chart.getXYPlot();
 		ValueAxis axis = plot.getDomainAxis();
 		axis.setRange(startFrame, endFrame);
+		// TODO step between xpoints?
+		
 		LegendTitle legendTitle = chart.getLegend();
 
 		if (legendTitle != null)
 			legendTitle.setPosition(RectangleEdge.RIGHT); 
-		mainChartPanel.add( new ChartPanel(  chart, width, height, minWidth, minHeight, maxWidth , maxHeight, false , false, true , true , true, true));
+		mainChartPanel.add( new ChartPanel( chart, 
+				width, height, minWidth, minHeight, maxWidth, maxHeight, 
+				false , false, true , true , true, true));
 		mainChartPanel.validate();
 		mainChartPanel.repaint();
 		
