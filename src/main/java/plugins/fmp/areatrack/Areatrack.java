@@ -69,7 +69,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 {	
 	// -------------------------------------- interface
 	IcyFrame mainFrame = new IcyFrame("AreaTrack 10-02-2022", true, true, true, true);
-
 	DisplayCharts displayCharts = new DisplayCharts();
 	
 	// ---------------------------------------- video
@@ -81,7 +80,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JCheckBox measureSurfacesCheckBox = new JCheckBox("Measure surface of objects over threshold");
 	private JRadioButton rbFilterbyColor	= new JRadioButton("filter by color array");
 	private JRadioButton rbFilterbyFunction	= new JRadioButton("filter by function");
-	JCheckBox measureHeatmapCheckBox = new JCheckBox("Detect movement and build image heatmap");
+	JCheckBox measureHeatmapCheckBox 		= new JCheckBox("Detect movement and build image heatmap");
 	// TODO
 	private JButton startComputationButton 	= new JButton("Start");
 	private JButton stopComputationButton	= new JButton("Stop");
@@ -95,7 +94,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JSpinner 	thresholdSpinner	= new JSpinner(new SpinnerNumberModel(70, 0, 255, 1));
 	private JLabel 		videochannel 		= new JLabel("filter  ");
 	private JLabel 		thresholdLabel 		= new JLabel("threshold ");
-	JSpinner threshold2Spinner = new JSpinner(new SpinnerNumberModel(20, 0, 255, 1));
+	JSpinner threshold2Spinner 				= new JSpinner(new SpinnerNumberModel(20, 0, 255, 1));
 	private JTextField 	analyzeStepTextField= new JTextField("1");
 		
 	//---------------------------------------------------------------------------
@@ -108,7 +107,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JButton		deleteColorButton	= new JButton("Delete color");
 	private JRadioButton rbL1				= new JRadioButton("L1");
 	private JRadioButton rbL2				= new JRadioButton("L2");
-	JSpinner distanceSpinner = new JSpinner(new SpinnerNumberModel(10, 0, 800, 5));
+	JSpinner distanceSpinner 				= new JSpinner(new SpinnerNumberModel(10, 0, 800, 5));
 	private JRadioButton rbRGB				= new JRadioButton("RGB");
 	private JRadioButton rbHSV				= new JRadioButton("HSV");
 	private JRadioButton rbH1H2H3			= new JRadioButton("H1H2H3");
@@ -133,7 +132,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	AreaAnalysisThread analysisThread = null;
 	
 	// parameters saved/read in xml file
-	private EnumThresholdType thresholdtype 	= EnumThresholdType.COLORARRAY; 
+	private EnumThresholdType thresholdtype	= EnumThresholdType.COLORARRAY; 
 	// simple
 	private EnumImageOp simpletransformop 	= EnumImageOp.R2MINUS_GB;
 	private int 		simplethreshold 	= 20;
@@ -300,9 +299,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	@Override
 	public void run() {
 		
-		Icy.getMainInterface().getMainFrame().getInspector().setVirtualMode(false);
-		Icy.getMainInterface().getMainFrame().getInspector().imageCacheDisabled();
-
 		// build and display the GUI
 		JPanel mainPanel = GuiUtil.generatePanelWithoutBorder();
 		mainFrame.setLayout(new BorderLayout());

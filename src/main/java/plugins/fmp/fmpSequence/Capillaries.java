@@ -197,12 +197,14 @@ public class Capillaries {
 	
 	public boolean xmlReadROIsAndData(SequenceVirtual sequenceVirtual) {
 
+		boolean wasOk = false;
 		String [] filedummy = null;
 		String filename = sequenceVirtual.seq.getName();
 		File file = new File(filename);
+		if (!file.exists()) 
+			return wasOk;
 		String directory = file.getParentFile().getAbsolutePath();
 		filedummy = FmpTools.selectFiles(directory, "xml");
-		boolean wasOk = false;
 		if (filedummy != null) {
 			for (int i= 0; i< filedummy.length; i++) {
 				String csFile = filedummy[i];

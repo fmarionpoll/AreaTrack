@@ -24,7 +24,6 @@ public class FmpTools  extends Plugin {
 
 	public static String saveFileAs(String defaultName, String directory, String csExt)
 	{		
-		// load last preferences for loader
 		String csFile = null;
 		final JFileChooser fileChooser = new JFileChooser();
 		if (directory != null) {
@@ -64,7 +63,6 @@ public class FmpTools  extends Plugin {
 	// TODO use LoaderDialog from Icy
 	public static String[] selectFiles(String directory, String csExt)
 	{
-		// load last preferences for loader
 		final JFileChooser fileChooser = new JFileChooser();
 
 		final String path = directory;

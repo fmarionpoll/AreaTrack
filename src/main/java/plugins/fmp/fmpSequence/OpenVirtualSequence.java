@@ -131,7 +131,7 @@ public class OpenVirtualSequence {
 			return null;
 
 		int j = 0;
-		for (int i=0; i<list.length; i++) 
+		for (int i = 0; i < list.length; i++) 
 		{
 			if (list[i]!= null)
 				imagesList [j++] = directory + '/'+ list[i];
@@ -147,7 +147,7 @@ public class OpenVirtualSequence {
 		// subroutines borrowed from FolderOpener
 		/* Keep only "accepted" names (file extension)*/
 		int count = 0;
-		for (int i=0; i< rawlist.length; i++) {
+		for (int i = 0; i < rawlist.length; i++) {
 			String name = rawlist[i];
 			if ( !acceptedFileType(name) )
 				rawlist[i] = null;
@@ -160,7 +160,7 @@ public class OpenVirtualSequence {
 		if (count<rawlist.length) {
 			list = new String[count];
 			int index = 0;
-			for (int i=0; i< rawlist.length; i++) {
+			for (int i = 0; i < rawlist.length; i++) {
 				if (rawlist[i]!=null)
 					list[index++] = rawlist[i];
 			}
@@ -170,9 +170,9 @@ public class OpenVirtualSequence {
 
 	private static boolean acceptedFileType(String name) 
 	{
-		if (name==null) 
+		if (name == null) 
 			return false;
-		for (int i=0; i<acceptedTypes.length; i++) 
+		for (int i = 0; i < acceptedTypes.length; i++) 
 		{
 			if (name.endsWith(acceptedTypes[i]))
 				return true;
