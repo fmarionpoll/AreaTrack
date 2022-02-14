@@ -59,7 +59,8 @@ public class DisplayCharts {
 			cropSeries[iroi] = new XYSeries (vSequence.seriesname[iroi]);
 			cropSeries[iroi].clear();
 			for (int t = startFrame; t <= endFrame; t += step) {
-				cropSeries[iroi].add(t, vSequence.data_filtered[iroi][t-startFrame]);
+				int bin = (t-startFrame)/ step;
+				cropSeries[iroi].add(t, vSequence.data_filtered[iroi][bin]);
 			}
 		}
 		
@@ -87,7 +88,7 @@ public class DisplayCharts {
 
 		if (legendTitle != null)
 			legendTitle.setPosition(RectangleEdge.RIGHT); 
-		mainChartPanel.add( new ChartPanel(  chart, width , height , minWidth, minHeight, maxWidth , maxHeight, false , false, true , true , true, true));
+		mainChartPanel.add( new ChartPanel(  chart, width, height, minWidth, minHeight, maxWidth , maxHeight, false , false, true , true , true, true));
 		mainChartPanel.validate();
 		mainChartPanel.repaint();
 		

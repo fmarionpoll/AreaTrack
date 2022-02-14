@@ -745,32 +745,9 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	}
 	
 	private void activateSequenceThresholdOverlay(boolean activate) {
-//		System.out.println("activateSequenceThresholdOverlay "+activate);
-		if (vSequence == null)
-			return;
+		if (vSequence == null) return;
 		
 		vSequence.setThresholdOverlay(activate);
-//		thresholdOverlayON = activate;
-//		if (activate) {
-//			if (!thresholdOverlayON) {
-//				if (thresholdOverlay == null) {
-//					//System.out.println("create overlay");
-//					thresholdOverlay = new OverlayThreshold(vSequence);
-//				}
-//				if (!vSequence.contains(thresholdOverlay)) 
-//					vSequence.addOverlay(thresholdOverlay);
-//				thresholdOverlayON = true;
-//			}			
-//		}
-//		else {
-//			if (thresholdOverlayON && thresholdOverlay != null) {
-//				if (vSequence.contains(thresholdOverlay) ) {
-//					vSequence.removeOverlay(thresholdOverlay);
-//					//System.out.println("remove overlay");
-//				}
-//			}
-//			thresholdOverlayON = false;
-//		}
 	}
 	
 	private void updateThresholdOverlayParameters() {
