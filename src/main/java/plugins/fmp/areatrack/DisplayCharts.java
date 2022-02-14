@@ -29,7 +29,7 @@ public class DisplayCharts {
 	JPanel 	mainChartPanel = null;
 	
 	
-	public void updateCharts(SequencePlus vSequence, int startFrame, int endFrame, int filteroption, int span) {
+	public void updateCharts(SequencePlus vSequence, int startFrame, int endFrame, int filteroption, int span, int step) {
 		
 		FilterTimeSeries.filterMeasures (vSequence, startFrame, endFrame, filteroption, span);
 		
@@ -55,16 +55,16 @@ public class DisplayCharts {
 		
 		int nrois = vSequence.data_filtered.length;
 		XYSeries [] cropSeries = new XYSeries [nrois];
-		for (int iroi=0; iroi < nrois; iroi++) {
+		for (int iroi = 0; iroi < nrois; iroi++) {
 			cropSeries[iroi] = new XYSeries (vSequence.seriesname[iroi]);
 			cropSeries[iroi].clear();
-			for (int t= startFrame; t <= endFrame; t++) {
+			for (int t = startFrame; t <= endFrame; t += step) {
 				cropSeries[iroi].add(t, vSequence.data_filtered[iroi][t-startFrame]);
 			}
 		}
 		
 		int ncurves = cropSeries.length;
-		for (int i=0; i< ncurves; i++)
+		for (int i = 0; i < ncurves; i++)
 			xyDataset.addSeries(cropSeries[i]);
 		
 		String TitleString = "Results";
