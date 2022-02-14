@@ -68,7 +68,7 @@ import plugins.fmp.fmpSequence.SequencePlus;
 public class Areatrack extends PluginActionable implements ActionListener, ChangeListener, ViewerListener
 {	
 	// -------------------------------------- interface
-	IcyFrame mainFrame = new IcyFrame("AreaTrack 10-02-2022", true, true, true, true);
+	IcyFrame mainFrame = new IcyFrame("AreaTrack 14-02-2022", true, true, true, true);
 	DisplayCharts displayCharts = new DisplayCharts();
 	
 	// ---------------------------------------- video
