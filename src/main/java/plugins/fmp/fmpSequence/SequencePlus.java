@@ -16,11 +16,14 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import icy.image.IcyBufferedImage;
+import icy.roi.ROI;
 import icy.roi.ROI2D;
 import icy.sequence.Sequence;
+import icy.sequence.edit.ROIAddsSequenceEdit;
 import icy.type.geom.Polyline2D;
 import icy.util.XMLUtil;
 import plugins.fmp.fmpTools.FmpTools;
@@ -29,6 +32,7 @@ import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.OverlayThreshold;
 import plugins.fmp.fmpTools.OverlayTrapMouse;
 import plugins.kernel.roi.roi2d.ROI2DPolyLine;
+import plugins.kernel.roi.roi2d.ROI2DShape;
 
 public class SequencePlus extends SequenceVirtual  {
 	
@@ -367,5 +371,4 @@ public class SequencePlus extends SequenceVirtual  {
 		}
 	}
 	
-
 }

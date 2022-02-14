@@ -2,7 +2,6 @@ package plugins.fmp.fmpSequence;
 
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,9 +40,6 @@ public class SequenceVirtual
 	
 	public boolean			bBufferON 		= false;
 	public EnumStatus 		statusSequenceVirtual = EnumStatus.REGULAR;
-	
-	public Capillaries 		capillariesRoi2RoiArray = new Capillaries();
-	public Cages			cagesRoi2RoiArray 		= new Cages();
 	
 	public String [] 		seriesname 		= null;
 	public int [][] 		data_raw 		= null;
@@ -248,58 +244,7 @@ public class SequenceVirtual
 	}
 	
 	// --------------------------------------------------------------------
-			
-	public void storeAnalysisParametersToCages() 
-	{
-		cagesRoi2RoiArray.detect.analysisEnd = analysisEnd;
-		cagesRoi2RoiArray.detect.analysisStart = analysisStart;
-		cagesRoi2RoiArray.detect.analysisStep = analysisStep;
-	}
-	
-	public void storeAnalysisParametersToCapillaries () 
-	{
-		capillariesRoi2RoiArray.analysisStart = analysisStart;
-		capillariesRoi2RoiArray.analysisEnd = analysisEnd;
-		capillariesRoi2RoiArray.analysisStep = analysisStep;
-	}
-	
-	public boolean xmlReadCapillaryTrackDefault() 
-	{
-		return xmlReadCapillaryTrack(getDirectory()+File.separator+"capillarytrack.xml");
-	}
-	
-	public boolean xmlReadCapillaryTrack(String filename) 
-	{
-		boolean flag = capillariesRoi2RoiArray.xmlReadROIsAndData(filename, this);
-		if (flag) {
-			analysisStart = capillariesRoi2RoiArray.analysisStart;
-			analysisEnd = capillariesRoi2RoiArray.analysisEnd;
-			analysisStep = capillariesRoi2RoiArray.analysisStep;
-		}
-		return flag;
-	}
-		
-	public boolean xmlReadDrosoTrackDefault() 
-	{
-		return cagesRoi2RoiArray.xmlReadCagesFromFileNoQuestion(getDirectory() + File.separator+"drosotrack.xml", this);
-	}
-	
-	public boolean xmlReadDrosoTrack(String filename) 
-	{
-		boolean flag = cagesRoi2RoiArray.xmlReadCagesFromFileNoQuestion(filename, this);
-		if (flag) {
-			analysisStart = cagesRoi2RoiArray.detect.analysisStart;
-			analysisEnd = cagesRoi2RoiArray.detect.analysisEnd;
-			analysisStep = cagesRoi2RoiArray.detect.analysisStep;
-		}
-		return flag;
-	}
-	
-	public boolean xmlWriteDrosoTrackDefault() 
-	{
-		return cagesRoi2RoiArray.xmlWriteCagesToFile("drosotrack.xml", getDirectory());
-	}
-	
+
 	public FileTime getImageModifiedTime (int t) 
 	{
 		String name = getFileName(t);

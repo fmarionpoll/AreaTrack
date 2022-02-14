@@ -4,11 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.w3c.dom.Document;
 
 import icy.common.exception.UnsupportedFormatException;
 import icy.file.Loader;
 import icy.gui.frame.progress.ProgressFrame;
 import icy.image.IcyBufferedImage;
+import icy.roi.ROI;
+import icy.sequence.edit.ROIAddsSequenceEdit;
+import icy.util.XMLUtil;
+import plugins.fmp.fmpTools.FmpTools;
 import plugins.kernel.roi.roi2d.ROI2DShape;
 
 
@@ -68,50 +76,6 @@ public class SequencePlusUtils {
 		return arrayKymos;
 	}
 	
-	public static ArrayList<SequencePlus> openFiles (String directory, Capillaries cap) {
-		
-		isRunning = true;
-		ArrayList<SequencePlus> arrayKymos = new ArrayList<SequencePlus> ();	
-
-		ProgressFrame progress = new ProgressFrame("Load kymographs");
-		progress.setLength(cap.capillariesArrayList.size());
-		
-		for (ROI2DShape roi: cap.capillariesArrayList) {
-			
-			if (isInterrupted) {
-				isInterrupted = false;
-				isRunning = false;
-				progress.close();
-				return null;
-			}
-			 
-			SequencePlus kymographSeq = new SequencePlus();
-			final String name =  directory + File.separator+ roi.getName() + ".tiff";
-			progress.setMessage( "Load "+name);
-			
-			IcyBufferedImage ibufImage = null;
-			try {
-				ibufImage = Loader.loadImage(name);
-
-			} catch (UnsupportedFormatException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			kymographSeq.seq.addImage(0, ibufImage);
-			
-			String title = roi.getName();
-			kymographSeq.seq.setName(title);
-			kymographSeq.loadXMLKymographAnalysis(directory);
-			arrayKymos.add(kymographSeq);
-			
-			progress.incPosition();
-		}
-		progress.close();
-		isRunning = false;
-		return arrayKymos;
-	}
-	
 	public static void saveKymosMeasures (ArrayList<SequencePlus> kymographArrayList, String directory) {
 		
 		isRunning = true;
@@ -143,4 +107,5 @@ public class SequencePlusUtils {
 			seq.analysisStep = vSequence.analysisStep;
 		}
 	}
+
 }
