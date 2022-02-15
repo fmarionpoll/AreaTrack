@@ -22,6 +22,6 @@ public class DlgTabOverlay extends JPanel {
 		panel.setLayout(capLayout);
 		
 		panel.add( GuiUtil.besidesPanel( new JLabel("display image with no overlay")));
-		tabbedPane.addTab("None", null, panel, "Display image without overlay");
+//		tabbedPane.addTab("None", null, panel, "Display image without overlay");
 	}
 }

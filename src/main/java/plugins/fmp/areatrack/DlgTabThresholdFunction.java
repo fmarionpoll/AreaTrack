@@ -42,6 +42,8 @@ public class DlgTabThresholdFunction extends JPanel {
 		panel1.add(thresholdSpinner);
 		panel.add(panel1);
 		tab.addTab("Filters", null, panel, "Display parameters for thresholding a transformed image with different filters");
+		
+		transformsComboBox.setSelectedIndex(EnumImageOp.B2MINUS_RG.ordinal());
 	}
 	
 }

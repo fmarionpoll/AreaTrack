@@ -23,6 +23,7 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
 import icy.gui.util.GuiUtil;
+import plugins.fmp.fmpTools.EnumImageOp;
 
 public class DlgAnalysis extends JPanel {
 	
@@ -92,6 +93,12 @@ public class DlgAnalysis extends JPanel {
 		panel2.add(saveFiltersButton);
 		capPanel.add(panel2, BorderLayout.PAGE_END);
 		
+		measureSurfacesCheckBox.setSelected(true);
+		measureHeatmapCheckBox.setSelected(false);
+		tabbedPane.setSelectedIndex(0);
+		rbFilterbyColor.setSelected(true);
+		
+		
 		openFiltersButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				xmlReadAreaTrackParameters(); 
@@ -114,7 +121,7 @@ public class DlgAnalysis extends JPanel {
 				selectTab(1);
 		} } );
 
-
+		
 	}
 	
 	private void selectTab(int index) {

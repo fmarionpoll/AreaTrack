@@ -66,26 +66,12 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 			DlgSourcePanel dlgSourcePanel = new DlgSourcePanel();
 			DlgROIsPanel dlgRoisPanel = new DlgROIsPanel();
 			DlgAnalysis dlgAnalysis = new DlgAnalysis();
+			DlgRunAnalysis dlgRunAnalysis = new DlgRunAnalysis();
+			DlgResults dlgResults = new DlgResults();
 			
-	// ---------------------------------------- video
-	
-	private JButton startComputationButton 	= new JButton("Start");
-	private JButton stopComputationButton	= new JButton("Stop");
-	JTextField startFrameTextField	= new JTextField("0");
-	JTextField endFrameTextField	= new JTextField("99999999");
-	
-	private JTextField analyzeStepTextField	= new JTextField("1");
-		
+	// ---------------------------------------- video		
 	//---------------------------------------------------------------------------
-	//---------------------------------------------------------------------------
-			JComboBox<String> filterComboBox = new JComboBox<String> (new String[] {"raw data", "average", "median"});
-			JTextField 	spanTextField 		= new JTextField("10");
-
-	private JButton updateChartsButton 		= new JButton("Chart window");
-	private JButton setGraphsOverlayButton	= new JButton("Curves");
-	
-	private JButton exportToXLSButton 		= new JButton("Save XLS file..");
-	
+	//---------------------------------------------------------------------------	
 	//------------------------------------------- global variables
 			SequencePlus vSequence 			= null;
 			int	 analyzeStep 				= 1;
@@ -105,61 +91,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	
 	// --------------------------------------------------------------------------
 	
-	private void panelSetRunInterface (JPanel mainPanel) {		
-		PopupPanel 	capPopupPanel = new PopupPanel("RUN ANALYSIS");
-		JPanel capPanel = capPopupPanel.getMainPanel();
-		capPanel.setLayout(new GridLayout(2, 2));
-		capPopupPanel.collapse();
-		capPopupPanel.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				mainFrame.revalidate();
-				mainFrame.pack();
-				mainFrame.repaint();
-			}});
-		mainPanel.add(capPopupPanel);
-		
-		capPanel.add( GuiUtil.besidesPanel( startComputationButton, stopComputationButton ) );
-		
-		JLabel startLabel 	= new JLabel("from ");
-		JLabel endLabel 	= new JLabel("to ");
-		JLabel stepLabel 	= new JLabel("step ");
-		
-		FlowLayout layoutLeft = new FlowLayout(FlowLayout.LEFT); 
-		JPanel panel0 = new JPanel(layoutLeft);
-		((FlowLayout)panel0.getLayout()).setVgap(0);
-		panel0.add(startLabel);
-		panel0.add(startFrameTextField);
-		panel0.add(endLabel);
-		panel0.add(endFrameTextField);
-		panel0.add(stepLabel);
-		panel0.add(analyzeStepTextField);
-		capPanel.add(panel0);
-
-	}
-	
-	private void panelSetResultsInterface(JPanel mainPanel) {
-		PopupPanel 	capPopupPanel = new PopupPanel("RESULTS DISPLAY/EXPORT");
-		JPanel capPanel = capPopupPanel.getMainPanel();
-		capPanel.setLayout(new GridLayout(3, 2));
-		capPopupPanel.collapse();
-		capPopupPanel.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentResized(ComponentEvent e) {
-				mainFrame.revalidate();
-				mainFrame.pack();
-				mainFrame.repaint();
-			}});
-		mainPanel.add(capPopupPanel);
-		
-		JLabel outputLabel = new JLabel ("output ");
-		outputLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLabel spanLabel = new JLabel ("span ");
-		spanLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		capPanel.add(GuiUtil.besidesPanel(outputLabel, filterComboBox, spanLabel, spanTextField));
-		capPanel.add(GuiUtil.besidesPanel(updateChartsButton, setGraphsOverlayButton));
-		capPanel.add(GuiUtil.besidesPanel(exportToXLSButton)); 
-	}
 	
 	@Override
 	public void run() {
@@ -173,8 +104,8 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		dlgSourcePanel.init(this, mainFrame, mainPanel);
 		dlgRoisPanel.init(this, mainFrame, mainPanel);
 		dlgAnalysis.init(this, mainFrame, mainPanel);
-		panelSetRunInterface(mainPanel);
-		panelSetResultsInterface(mainPanel);
+		dlgRunAnalysis.init(this, mainFrame, mainPanel);
+		dlgResults.init(this, mainFrame, mainPanel);
 		
 		mainFrame.pack();
 		mainFrame.center();
@@ -186,17 +117,8 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		declareChangeListeners();
 		
 		// -------------------------------------------- default selection
-		filterComboBox.setSelectedIndex(2);
-		measureSurfacesCheckBox.setSelected(true);
-		measureHeatmapCheckBox.setSelected(false);
-
-		tabbedPane.setSelectedIndex(0);
-		rbFilterbyColor.setSelected(true);
-		rbL1.setSelected(true);
-		rbRGB.setSelected(true);
-		colortransformop = EnumImageOp.NONE;
-		transformsComboBox.setSelectedIndex(EnumImageOp.B2MINUS_RG.ordinal());
-		filterComboBox.setSelectedIndex(0);
+		
+		
 	}
 
 	private void declareChangeListeners() {

@@ -16,6 +16,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
 
 import plugins.fmp.fmpTools.ComboBoxColorRenderer;
+import plugins.fmp.fmpTools.EnumImageOp;
 
 public class DlgTabThresholdColors extends JPanel 
 {
@@ -74,6 +75,10 @@ public class DlgTabThresholdColors extends JPanel
 		panel2.add(rbH1H2H3);
 		panel.add( panel2);
 		tab.addTab("Colors", null, panel, "Display parameters for thresholding an image with different colors and a distance");
+	
+		rbL1.setSelected(true);
+		rbRGB.setSelected(true);
+		
 	}
 
 }
