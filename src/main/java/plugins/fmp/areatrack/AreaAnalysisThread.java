@@ -127,71 +127,69 @@ public class AreaAnalysisThread extends Thread {
 		int nrois = roiList.size();
 
 		vSequence.data_raw = new int [nrois][nbframes];
-		ArrayList<BooleanMask2D> areaMaskList = new ArrayList<BooleanMask2D>();
+		ArrayList<BooleanMask2D> areaMasks = new ArrayList<BooleanMask2D>();
 		vSequence.seriesname = new String[nrois];
 		for (ROI2D roi: roiList)
 		{
 			String csName = roi.getName();
 			vSequence.seriesname[iroi] = csName;
-			areaMaskList.add(roi.getBooleanMask2D( 0 , 0, 1, true ));
+			areaMasks.add(roi.getBooleanMask2D( 0 , 0, 1, true ));
 			iroi++;
 		}
 		
-		try {
-			Viewer viewer = null;
-			if (measureROIsEvolution)
-				viewer = Icy.getMainInterface().getFirstViewer(vSequence.seq);
-			else 
-				viewer = resultOFFViewer;
-			vSequence.seq.beginUpdate();
-							
-			// ----------------- loop over all images of the stack
-			for (int t = startFrame ; t <= endFrame && !isInterrupted(); t  += analyzeStep ) {				
-				// update progression bar
-				updateProgressionBar (t, nbframes, chrono, progress);
 
-				if (measureROIsEvolution) {
-					// load next image and compute threshold
-					vSequence.currentFrame = t;
-					viewer.setPositionT(t);
-//					viewer.setTitle(vSequence.getDecoratedImageName(t));
+		Viewer viewer = null;
+		if (measureROIsEvolution)
+			viewer = Icy.getMainInterface().getFirstViewer(vSequence.seq);
+		else 
+			viewer = resultOFFViewer;
+		vSequence.seq.beginUpdate();
+						
+		// ----------------- loop over all images of the stack
+		for (int t = startFrame ; t <= endFrame && !isInterrupted(); t  += analyzeStep ) {				
+			// update progression bar
+			updateProgressionBar (t, nbframes, chrono, progress);
 
-					// ------------------------ compute global mask
-					IcyBufferedImage binaryMap = imgOp1.run(t);	
-					boolean[] boolMap = imgOp1.convertToBoolean(binaryMap);
-					BooleanMask2D maskAll2D = new BooleanMask2D(binaryMap.getBounds(), boolMap); 
-					
-					// ------------------------ loop over each ROI & count number of pixels above threshold
-					for (int iiroi = 0; iiroi < areaMaskList.size(); iiroi++ )
-					{
-						BooleanMask2D areaMask = areaMaskList.get(iiroi);
-						BooleanMask2D intersectionMask = maskAll2D.getIntersection( areaMask );
-						int sum = intersectionMask.getNumberOfPoints();
-						vSequence.data_raw[iiroi][t-startFrame] = sum;
-					}
-				}
+			if (measureROIsEvolution) {
+				// load next image and compute threshold
+				vSequence.currentFrame = t;
+				viewer.setPositionT(t);
+
+				// ------------------------ compute global mask
+				IcyBufferedImage binaryMap = imgOp1.run(t);	
+				boolean[] boolMap = imgOp1.convertToBoolean(binaryMap);
+				BooleanMask2D maskAll2D = new BooleanMask2D(binaryMap.getBounds(), boolMap); 
 				
-				if (measureROIsMove) {
-					// get difference image
-					if (t < startFrame+20)
-						continue;
-					IcyBufferedImage binaryMap = imgOp2.run_nocache();
-					int [] binaryArray = Array1DUtil.arrayToIntArray(binaryMap.getDataXY(0), binaryMap.isSignedDataType());
-					double [] resultOFFArray = resultOFFImage.getDataXYAsDouble(0);
-					double [] resultONArray = resultONImage.getDataXYAsDouble(0);
-					for (int i= 0; i< binaryArray.length; i++) {
-						if (binaryArray[i] == 0)
-							resultOFFArray[i] += 1;
-						else
-							resultONArray[i] += 1;
-					}
+				// ------------------------ loop over each ROI & count number of pixels above threshold
+				for (int iiroi = 0; iiroi < areaMasks.size(); iiroi++ )
+				{
+					BooleanMask2D areaMask = areaMasks.get(iiroi);
+					BooleanMask2D intersectionMask = maskAll2D.getIntersection( areaMask );
+					int sum = intersectionMask.getNumberOfPoints();
+					vSequence.data_raw[iiroi][t-startFrame] = sum;
 				}
 			}
-		} 
-		finally {
-			progress.close();
-			vSequence.seq.endUpdate();
+			
+			if (measureROIsMove) {
+				// get difference image
+				if (t < startFrame+20)
+					continue;
+				IcyBufferedImage binaryMap = imgOp2.run_nocache();
+				int [] binaryArray = Array1DUtil.arrayToIntArray(binaryMap.getDataXY(0), binaryMap.isSignedDataType());
+				double [] resultOFFArray = resultOFFImage.getDataXYAsDouble(0);
+				double [] resultONArray = resultONImage.getDataXYAsDouble(0);
+				for (int i= 0; i< binaryArray.length; i++) {
+					if (binaryArray[i] == 0)
+						resultOFFArray[i] += 1;
+					else
+						resultONArray[i] += 1;
+				}
+			}
 		}
+
+		progress.close();
+		vSequence.seq.endUpdate();
+
 
 		chrono.displayInSeconds();
 		System.out.println("Computation finished.");
@@ -226,7 +224,7 @@ public class AreaAnalysisThread extends Thread {
 			}
 
 			for (ROI2D roi: roiList2)
-				areaMaskList.add(roi.getBooleanMask2D( 0 , 0, 1, true ));
+				areaMasks.add(roi.getBooleanMask2D( 0 , 0, 1, true ));
 
 			// ------------------------ loop over all the cages of the stack & count n pixels above threshold
 			results = new ArrayList<MeasureAndName> ();
@@ -256,5 +254,7 @@ public class AreaAnalysisThread extends Thread {
 		int timeleft = (int) ((nbSeconds* nbframes /(t+1)) - nbSeconds);
 		progress.setMessage( "Processing: " + pos + " % - Elapsed time: " + nbSeconds + " s - Estimated time left: " + timeleft + " s");
 	}
+	
+
 
 }

@@ -23,7 +23,7 @@ import icy.gui.util.GuiUtil;
 import plugins.fmp.fmpSequence.SequencePlus;
 
 
-public class DisplayCharts {
+public class GraphsWindow {
 	
 	IcyFrame mainChartFrame = null;
 	JPanel 	mainChartPanel = null;

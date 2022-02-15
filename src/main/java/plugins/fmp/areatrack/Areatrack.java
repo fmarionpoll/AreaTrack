@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -18,10 +20,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -32,6 +31,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
 import icy.gui.util.GuiUtil;
@@ -61,25 +61,18 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 {	
 	// -------------------------------------- interface
 			IcyFrame mainFrame 				= new IcyFrame("AreaTrack 15-02-2022", true, true, true, true);
-			DisplayCharts displayCharts 	= null;
+			GraphsWindow displayCharts 		= null;
 	
+			DlgSourcePanel dlgSourcePanel = new DlgSourcePanel();
+			DlgROIsPanel dlgRoisPanel = new DlgROIsPanel();
+			DlgAnalysis dlgAnalysis = new DlgAnalysis();
+			
 	// ---------------------------------------- video
-	private JButton setVideoSourceButton	= new JButton("Open...");
-	private JButton closeAllButton			= new JButton("Close");
-
-	private JButton openROIsButton			= new JButton("Load...");
-	private JButton addROIsButton			= new JButton("Add...");
-	private JButton	saveROIsButton			= new JButton("Save...");
 	
-	private JCheckBox measureSurfacesCheckBox = new JCheckBox("Measure surface using");
-			JRadioButton rbFilterbyColor 	= new JRadioButton("color array");
-	private JRadioButton rbFilterbyFunction	= new JRadioButton("filters");
-			JCheckBox measureHeatmapCheckBox = new JCheckBox("Detect movement and build image heatmap");
-	// TODO
 	private JButton startComputationButton 	= new JButton("Start");
 	private JButton stopComputationButton	= new JButton("Stop");
-	private JTextField startFrameTextField	= new JTextField("0");
-	private JTextField endFrameTextField	= new JTextField("99999999");
+	JTextField startFrameTextField	= new JTextField("0");
+	JTextField endFrameTextField	= new JTextField("99999999");
 	
 			JComboBox<EnumImageOp> transformsComboBox = new JComboBox<EnumImageOp> (new EnumImageOp[] {
 					EnumImageOp.R_RGB, EnumImageOp.G_RGB, EnumImageOp.B_RGB, 
@@ -93,7 +86,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	private JTextField analyzeStepTextField	= new JTextField("1");
 		
 	//---------------------------------------------------------------------------
-			JTabbedPane tabbedPane 			= new JTabbedPane();
 			JComboBox<Color> colorPickCombo = new JComboBox<Color>();
 	private ComboBoxColorRenderer colorPickComboRenderer = new ComboBoxColorRenderer(colorPickCombo);
 	
@@ -108,8 +100,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 			JRadioButton rbH1H2H3 			= new JRadioButton("H1H2H3");
 	private JLabel distanceLabel 			= new JLabel("Distance  ");
 	private JLabel colorspaceLabel 			= new JLabel("Color space ");
-	private JButton openFiltersButton		= new JButton("Load...");
-	private JButton saveFiltersButton		= new JButton("Save...");
 	
 	//---------------------------------------------------------------------------
 			JComboBox<String> filterComboBox = new JComboBox<String> (new String[] {"raw data", "average", "median"});
@@ -139,136 +129,22 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	
 	// --------------------------------------------------------------------------
 	
-	private void panelSetMenuBar (JPanel mainPanel) {
-		JMenuBar menuBar = new JMenuBar();
-		JMenu aboutMenu = new JMenu("About");
-		menuBar.add(aboutMenu);
-		
-		JMenuItem manualItem = new JMenuItem("Manual");
-		aboutMenu.add(manualItem);
-		manualItem.addActionListener(new ActionListener() {			
+	private void panelSetRunInterface (JPanel mainPanel) {		
+		PopupPanel 	capPopupPanel = new PopupPanel("RUN ANALYSIS");
+		JPanel capPanel = capPopupPanel.getMainPanel();
+		capPanel.setLayout(new GridLayout(2, 2));
+		capPopupPanel.collapse();
+		capPopupPanel.addComponentListener(new ComponentAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(mainPanel,
-					    "Please refer to the online help:\n http://icy.bioimageanalysis.org/plugin/...", "Manual", JOptionPane.INFORMATION_MESSAGE );
-			}
-		});
-		JMenuItem aboutItem = new JMenuItem("About");
-		aboutMenu.add(aboutItem);
-		aboutItem.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(mainPanel,
-					    "This plugin is distributed under GPL v3 license.\n Author: Frederic Marion-Poll" +
-					    "\n Email frederic.marion-poll@egce.cnrs-gif.fr", "About", JOptionPane.INFORMATION_MESSAGE);
-			}
-		});
-		mainFrame.setJMenuBar(menuBar);
-	}
-	
-	private void panelSetSourceInterface (JPanel mainPanel) {
-		final JPanel panel = GuiUtil.generatePanel("SOURCE");
-		mainPanel.add(GuiUtil.besidesPanel(panel));
-		panel.add( GuiUtil.besidesPanel(setVideoSourceButton, closeAllButton));
-	}
-
-	private void panelSetROIsInterface(JPanel mainPanel) {
-		final JPanel panel =  GuiUtil.generatePanel("ROIs");
-		mainPanel.add(GuiUtil.besidesPanel(panel));
+			public void componentResized(ComponentEvent e) {
+				mainFrame.revalidate();
+				mainFrame.pack();
+				mainFrame.repaint();
+			}});
+		mainPanel.add(capPopupPanel);
 		
-		JLabel commentText1 = new JLabel ("Use ROItoArray plugin to create polygons ");
-		commentText1.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(GuiUtil.besidesPanel(commentText1));
-		JLabel emptyText1	= new JLabel (" ");
-		panel.add(GuiUtil.besidesPanel(emptyText1, openROIsButton, addROIsButton, saveROIsButton));
-	}
-	
-	private void panelSetAnalysisInterface(JPanel mainPanel) {
-		final JPanel panel =  GuiUtil.generatePanel("ANALYSIS PARAMETERS");
-		mainPanel.add(GuiUtil.besidesPanel(panel));
-
-		FlowLayout layoutLeft = new FlowLayout(FlowLayout.LEFT); 
-		JPanel panel0 = new JPanel(layoutLeft);
-		((FlowLayout)panel0.getLayout()).setVgap(0);
-		panel0.add(measureSurfacesCheckBox);
-		panel0.add(rbFilterbyColor);
-		panel0.add(rbFilterbyFunction);
-		panel.add(panel0);
+		capPanel.add( GuiUtil.besidesPanel( startComputationButton, stopComputationButton ) );
 		
-		ButtonGroup bgchoice = new ButtonGroup();
-		bgchoice.add(rbFilterbyColor);
-		bgchoice.add(rbFilterbyFunction);
-		panel.add( GuiUtil.besidesPanel(measureHeatmapCheckBox ));
-		
-		GridLayout capLayout = new GridLayout(3, 2);
-		panelAnalysisAdd_ThresholdOnColors(tabbedPane, capLayout);
-		panelAnalysisAdd_ThresholdOnFilter(tabbedPane, capLayout);
-		panelAnalysisAdd_MovementThreshold(tabbedPane, capLayout);
-		panelAnalysisAdd_DisplayImagewithoutOverlay(tabbedPane, capLayout);
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		panel.add(GuiUtil.besidesPanel(tabbedPane));
-		
-		JLabel loadsaveText1 = new JLabel ("-> File (xml) ");
-		loadsaveText1.setHorizontalAlignment(SwingConstants.RIGHT); 
-		loadsaveText1.setFont(FontUtil.setStyle(loadsaveText1.getFont(), Font.ITALIC));
-		panel.add(GuiUtil.besidesPanel( new JLabel (" "), loadsaveText1, openFiltersButton, saveFiltersButton));
-	}
-	
-	private void panelAnalysisAdd_ThresholdOnColors(JTabbedPane tab, GridLayout capLayout) {
-		JComponent panel = new JPanel(false);
-		panel.setLayout(capLayout);
-		
-		colorPickCombo.setRenderer(colorPickComboRenderer);
-		panel.add( GuiUtil.besidesPanel(pickColorButton, colorPickCombo, deleteColorButton));
-		distanceLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		ButtonGroup bgd = new ButtonGroup();
-		bgd.add(rbL1);
-		bgd.add(rbL2);
-		panel.add( GuiUtil.besidesPanel(distanceLabel, rbL1, rbL2, distanceSpinner));
-		colorspaceLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		ButtonGroup bgcs = new ButtonGroup();
-		bgcs.add(rbRGB);
-		bgcs.add(rbHSV);
-		bgcs.add(rbH1H2H3);
-		panel.add( GuiUtil.besidesPanel(colorspaceLabel, rbRGB, rbHSV, rbH1H2H3));
-		tab.addTab("Colors", null, panel, "Display parameters for thresholding an image with different colors and a distance");
-	}
-	
-	private void panelAnalysisAdd_ThresholdOnFilter(JTabbedPane tab, GridLayout capLayout) {
-		JComponent panel = new JPanel(false);
-		//panel.setLayout(capLayout);
-		
-		videochannel.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add( GuiUtil.besidesPanel(videochannel, transformsComboBox));			
-		thresholdLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add( GuiUtil.besidesPanel(thresholdLabel));
-		panel.add( GuiUtil.besidesPanel(thresholdSpinner));
-		tab.addTab("Filters", null, panel, "Display parameters for thresholding a transformed image with different filters");
-	}
-	
-	private void panelAnalysisAdd_MovementThreshold(JTabbedPane tab, GridLayout capLayout) {
-		JComponent panel = new JPanel(false);
-		//panel.setLayout(capLayout);
-		
-		JLabel thresholdLabel2 = new JLabel("'move' threshold ");
-		thresholdLabel2.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add( GuiUtil.besidesPanel( thresholdLabel2, threshold2Spinner));
-		tab.addTab("Movement", null, panel, "Display parameters for thresholding movements (image n - (n-1)");
-	}
-	
-	private void panelAnalysisAdd_DisplayImagewithoutOverlay(JTabbedPane tab, GridLayout capLayout) {
-		JComponent panel = new JPanel(false);
-		//panel.setLayout(capLayout);
-		
-		panel.add( GuiUtil.besidesPanel( new JLabel("display image with no overlay")));
-		tabbedPane.addTab("None", null, panel, "Display image without overlay");
-	}
-	
-	private void panelSetRunInterface (JPanel mainPanel) {
-		final JPanel panel =  GuiUtil.generatePanel("RUN ANALYSIS");
-		mainPanel.add(GuiUtil.besidesPanel(panel));
-		
-		panel.add( GuiUtil.besidesPanel( startComputationButton, stopComputationButton ) );
 		JLabel startLabel 	= new JLabel("from ");
 		JLabel endLabel 	= new JLabel("to ");
 		JLabel stepLabel 	= new JLabel("step ");
@@ -282,20 +158,31 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		panel0.add(endFrameTextField);
 		panel0.add(stepLabel);
 		panel0.add(analyzeStepTextField);
-		panel.add(panel0);
+		capPanel.add(panel0);
+
 	}
 	
 	private void panelSetResultsInterface(JPanel mainPanel) {
-		final JPanel panel = GuiUtil.generatePanel("RESULTS DISPLAY/EXPORT");
-		mainPanel.add(GuiUtil.besidesPanel(panel));
+		PopupPanel 	capPopupPanel = new PopupPanel("RESULTS DISPLAY/EXPORT");
+		JPanel capPanel = capPopupPanel.getMainPanel();
+		capPanel.setLayout(new GridLayout(3, 2));
+		capPopupPanel.collapse();
+		capPopupPanel.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				mainFrame.revalidate();
+				mainFrame.pack();
+				mainFrame.repaint();
+			}});
+		mainPanel.add(capPopupPanel);
 		
 		JLabel outputLabel = new JLabel ("output ");
 		outputLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel spanLabel = new JLabel ("span ");
 		spanLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add(GuiUtil.besidesPanel(outputLabel, filterComboBox, spanLabel, spanTextField));
-		panel.add(GuiUtil.besidesPanel(updateChartsButton, setGraphsOverlayButton))
-;		panel.add(GuiUtil.besidesPanel(exportToXLSButton)); 
+		capPanel.add(GuiUtil.besidesPanel(outputLabel, filterComboBox, spanLabel, spanTextField));
+		capPanel.add(GuiUtil.besidesPanel(updateChartsButton, setGraphsOverlayButton));
+		capPanel.add(GuiUtil.besidesPanel(exportToXLSButton)); 
 	}
 	
 	@Override
@@ -306,10 +193,10 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.add(mainPanel, BorderLayout.CENTER);
 			
-		panelSetMenuBar(mainPanel);
-		panelSetSourceInterface(mainPanel);
-		panelSetROIsInterface(mainPanel);
-		panelSetAnalysisInterface(mainPanel);
+		DlgMenuBar.panelSetMenuBar(mainFrame, mainPanel);
+		dlgSourcePanel.init(this, mainFrame, mainPanel);
+		dlgRoisPanel.init(this, mainFrame, mainPanel);
+		dlgAnalysis.init(this, mainFrame, mainPanel);
 		panelSetRunInterface(mainPanel);
 		panelSetResultsInterface(mainPanel);
 		
@@ -323,12 +210,11 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		declareChangeListeners();
 		
 		// -------------------------------------------- default selection
-//		thresholdOverlay = new OverlayThreshold();
 		filterComboBox.setSelectedIndex(2);
 		measureSurfacesCheckBox.setSelected(true);
 		measureHeatmapCheckBox.setSelected(false);
 
-		tabbedPane.setSelectedIndex(3);
+		tabbedPane.setSelectedIndex(0);
 		rbFilterbyColor.setSelected(true);
 		rbL1.setSelected(true);
 		rbRGB.setSelected(true);
@@ -345,16 +231,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	}
 	
 	private void declareActionListeners() {
-		closeAllButton.addActionListener(new ActionListener () { 
-			@Override public void actionPerformed( final ActionEvent e ) { 
-				if (displayCharts != null && displayCharts.mainChartFrame != null) 
-				{
-					displayCharts.mainChartFrame.removeAll();
-					displayCharts.mainChartFrame.close();
-					displayCharts.mainChartFrame = null;
-				}
-				vSequence.close();
-			} } );
 		
 		rbRGB.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
@@ -416,37 +292,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 				updateThresholdOverlayParameters(); 
 			} } );
 		
-		openFiltersButton.addActionListener(new ActionListener () { 
-			@Override public void actionPerformed( final ActionEvent e ) { 
-				xmlReadAreaTrackParameters(); 
-			} } );
-		
-		saveFiltersButton.addActionListener(new ActionListener () {
-			@Override public void actionPerformed( final ActionEvent e ) { 
-				xmlWriteAreaTrackParameters(); 
-			} } );
-		
-		openROIsButton.addActionListener(new ActionListener () { 
-			@Override public void actionPerformed( final ActionEvent e ) { 
-				LoadRois loadRois = new LoadRois();
-				loadRois.openROIs(vSequence); 
-				updateStartAndEndFrameFromvSequence();
-			} } );
-		
-		saveROIsButton.addActionListener(new ActionListener () { 
-			@Override public void actionPerformed( final ActionEvent e ) {
-				vSequence.analysisStart = startFrame;
-				vSequence.analysisEnd = endFrame;
-				LoadRois loadRois = new LoadRois();
-				loadRois.saveROIs(vSequence); 
-			} } );
-		
-		addROIsButton.addActionListener(new ActionListener () { 
-			@Override public void actionPerformed( final ActionEvent e ) {
-				LoadRois loadRois = new LoadRois();
-				loadRois.addROIs(vSequence);
-				updateStartAndEndFrameFromvSequence();
-			} } );
 		
 		pickColorButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
@@ -458,24 +303,10 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 				exportToXLS();
 			} } );
 		
-		setVideoSourceButton.addActionListener(new ActionListener () { 
-			@Override public void actionPerformed( final ActionEvent e ) {
-				openVideoOrStack();
-			} } );
 		
-		rbFilterbyColor.addActionListener(new ActionListener () { 
-			@Override public void actionPerformed( final ActionEvent e ) {
-			if (rbFilterbyColor.isSelected())
-				selectTab(0);
-		} } );
 		
-		rbFilterbyFunction.addActionListener(new ActionListener () { 
-			@Override public void actionPerformed( final ActionEvent e ) {
-			if (rbFilterbyFunction.isSelected())
-				selectTab(1);
-		} } );
 		
-		class ItemChangeListener implements ItemListener{
+		class ItemChangeListener implements ItemListener {
 		    @Override
 		    public void itemStateChanged(ItemEvent event) {
 		       if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -486,17 +317,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		colorPickCombo.addItemListener(new ItemChangeListener());
 	}
 	
-	private void updateStartAndEndFrameFromvSequence()
-	{
-		startFrame = (int) vSequence.analysisStart;
-		endFrame = (int) vSequence.analysisEnd;
-		endFrameTextField.setText( Integer.toString(endFrame));
-		startFrameTextField.setText( Integer.toString(startFrame));
-	}
-	
-	private void selectTab(int index) {
-		tabbedPane.setSelectedIndex(index);
-	}
 	
 	@Override
 	public void viewerChanged(ViewerEvent event) {
@@ -518,7 +338,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 			updateThresholdOverlayParameters();
 	}
 
-	private void openVideoOrStack() {
+	public void openVideoOrStack() {
 		String path = null;
 		if (vSequence != null)
 			vSequence.close();
@@ -684,18 +504,8 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		
 	}
 	
-	private void xmlReadAreaTrackParameters() {
-		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
-		xmlAreaTrack.xmlReadAreaTrackParameters(this);
-	}
-	
-	private void xmlWriteAreaTrackParameters() {
-		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
-		xmlAreaTrack.xmlWriteAreaTrackParameters(this);
-	}
-	
 	private void updateCharts() {
-		displayCharts = new DisplayCharts();
+		displayCharts = new GraphsWindow();
 		int span = Integer.parseInt(spanTextField.getText());
 		int filteroption = filterComboBox.getSelectedIndex();
 		displayCharts.updateCharts(vSequence, startFrame, endFrame, filteroption, span, analyzeStep); 
