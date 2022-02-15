@@ -4,20 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-import org.w3c.dom.Document;
 
 import icy.common.exception.UnsupportedFormatException;
 import icy.file.Loader;
 import icy.gui.frame.progress.ProgressFrame;
 import icy.image.IcyBufferedImage;
-import icy.roi.ROI;
-import icy.sequence.edit.ROIAddsSequenceEdit;
-import icy.util.XMLUtil;
-import plugins.fmp.fmpTools.FmpTools;
-import plugins.kernel.roi.roi2d.ROI2DShape;
 
 
 

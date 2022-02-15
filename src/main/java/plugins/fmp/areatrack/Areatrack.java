@@ -10,10 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
 import java.util.ArrayList;
-
-
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -35,12 +32,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import icy.gui.frame.IcyFrame;
-import icy.gui.frame.progress.AnnounceFrame;
 import icy.gui.util.FontUtil;
 import icy.gui.util.GuiUtil;
 import icy.gui.viewer.Viewer;
@@ -55,7 +47,6 @@ import icy.preferences.XMLPreferences;
 import icy.roi.ROI2D;
 import icy.sequence.DimensionId;
 import icy.sequence.Sequence;
-import icy.util.XMLUtil;
 
 import plugins.fmp.fmpTools.ComboBoxColorRenderer;
 import plugins.fmp.fmpTools.EnumImageOp;
@@ -69,7 +60,7 @@ import plugins.fmp.fmpSequence.SequencePlus;
 public class Areatrack extends PluginActionable implements ActionListener, ChangeListener, ViewerListener
 {	
 	// -------------------------------------- interface
-			IcyFrame mainFrame 				= new IcyFrame("AreaTrack 14-02-2022", true, true, true, true);
+			IcyFrame mainFrame 				= new IcyFrame("AreaTrack 15-02-2022", true, true, true, true);
 			DisplayCharts displayCharts 	= null;
 	
 	// ---------------------------------------- video
