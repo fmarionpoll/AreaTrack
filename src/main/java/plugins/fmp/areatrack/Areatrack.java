@@ -74,33 +74,9 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	JTextField startFrameTextField	= new JTextField("0");
 	JTextField endFrameTextField	= new JTextField("99999999");
 	
-			JComboBox<EnumImageOp> transformsComboBox = new JComboBox<EnumImageOp> (new EnumImageOp[] {
-					EnumImageOp.R_RGB, EnumImageOp.G_RGB, EnumImageOp.B_RGB, 
-					EnumImageOp.R2MINUS_GB, EnumImageOp.G2MINUS_RB, EnumImageOp.B2MINUS_RG, 
-					EnumImageOp.NORM_BRMINUSG, EnumImageOp.RGB,
-					EnumImageOp.H_HSB, EnumImageOp.S_HSB, EnumImageOp.B_HSB	});
-			JSpinner thresholdSpinner 		= new JSpinner(new SpinnerNumberModel(70, 0, 255, 1));
-	private JLabel videochannel 			= new JLabel("filter  ");
-	private JLabel thresholdLabel 			= new JLabel("threshold ");
-			JSpinner threshold2Spinner 				= new JSpinner(new SpinnerNumberModel(20, 0, 255, 1));
 	private JTextField analyzeStepTextField	= new JTextField("1");
 		
 	//---------------------------------------------------------------------------
-			JComboBox<Color> colorPickCombo = new JComboBox<Color>();
-	private ComboBoxColorRenderer colorPickComboRenderer = new ComboBoxColorRenderer(colorPickCombo);
-	
-	private String textPickAPixel 			= "Pick a pixel";
-	private JButton pickColorButton			= new JButton(textPickAPixel);
-	private JButton	deleteColorButton		= new JButton("Delete color");
-			JRadioButton rbL1 				= new JRadioButton("L1");
-			JRadioButton rbL2 				= new JRadioButton("L2");
-			JSpinner distanceSpinner 		= new JSpinner(new SpinnerNumberModel(10, 0, 800, 5));
-			JRadioButton rbRGB 				= new JRadioButton("RGB");
-			JRadioButton rbHSV 				= new JRadioButton("HSV");
-			JRadioButton rbH1H2H3 			= new JRadioButton("H1H2H3");
-	private JLabel distanceLabel 			= new JLabel("Distance  ");
-	private JLabel colorspaceLabel 			= new JLabel("Color space ");
-	
 	//---------------------------------------------------------------------------
 			JComboBox<String> filterComboBox = new JComboBox<String> (new String[] {"raw data", "average", "median"});
 			JTextField 	spanTextField 		= new JTextField("10");

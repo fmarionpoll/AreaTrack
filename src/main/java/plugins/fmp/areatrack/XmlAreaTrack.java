@@ -64,7 +64,7 @@ public class XmlAreaTrack {
 
 		Element xmlVal = XMLUtil.getElement(xmlElement, "colormodeselected");
 		boolean iscolorselected = XMLUtil.getAttributeBooleanValue(xmlVal, "value", true );
-		parent0.rbFilterbyColor.setSelected(iscolorselected);
+		parent0.dlgAnalysis.rbFilterbyColor.setSelected(iscolorselected);
 		
 		xmlVal = XMLUtil.getElement(xmlElement, "colortransformop");	
 		String codestring = XMLUtil.getAttributeValue(xmlVal, "descriptor", "none");		
@@ -109,7 +109,7 @@ public class XmlAreaTrack {
 		Element xmlElement = XMLUtil.addElement(node, "Parameters");
 		
 		Element xmlVal = XMLUtil.addElement(xmlElement, "colormodeselected");
-		XMLUtil.setAttributeBooleanValue(xmlVal, "value", parent0.rbFilterbyColor.isSelected() );
+		XMLUtil.setAttributeBooleanValue(xmlVal, "value", parent0.dlgAnalysis.rbFilterbyColor.isSelected() );
 	
 		xmlVal = XMLUtil.addElement(xmlElement, "simpletransformop");
 		XMLUtil.setAttributeValue(xmlVal, "descriptor", parent0.simpletransformop.toString());
@@ -148,7 +148,7 @@ public class XmlAreaTrack {
 	private void transferParametersToDialog() {
 		
 		parent0.distanceSpinner.setValue(parent0.colorthreshold);
-		parent0.tabbedPane.setSelectedIndex(3);
+		parent0.dlgAnalysis.tabbedPane.setSelectedIndex(3);
 		switch (parent0.colortransformop) {
 		case RGB_TO_HSV:
 			parent0.rbHSV.setSelected(true);

@@ -138,9 +138,9 @@ public class ExportToXLS {
 			resultsHeatMap = parent0.analysisThread.results;
 		span = Integer.parseInt(parent0.spanTextField.getText());
 		analyzeStep = parent0.analyzeStep;
-		distanceString = parent0.distanceSpinner.getValue().toString();
-		threshold2String = parent0.threshold2Spinner.getValue().toString();
-		measureHeatmap = parent0.measureHeatmapCheckBox.isSelected();
+		distanceString = parent0.dlgAnalysis.distanceSpinner.getValue().toString();
+		threshold2String = parent0.dlgAnalysis.threshold2Spinner.getValue().toString();
+		measureHeatmap = parent0.dlgAnalysis.measureHeatmapCheckBox.isSelected();
 		
 		System.out.println("XLS output");
 		try {
