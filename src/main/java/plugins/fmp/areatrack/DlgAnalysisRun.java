@@ -1,5 +1,6 @@
 package plugins.fmp.areatrack;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import icy.roi.ROI2D;
+import plugins.fmp.fmpSequence.SequenceVirtual;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumThresholdType;
 
@@ -69,10 +71,10 @@ public class DlgAnalysisRun extends JPanel
 		capPanel.add(panel0);
 
 		declareActionListeners();
-		
 	}
 	
 	private void declareActionListeners() {
+		
 		stopComputationButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				stopAnalysisThread();
@@ -85,44 +87,44 @@ public class DlgAnalysisRun extends JPanel
 	}
 	
 	private void startAnalysisThread() {
+		
 		stopAnalysisThread();
 		
 		analysisThread = new AreaAnalysisThread(); 
-		
+
 		parent0.startFrame 	= Integer.parseInt( startFrameTextField.getText() );
 		parent0.endFrame 	= Integer.parseInt( endFrameTextField.getText() );
 		parent0.analyzeStep = Integer.parseInt( analyzeStepTextField.getText() );
 		parent0.vSequence.analysisStep = parent0.analyzeStep;
 		
-		EnumImageOp transformop = EnumImageOp.NONE;
-		int thresholdforsurface = parent0.simplethreshold;
-		if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) {
-			transformop = parent0.simpletransformop;
-			parent0.thresholdtype = EnumThresholdType.SINGLE;
-		} else if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) {
-			transformop = EnumImageOp.NONE;
-			parent0.thresholdtype = EnumThresholdType.COLORARRAY;
+		if (parent0.dlgAnalysisParameters.measureSurfacesCheckBox.isSelected()) 
+		{ 
+			EnumImageOp transformOpForOperation1 = EnumImageOp.NONE;
+			int thresholdForSurface = parent0.simplethreshold;
+			if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) 
+			{
+				transformOpForOperation1 = parent0.simpletransformop;
+				parent0.thresholdtype = EnumThresholdType.SINGLE;
+				analysisThread.initAreaDetectionFromFunction(parent0.vSequence, parent0.startFrame, parent0.endFrame, 
+						getROIsToAnalyze(),  
+						transformOpForOperation1, thresholdForSurface);
+			} 
+			else if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) 
+			{
+				transformOpForOperation1 = EnumImageOp.NONE;
+				parent0.thresholdtype = EnumThresholdType.COLORARRAY;
+				analysisThread.initAreaDetectionFromColors(parent0.vSequence, parent0.startFrame, parent0.endFrame,
+						getROIsToAnalyze(),  
+						parent0.colordistanceType, parent0.colorthreshold, parent0.colorarray);
+			}
 		}
 		
-		int thresholdformovement = parent0.thresholdmovement;
-		
-		analysisThread.setAnalysisThreadParameters(
-			parent0.vSequence, 
-			getROIsToAnalyze(), 
-			parent0.startFrame, 
-			parent0.endFrame,  
-			transformop, 
-			thresholdforsurface,
-			thresholdformovement,
-			parent0.dlgAnalysisParameters.measureSurfacesCheckBox.isSelected(), 
-			parent0.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected());
-		
-		analysisThread.setAnalysisThreadParametersColors (
-			parent0.thresholdtype, 
-			parent0.colordistanceType, 
-			parent0.colorthreshold, 
-			parent0.colorarray);
-		
+		if (parent0.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected()) {
+			int thresholdformovement = parent0.thresholdmovement;
+			analysisThread.initMovementDetection(parent0.vSequence, parent0.startFrame, parent0.endFrame,
+					getROIsToAnalyze(),
+					thresholdformovement);
+		}	
 		analysisThread.start();	
 	}
 	
@@ -138,6 +140,7 @@ public class DlgAnalysisRun extends JPanel
 		}
 	}
 	
+	// TODO : filter out ROIS that are not defining a "cage"
 	private ArrayList<ROI2D> getROIsToAnalyze() {
 		return parent0.vSequence.seq.getROI2Ds();
 	}

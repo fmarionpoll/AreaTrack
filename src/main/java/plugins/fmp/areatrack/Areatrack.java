@@ -36,7 +36,6 @@ public class Areatrack extends PluginActionable implements ViewerListener
 			DlgAnalysisRun dlgAnalysisRun = new DlgAnalysisRun();
 			DlgResults dlgResults = new DlgResults();
 
-	//------------------------------------------- global variables
 			SequencePlus vSequence 			= null;
 			int	 analyzeStep 				= 1;
 			int  startFrame 				= 1;
