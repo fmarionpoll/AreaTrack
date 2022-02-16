@@ -14,12 +14,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import plugins.fmp.fmpTools.ComboBoxColorRenderer;
 import plugins.fmp.fmpTools.EnumImageOp;
+import plugins.fmp.fmpTools.EnumThresholdType;
 
-public class DlgTabThresholdColors extends JPanel 
-{
+public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 
 	/**
 	 * 
@@ -79,6 +81,53 @@ public class DlgTabThresholdColors extends JPanel
 		rbL1.setSelected(true);
 		rbRGB.setSelected(true);
 		
+		distanceSpinner.addChangeListener(this);
 	}
+
+
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		if (e.getSource() == distanceSpinner)  
+			updateThresholdOverlayParameters();
+		
+	}
+	
+private void updateThresholdOverlayParameters() {
+		
+		if (vSequence == null)
+			return;
+		
+		boolean activateThreshold = true;
+		int thresholdForOverlay = 0;
+		EnumImageOp transformOpForOverlay = EnumImageOp.NONE;
+		EnumThresholdType thresholdTypeForOverlay = EnumThresholdType.SINGLE;
+	
+				colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
+				thresholdForOverlay = colorthreshold;
+				thresholdtype = EnumThresholdType.COLORARRAY;
+				thresholdTypeForOverlay = thresholdtype;
+				transformOpForOverlay = colortransformop;
+				colorarray.clear();
+				for (int i=0; i<colorPickCombo.getItemCount(); i++) {
+					colorarray.add(colorPickCombo.getItemAt(i));
+				}
+				colordistanceType = 1;
+				if (rbL2.isSelected()) 
+					colordistanceType = 2;
+				
+		//--------------------------------
+		
+		activateSequenceThresholdOverlay(activateThreshold);
+		if (activateThreshold && vSequence != null) {
+			vSequence.setThresholdOverlay(activateThreshold);
+			if (thresholdTypeForOverlay == EnumThresholdType.SINGLE)
+				vSequence.setThresholdOverlayParametersSingle(transformOpForOverlay, thresholdForOverlay);
+			else
+				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, colorarray, colordistanceType, colorthreshold);
+		}
+	}
+	
+	
 
 }

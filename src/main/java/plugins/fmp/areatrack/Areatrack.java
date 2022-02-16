@@ -57,7 +57,7 @@ import plugins.fmp.fmpSequence.SequencePlus;
 
 
 
-public class Areatrack extends PluginActionable implements ActionListener, ChangeListener, ViewerListener
+public class Areatrack extends PluginActionable implements ActionListener, ViewerListener
 {	
 	// -------------------------------------- interface
 			IcyFrame mainFrame 				= new IcyFrame("AreaTrack 15-02-2022", true, true, true, true);
@@ -68,10 +68,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 			DlgAnalysis dlgAnalysis = new DlgAnalysis();
 			DlgRunAnalysis dlgRunAnalysis = new DlgRunAnalysis();
 			DlgResults dlgResults = new DlgResults();
-			
-	// ---------------------------------------- video		
-	//---------------------------------------------------------------------------
-	//---------------------------------------------------------------------------	
+
 	//------------------------------------------- global variables
 			SequencePlus vSequence 			= null;
 			int	 analyzeStep 				= 1;
@@ -90,7 +87,7 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 	final 	String filename 				= "areatrack.xml";
 	
 	// --------------------------------------------------------------------------
-	
+
 	
 	@Override
 	public void run() {
@@ -114,19 +111,10 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		mainFrame.requestFocus();
 		
 		declareActionListeners();
-		declareChangeListeners();
-		
-		// -------------------------------------------- default selection
-		
 		
 	}
 
-	private void declareChangeListeners() {
-		thresholdSpinner.addChangeListener(this);
-		tabbedPane.addChangeListener(this);
-		distanceSpinner.addChangeListener(this);
-		threshold2Spinner.addChangeListener(this);
-	}
+
 	
 	private void declareActionListeners() {
 		
@@ -227,15 +215,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		viewer.removeListener(this);
 	}
 
-	@Override
-	public void stateChanged(ChangeEvent e) {
-		if ((e.getSource() == thresholdSpinner)  
-		|| (e.getSource() == tabbedPane) 
-		|| (e.getSource() == distanceSpinner) 
-		|| (e.getSource() == threshold2Spinner)) 
-			updateThresholdOverlayParameters();
-	}
-
 	public void openVideoOrStack() {
 		String path = null;
 		if (vSequence != null)
@@ -325,66 +304,6 @@ public class Areatrack extends PluginActionable implements ActionListener, Chang
 		if (vSequence == null) return;
 		
 		vSequence.setThresholdOverlay(activate);
-	}
-	
-	private void updateThresholdOverlayParameters() {
-		
-		if (vSequence == null)
-			return;
-		
-		boolean activateThreshold = true;
-		int thresholdForOverlay = 0;
-		EnumImageOp transformOpForOverlay = EnumImageOp.NONE;
-		EnumThresholdType thresholdTypeForOverlay = EnumThresholdType.SINGLE;
-		
-		switch (tabbedPane.getSelectedIndex()) {
-			case 0:  // color array
-				colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
-				thresholdForOverlay = colorthreshold;
-				thresholdtype = EnumThresholdType.COLORARRAY;
-				thresholdTypeForOverlay = thresholdtype;
-				transformOpForOverlay = colortransformop;
-				colorarray.clear();
-				for (int i=0; i<colorPickCombo.getItemCount(); i++) {
-					colorarray.add(colorPickCombo.getItemAt(i));
-				}
-				colordistanceType = 1;
-				if (rbL2.isSelected()) 
-					colordistanceType = 2;
-				break;
-				
-			case 1:	// simple filter & single threshold
-				simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
-				transformOpForOverlay = simpletransformop;
-				simplethreshold = Integer.parseInt(thresholdSpinner.getValue().toString());
-				thresholdForOverlay = simplethreshold; 
-				thresholdtype = EnumThresholdType.SINGLE;
-				thresholdTypeForOverlay = thresholdtype;	
-				break;
-
-			case 2:	// movement threshold
-				thresholdmovement = Integer.parseInt(threshold2Spinner.getValue().toString());
-				thresholdForOverlay = thresholdmovement; 
-				thresholdTypeForOverlay = EnumThresholdType.SINGLE;
-				transformOpForOverlay = EnumImageOp.REF_PREVIOUS;
-				break;
-			
-			case 3:	// nothing
-			default:
-				activateThreshold = false;
-				break;
-		}
-		
-		//--------------------------------
-		
-		activateSequenceThresholdOverlay(activateThreshold);
-		if (activateThreshold && vSequence != null) {
-			vSequence.setThresholdOverlay(activateThreshold);
-			if (thresholdTypeForOverlay == EnumThresholdType.SINGLE)
-				vSequence.setThresholdOverlayParametersSingle(transformOpForOverlay, thresholdForOverlay);
-			else
-				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, colorarray, colordistanceType, colorthreshold);
-		}
 	}
 	
 	private void updateGuiEndFrame () {

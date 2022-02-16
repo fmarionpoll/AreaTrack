@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
@@ -25,7 +27,8 @@ import icy.gui.util.FontUtil;
 import icy.gui.util.GuiUtil;
 import plugins.fmp.fmpTools.EnumImageOp;
 
-public class DlgAnalysis extends JPanel {
+
+public class DlgAnalysis extends JPanel implements ChangeListener {
 	
 	/**
 	 * 
@@ -120,7 +123,8 @@ public class DlgAnalysis extends JPanel {
 			if (rbFilterbyFunction.isSelected())
 				selectTab(1);
 		} } );
-
+		
+		tabbedPane.addChangeListener(this);
 		
 	}
 	
@@ -137,7 +141,13 @@ public class DlgAnalysis extends JPanel {
 		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
 		xmlAreaTrack.xmlWriteAreaTrackParameters(parent0);
 	}
-	
+
+	@Override
+	public void stateChanged (ChangeEvent e) {
+		if (e.getSource() == tabbedPane) 
+			updateThresholdOverlayParameters();
+	}
+
 	
 	
 	

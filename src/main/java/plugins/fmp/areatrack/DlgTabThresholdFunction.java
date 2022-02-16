@@ -1,6 +1,7 @@
 package plugins.fmp.areatrack;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -9,10 +10,13 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import plugins.fmp.fmpTools.EnumImageOp;
+import plugins.fmp.fmpTools.EnumThresholdType;
 
-public class DlgTabThresholdFunction extends JPanel {
+public class DlgTabThresholdFunction extends JPanel implements ChangeListener{
 
 	/**
 	 * 
@@ -44,6 +48,47 @@ public class DlgTabThresholdFunction extends JPanel {
 		tab.addTab("Filters", null, panel, "Display parameters for thresholding a transformed image with different filters");
 		
 		transformsComboBox.setSelectedIndex(EnumImageOp.B2MINUS_RG.ordinal());
+		
+		thresholdSpinner.addChangeListener(this);
+		
+	}
+
+
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		if (e.getSource() == thresholdSpinner) 
+				updateThresholdOverlayParameters();
+		
+	}
+	
+	private void updateThresholdOverlayParameters() {
+		
+		if (vSequence == null)
+			return;
+		
+		boolean activateThreshold = true;
+		int thresholdForOverlay = 0;
+		EnumImageOp transformOpForOverlay = EnumImageOp.NONE;
+		EnumThresholdType thresholdTypeForOverlay = EnumThresholdType.SINGLE;
+		
+		
+				simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
+				transformOpForOverlay = simpletransformop;
+				simplethreshold = Integer.parseInt(thresholdSpinner.getValue().toString());
+				thresholdForOverlay = simplethreshold; 
+				thresholdtype = EnumThresholdType.SINGLE;
+				thresholdTypeForOverlay = thresholdtype;	
+		
+		//--------------------------------
+		
+		activateSequenceThresholdOverlay(activateThreshold);
+		if (activateThreshold && vSequence != null) {
+			vSequence.setThresholdOverlay(activateThreshold);
+			if (thresholdTypeForOverlay == EnumThresholdType.SINGLE)
+				vSequence.setThresholdOverlayParametersSingle(transformOpForOverlay, thresholdForOverlay);
+			else
+				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, colorarray, colordistanceType, colorthreshold);
+		}
 	}
 	
 }
