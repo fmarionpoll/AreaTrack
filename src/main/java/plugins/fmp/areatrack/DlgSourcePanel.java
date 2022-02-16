@@ -12,6 +12,11 @@ import javax.swing.JPanel;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
+import icy.gui.viewer.Viewer;
+import icy.preferences.XMLPreferences;
+import icy.sequence.Sequence;
+import plugins.fmp.fmpSequence.OpenVirtualSequence;
+import plugins.fmp.fmpSequence.SequencePlus;
 
 public class DlgSourcePanel extends JPanel {
 	
@@ -21,10 +26,12 @@ public class DlgSourcePanel extends JPanel {
 	private static final long serialVersionUID = 6623935409683076615L;
 	private JButton setVideoSourceButton	= new JButton("Open...");
 	private JButton closeAllButton = new JButton("Close");
+	Areatrack parent0 = null;
 
 	
 	public void init (Areatrack parent0, IcyFrame mainFrame, JPanel mainPanel) {
 		
+		this.parent0 = parent0;
 		PopupPanel 	capPopupPanel = new PopupPanel("Source data");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new BorderLayout());
@@ -40,9 +47,13 @@ public class DlgSourcePanel extends JPanel {
 
 		capPanel.add( GuiUtil.besidesPanel(setVideoSourceButton, closeAllButton));
 		
+		declareActionListeners();
+	}
+		
+	private void declareActionListeners() {
 		setVideoSourceButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) {
-				parent0.openVideoOrStack();
+				openVideoOrStack();
 			} } );
 		
 		closeAllButton.addActionListener(new ActionListener () { 
@@ -55,5 +66,30 @@ public class DlgSourcePanel extends JPanel {
 				}
 				parent0.vSequence.close();
 			} } );
+	}
+	
+	public void openVideoOrStack() {
+		String path = null;
+		if (vSequence != null)
+			vSequence.close();
+
+		Sequence seq = OpenVirtualSequence.openImagesOrAvi(null);
+		Viewer v = OpenVirtualSequence.initSequenceViewer(seq);
+		v.addListener(Areatrack.this);
+		vSequence = new SequencePlus(seq);
+		
+		path = vSequence.getDirectory();
+		if (path != null) {
+			XMLPreferences guiPrefs = this.getPreferences("gui");
+			guiPrefs.put("lastUsedPath", path);
+		}
+		
+		updateGuiEndFrame();
+		xmlReadAreaTrackParameters();
+	}
+	
+	private void updateGuiEndFrame () {
+		endFrame = vSequence.getSizeT()-1;
+		endFrameTextField.setText( Integer.toString(endFrame));
 	}
 }

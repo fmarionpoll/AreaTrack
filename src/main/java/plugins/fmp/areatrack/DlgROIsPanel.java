@@ -48,6 +48,10 @@ public class DlgROIsPanel extends JPanel {
 		JLabel emptyText1	= new JLabel (" ");
 		capPanel.add(GuiUtil.besidesPanel(emptyText1, openROIsButton, addROIsButton, saveROIsButton));
 		
+		declareActionListeners();
+	}
+	
+	private void declareActionListeners() {
 		openROIsButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				LoadRois loadRois = new LoadRois();

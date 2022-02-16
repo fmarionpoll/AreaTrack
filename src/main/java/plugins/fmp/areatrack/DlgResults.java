@@ -1,6 +1,8 @@
 package plugins.fmp.areatrack;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -52,6 +54,25 @@ public class DlgResults extends JPanel {
 		capPanel.add(GuiUtil.besidesPanel(exportToXLSButton)); 
 		
 		filterComboBox.setSelectedIndex(0);
+		
+		declareActionListeners();		
+	}
+	
+	private void declareActionListeners() {
+		updateChartsButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
+				updateCharts(); 
+			} } );
+		
+		setGraphsOverlayButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
+				setGraphsOverlay(); 
+			} } );
+		
+		exportToXLSButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {
+				exportToXLS();
+			} } );
 	}
 
 }

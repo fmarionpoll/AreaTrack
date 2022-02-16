@@ -3,6 +3,10 @@ package plugins.fmp.areatrack;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -82,6 +86,59 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 		rbRGB.setSelected(true);
 		
 		distanceSpinner.addChangeListener(this);
+		declareActionListeners();
+	}
+	
+	private void declareActionListeners() {
+		rbRGB.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				colortransformop = EnumImageOp.NONE;
+				updateThresholdOverlayParameters();
+			} } );
+		
+		rbHSV.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				colortransformop = EnumImageOp.RGB_TO_HSV;
+				updateThresholdOverlayParameters();
+			} } );
+		
+		rbH1H2H3.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				colortransformop = EnumImageOp.RGB_TO_H1H2H3;
+				updateThresholdOverlayParameters();
+			} } );
+		
+		rbL1.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				updateThresholdOverlayParameters();
+			} } );
+		
+		rbL2.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				updateThresholdOverlayParameters();
+			} } );
+		
+		deleteColorButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				if (colorPickCombo.getItemCount() > 0 && colorPickCombo.getSelectedIndex() >= 0)
+					colorPickCombo.removeItemAt(colorPickCombo.getSelectedIndex());
+				updateThresholdOverlayParameters();
+			} } );
+		
+		pickColorButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				pickColor(); 
+			} } );
+		
+		class ItemChangeListener implements ItemListener {
+		    @Override
+		    public void itemStateChanged(ItemEvent event) {
+		       if (event.getStateChange() == ItemEvent.SELECTED) {
+		    	   updateThresholdOverlayParameters();
+		       }
+		    }       
+		}
+		colorPickCombo.addItemListener(new ItemChangeListener());
 	}
 
 
@@ -118,7 +175,9 @@ private void updateThresholdOverlayParameters() {
 				
 		//--------------------------------
 		
-		activateSequenceThresholdOverlay(activateThreshold);
+		if (vSequence != null) 
+			vSequence.setThresholdOverlay(activateThreshold);
+		
 		if (activateThreshold && vSequence != null) {
 			vSequence.setThresholdOverlay(activateThreshold);
 			if (thresholdTypeForOverlay == EnumThresholdType.SINGLE)
@@ -128,6 +187,22 @@ private void updateThresholdOverlayParameters() {
 		}
 	}
 	
-	
+	private void pickColor() {
+		
+		boolean bActiveTrapOverlay = false;
+		
+		if (pickColorButton.getText().contains("*") || pickColorButton.getText().contains(":")) {
+			pickColorButton.setBackground(Color.LIGHT_GRAY);
+			pickColorButton.setText(textPickAPixel);
+			bActiveTrapOverlay = false;
+		}
+		else
+		{
+			pickColorButton.setText("*"+textPickAPixel+"*");
+			pickColorButton.setBackground(Color.DARK_GRAY);
+			bActiveTrapOverlay = true;
+		}	
+		vSequence.setMouseTrapOverlay(bActiveTrapOverlay, pickColorButton, colorPickCombo);
+	}
 
 }

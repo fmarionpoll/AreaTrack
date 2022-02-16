@@ -2,6 +2,8 @@ package plugins.fmp.areatrack;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -13,6 +15,7 @@ import javax.swing.JTextField;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
+import plugins.fmp.fmpTools.EnumImageOp;
 
 public class DlgRunAnalysis extends JPanel 
 {
@@ -59,5 +62,67 @@ public class DlgRunAnalysis extends JPanel
 		panel0.add(analyzeStepTextField);
 		capPanel.add(panel0);
 
+		declareActionListeners();
+		
 	}
+	
+	private void declareActionListeners() {
+		stopComputationButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				stopAnalysisThread();
+			} } );
+		
+		startComputationButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) {  
+				startAnalysisThread(); 
+			} } );	
+	}
+	
+	private void startAnalysisThread() {
+		stopAnalysisThread();
+		
+		analysisThread = new AreaAnalysisThread(); 
+		updateThresholdOverlayParameters();
+		
+		startFrame 	= Integer.parseInt( startFrameTextField.getText() );
+		endFrame 	= Integer.parseInt( endFrameTextField.getText() );
+		analyzeStep = Integer.parseInt( analyzeStepTextField.getText() );
+		vSequence.analysisStep = analyzeStep;
+		
+		EnumImageOp transformop = EnumImageOp.NONE;
+		if (rbFilterbyFunction.isSelected())
+			transformop = (EnumImageOp) transformsComboBox.getSelectedItem();
+		int thresholdforsurface = Integer.parseInt(thresholdSpinner.getValue().toString());
+		int thresholdformovement = Integer.parseInt(threshold2Spinner.getValue().toString());
+		
+		analysisThread.setAnalysisThreadParameters(
+			vSequence, 
+			getROIsToAnalyze(), 
+			startFrame, 
+			endFrame,  
+			transformop, 
+			thresholdforsurface,
+			thresholdformovement,
+			measureSurfacesCheckBox.isSelected(), 
+			measureHeatmapCheckBox.isSelected());
+		analysisThread.setAnalysisThreadParametersColors (
+			thresholdtype, 
+			colordistanceType, 
+			colorthreshold, 
+			colorarray);
+		analysisThread.start();	
+	}
+	
+	private void stopAnalysisThread() {
+		
+		if (analysisThread != null && analysisThread.isAlive()) {
+			analysisThread.interrupt();
+			try {
+				analysisThread.join();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+	
 }

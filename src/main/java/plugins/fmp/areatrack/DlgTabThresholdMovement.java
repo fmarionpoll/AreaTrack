@@ -62,7 +62,9 @@ public class DlgTabThresholdMovement extends JPanel implements ChangeListener {
 		
 		//--------------------------------
 		
-		activateSequenceThresholdOverlay(activateThreshold);
+		if (vSequence != null) 
+			vSequence.setThresholdOverlay(activateThreshold);
+		
 		if (activateThreshold && vSequence != null) {
 			vSequence.setThresholdOverlay(activateThreshold);
 			if (thresholdTypeForOverlay == EnumThresholdType.SINGLE)

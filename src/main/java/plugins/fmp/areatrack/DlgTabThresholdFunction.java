@@ -1,6 +1,7 @@
 package plugins.fmp.areatrack;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
@@ -51,6 +52,14 @@ public class DlgTabThresholdFunction extends JPanel implements ChangeListener{
 		
 		thresholdSpinner.addChangeListener(this);
 		
+		declareActionListeners();
+	}
+	
+	private void declareActionListeners() {
+		transformsComboBox.addActionListener(new ActionListener () {
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				updateThresholdOverlayParameters(); 
+			} } );
 	}
 
 
@@ -81,7 +90,8 @@ public class DlgTabThresholdFunction extends JPanel implements ChangeListener{
 		
 		//--------------------------------
 		
-		activateSequenceThresholdOverlay(activateThreshold);
+		if (vSequence != null) 
+			vSequence.setThresholdOverlay(activateThreshold);
 		if (activateThreshold && vSequence != null) {
 			vSequence.setThresholdOverlay(activateThreshold);
 			if (thresholdTypeForOverlay == EnumThresholdType.SINGLE)

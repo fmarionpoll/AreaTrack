@@ -101,7 +101,13 @@ public class DlgAnalysis extends JPanel implements ChangeListener {
 		tabbedPane.setSelectedIndex(0);
 		rbFilterbyColor.setSelected(true);
 		
+		declareActionListeners();
 		
+		tabbedPane.addChangeListener(this);
+		
+	}
+	
+	private void declareActionListeners() {
 		openFiltersButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				xmlReadAreaTrackParameters(); 
@@ -123,9 +129,6 @@ public class DlgAnalysis extends JPanel implements ChangeListener {
 			if (rbFilterbyFunction.isSelected())
 				selectTab(1);
 		} } );
-		
-		tabbedPane.addChangeListener(this);
-		
 	}
 	
 	private void selectTab(int index) {
