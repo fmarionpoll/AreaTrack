@@ -1,6 +1,5 @@
 package plugins.fmp.fmpSequence;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -197,11 +196,8 @@ public class Capillaries {
 	
 	public boolean xmlReadROIsAndData(SequenceVirtual sequenceVirtual) {
 
-		String [] filedummy = null;
-		String filename = sequenceVirtual.seq.getName();
-		File file = new File(filename);
-		String directory = file.getParentFile().getAbsolutePath();
-		filedummy = FmpTools.selectFiles(directory, "xml");
+		String directory = sequenceVirtual.getDirectory();
+		String [] filedummy = FmpTools.selectFiles(directory, "xml");
 		boolean wasOk = false;
 		if (filedummy != null) {
 			for (int i= 0; i< filedummy.length; i++) {

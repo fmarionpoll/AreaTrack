@@ -39,7 +39,7 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 	private JButton	deleteColorButton		= new JButton("Delete color");
 		JRadioButton rbL1 				= new JRadioButton("L1");
 		JRadioButton rbL2 				= new JRadioButton("L2");
-		JSpinner distanceSpinner 		= new JSpinner(new SpinnerNumberModel(10, 0, 800, 5));
+		JSpinner distanceSpinner 		= new JSpinner(new SpinnerNumberModel(10, 0, 800, 1));
 		JRadioButton rbRGB 				= new JRadioButton("RGB");
 		JRadioButton rbHSV 				= new JRadioButton("HSV");
 		JRadioButton rbH1H2H3 			= new JRadioButton("H1H2H3");

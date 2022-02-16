@@ -49,12 +49,12 @@ public class OverlayThreshold extends Overlay
 	
 	public void setThresholdSingle (int threshold)
 	{
-		imgOp.setThresholdSingle(threshold);
+		imgOp.setThresholdToSingleValue(threshold);
 	}
 	
 	public void setThresholdColor (ArrayList <Color> colorarray, int distancetype, int threshold)
 	{
-		imgOp.setColorArrayThreshold(colorarray, distancetype, threshold);
+		imgOp.setThresholdToColorArray(colorarray, distancetype, threshold);
 	}
 	
 	@Override

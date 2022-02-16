@@ -81,11 +81,11 @@ public class AreaAnalysisThread extends Thread {
 		imgOp1 = new ImageOperations (sequenceVirtual);
 		imgOp1.setTransform(transformop);
 		if (thresholdtype == EnumThresholdType.SINGLE) 
-			imgOp1.setThresholdSingle(thresholdForSurface);
+			imgOp1.setThresholdToSingleValue(thresholdForSurface);
 		
 		imgOp2 = new ImageOperations (sequenceVirtual);
 		imgOp2.setTransform(EnumImageOp.REF_PREVIOUS);
-		imgOp2.setThresholdSingle(thresholdForHeatMap);
+		imgOp2.setThresholdToSingleValue(thresholdForHeatMap);
 				
 		IcyBufferedImage image = vSequence.seq.getImage(vSequence.currentFrame, 0);
 		resultOFFImage = new IcyBufferedImage(image.getSizeX(), image.getSizeY(), 1, DataType.DOUBLE);
@@ -103,7 +103,7 @@ public class AreaAnalysisThread extends Thread {
 	
 	public void setAnalysisThreadParametersColors (EnumThresholdType thresholdtype, int distanceType, int colorthreshold, ArrayList<Color> colorarray)
 	{
-		imgOp1.setColorArrayThreshold(colorarray, distanceType, colorthreshold);
+		imgOp1.setThresholdToColorArray(colorarray, distanceType, colorthreshold);
 		this.thresholdtype = thresholdtype;
 	}
 	
@@ -157,6 +157,7 @@ public class AreaAnalysisThread extends Thread {
 
 				// ------------------------ compute global mask
 				IcyBufferedImage binaryMap = imgOp1.run(t);	
+				
 				boolean[] boolMap = imgOp1.convertToBoolean(binaryMap);
 				BooleanMask2D maskAll2D = new BooleanMask2D(binaryMap.getBounds(), boolMap); 
 				

@@ -18,6 +18,7 @@ import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import icy.roi.ROI2D;
 import plugins.fmp.fmpTools.EnumImageOp;
+import plugins.fmp.fmpTools.EnumThresholdType;
 
 public class DlgAnalysisRun extends JPanel 
 {
@@ -95,8 +96,10 @@ public class DlgAnalysisRun extends JPanel
 		parent0.vSequence.analysisStep = parent0.analyzeStep;
 		
 		EnumImageOp transformop = EnumImageOp.NONE;
-		if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected())
+		if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) {
 			transformop = parent0.simpletransformop;
+			parent0.thresholdtype = EnumThresholdType.SINGLE;
+		}
 		int thresholdforsurface = parent0.simplethreshold;
 		int thresholdformovement = parent0.thresholdmovement;
 		
@@ -116,6 +119,7 @@ public class DlgAnalysisRun extends JPanel
 			parent0.colordistanceType, 
 			parent0.colorthreshold, 
 			parent0.colorarray);
+		
 		analysisThread.start();	
 	}
 	

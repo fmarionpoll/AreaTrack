@@ -28,13 +28,13 @@ public class ImageOperations {
 		opTransf.transformop = transformop;
 	}
 	
-	public void setThresholdSingle( int threshold) {
+	public void setThresholdToSingleValue( int threshold) {
 		opThresh.thresholdtype = EnumThresholdType.SINGLE;
 		opThresh.simplethreshold = threshold;
 		imgThresh.setSingleThreshold(threshold);
 	}
 	
-	public void setColorArrayThreshold (ArrayList <Color> colorarray, int distanceType, int colorthreshold) {
+	public void setThresholdToColorArray (ArrayList <Color> colorarray, int distanceType, int colorthreshold) {
 		opThresh.thresholdtype = EnumThresholdType.COLORARRAY;
 		opThresh.colorarray = colorarray;
 		opThresh.colordistanceType = distanceType;
@@ -45,7 +45,7 @@ public class ImageOperations {
 	public IcyBufferedImage run (int frame) {	
 		// step 1
 		opTransf.fromFrame = frame;
-		if (!opTransf.isValidTransformCache(seq.cacheTransformOp)) {
+		if (seq.cacheTransformedImage == null || !opTransf.isValidTransformCache(seq.cacheTransformOp)) {
 			seq.cacheTransformedImage = imgTransf.transformImageFromVirtualSequence(frame, opTransf.transformop);
 			if (seq.cacheTransformedImage == null) {
 				return null;

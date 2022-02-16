@@ -31,12 +31,12 @@ public class DlgTabThresholdFunction extends JPanel implements ChangeListener{
 			EnumImageOp.NORM_BRMINUSG, EnumImageOp.RGB,
 			EnumImageOp.H_HSB, EnumImageOp.S_HSB, EnumImageOp.B_HSB	});
 	JSpinner thresholdSpinner = new JSpinner(new SpinnerNumberModel(70, 0, 255, 1));
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 	
 	
-	public void init(JTabbedPane tab, GridLayout capLayout, Areatrack parent0) {
+	public void init(JTabbedPane tab, GridLayout capLayout, Areatrack areatrack) {
 		
-		this.parent0 = parent0;
+		this.areatrack = areatrack;
 		JComponent panel = new JPanel(false);
 		panel.setLayout(capLayout);
 		
@@ -75,17 +75,17 @@ public class DlgTabThresholdFunction extends JPanel implements ChangeListener{
 	
 	void updateThresholdOverlayParameters() {
 			
-		parent0.simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
-		parent0.simplethreshold = Integer.parseInt(thresholdSpinner.getValue().toString());
-		parent0.thresholdtype = EnumThresholdType.SINGLE;
+		areatrack.simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
+		areatrack.simplethreshold = Integer.parseInt(thresholdSpinner.getValue().toString());
+		areatrack.thresholdtype = EnumThresholdType.SINGLE;
 		
-		parent0.setOverlayParameters(true, parent0.simpletransformop, parent0.thresholdtype, parent0.simplethreshold);
+		areatrack.setOverlayParameters(true, areatrack.simpletransformop, areatrack.thresholdtype, areatrack.simplethreshold);
 	}
 	
 	public void transferParametersToDialog() {
 		
-		transformsComboBox.setSelectedItem(parent0.simpletransformop);
-		thresholdSpinner.setValue(parent0.simplethreshold);
+		transformsComboBox.setSelectedItem(areatrack.simpletransformop);
+		thresholdSpinner.setValue(areatrack.simplethreshold);
 	}
 	
 }
