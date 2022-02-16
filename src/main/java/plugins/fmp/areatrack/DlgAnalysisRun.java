@@ -88,7 +88,6 @@ public class DlgAnalysisRun extends JPanel
 		stopAnalysisThread();
 		
 		analysisThread = new AreaAnalysisThread(); 
-		parent0.dlgAnalysisParameters.updateThresholdOverlayParameters(-1);
 		
 		parent0.startFrame 	= Integer.parseInt( startFrameTextField.getText() );
 		parent0.endFrame 	= Integer.parseInt( endFrameTextField.getText() );
@@ -96,11 +95,15 @@ public class DlgAnalysisRun extends JPanel
 		parent0.vSequence.analysisStep = parent0.analyzeStep;
 		
 		EnumImageOp transformop = EnumImageOp.NONE;
+		int thresholdforsurface = parent0.simplethreshold;
 		if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) {
 			transformop = parent0.simpletransformop;
 			parent0.thresholdtype = EnumThresholdType.SINGLE;
+		} else if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) {
+			transformop = EnumImageOp.NONE;
+			parent0.thresholdtype = EnumThresholdType.COLORARRAY;
 		}
-		int thresholdforsurface = parent0.simplethreshold;
+		
 		int thresholdformovement = parent0.thresholdmovement;
 		
 		analysisThread.setAnalysisThreadParameters(
