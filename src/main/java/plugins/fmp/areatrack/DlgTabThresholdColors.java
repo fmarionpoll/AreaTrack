@@ -45,13 +45,13 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 		JRadioButton rbH1H2H3 			= new JRadioButton("H1H2H3");
 	private JLabel distanceLabel 			= new JLabel("Distance  ");
 	private JLabel colorspaceLabel 			= new JLabel("Color space ");
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 
 
 
-	public void init(JTabbedPane tab, GridLayout capLayout, Areatrack parent0) {
+	public void init(JTabbedPane tab, GridLayout capLayout, Areatrack areatrack) {
 		
-		this.parent0 = parent0;
+		this.areatrack = areatrack;
 		JComponent panel = new JPanel(false);
 		panel.setLayout(capLayout);
 		
@@ -95,19 +95,19 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 	private void declareActionListeners() {
 		rbRGB.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				parent0.colortransformop = EnumImageOp.NONE;
+				areatrack.colortransformop = EnumImageOp.NONE;
 				updateThresholdOverlayParameters();
 			} } );
 		
 		rbHSV.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				parent0.colortransformop = EnumImageOp.RGB_TO_HSV;
+				areatrack.colortransformop = EnumImageOp.RGB_TO_HSV;
 				updateThresholdOverlayParameters();
 			} } );
 		
 		rbH1H2H3.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				parent0.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
+				areatrack.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
 				updateThresholdOverlayParameters();
 			} } );
 		
@@ -153,17 +153,17 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 	
     void updateThresholdOverlayParameters() {
     	
-		parent0.colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
-		parent0.thresholdtype = EnumThresholdType.COLORARRAY;
-		parent0.colorarray.clear();
+		areatrack.colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
+		areatrack.thresholdtype = EnumThresholdType.COLORARRAY;
+		areatrack.colorarray.clear();
 		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
-			parent0.colorarray.add(colorPickCombo.getItemAt(i));
+			areatrack.colorarray.add(colorPickCombo.getItemAt(i));
 		}
-		parent0.colordistanceType = 1;
+		areatrack.colordistanceType = 1;
 		if (rbL2.isSelected()) 
-			parent0.colordistanceType = 2;
+			areatrack.colordistanceType = 2;
 
-		parent0.setOverlayParameters(true, parent0.colortransformop, parent0.thresholdtype, parent0.colorthreshold);
+		areatrack.setOverlayParameters(true, areatrack.colortransformop, areatrack.thresholdtype, areatrack.colorthreshold);
 	}
 	
 	private void pickColor() {
@@ -181,13 +181,13 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 			pickColorButton.setBackground(Color.DARK_GRAY);
 			bActiveTrapOverlay = true;
 		}	
-		parent0.vSequence.setMouseTrapOverlay(bActiveTrapOverlay, pickColorButton, colorPickCombo);
+		areatrack.vSequence.setMouseTrapOverlay(bActiveTrapOverlay, pickColorButton, colorPickCombo);
 	}
 	
 	public void transferParametersToDialog() {
 		
-		distanceSpinner.setValue(parent0.colorthreshold);
-		switch (parent0.colortransformop) {
+		distanceSpinner.setValue(areatrack.colorthreshold);
+		switch (areatrack.colortransformop) {
 			case RGB_TO_HSV:
 				rbHSV.setSelected(true);
 				break;
@@ -200,9 +200,9 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 				break;
 		}
 		colorPickCombo.removeAll();
-		for (int i = 0; i < parent0.colorarray.size(); i++)
-			colorPickCombo.addItem(parent0.colorarray.get(i));
-		if (parent0.colordistanceType == 1)
+		for (int i = 0; i < areatrack.colorarray.size(); i++)
+			colorPickCombo.addItem(areatrack.colorarray.get(i));
+		if (areatrack.colordistanceType == 1)
 			rbL1.setSelected(true);
 		else
 			rbL2.setSelected(true);

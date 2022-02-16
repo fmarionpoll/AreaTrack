@@ -44,13 +44,13 @@ public class DlgAnalysisParameters extends JPanel implements ChangeListener {
 	JButton openFiltersButton		= new JButton("Load...");
 	JButton saveFiltersButton		= new JButton("Save...");
 	JTabbedPane tabbedPane 			= new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 
 	
 
-	public void init(Areatrack parent0, IcyFrame mainFrame, JPanel mainPanel) {
+	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
-		this.parent0 = parent0;
+		this.areatrack = areatrack;
 		
 		PopupPanel 	capPopupPanel = new PopupPanel("ANALYSIS PARAMETERS");
 		JPanel capPanel = capPopupPanel.getMainPanel();
@@ -78,9 +78,9 @@ public class DlgAnalysisParameters extends JPanel implements ChangeListener {
 		capPanel.add(panel0, BorderLayout.PAGE_START);
 		
 		GridLayout capLayout = new GridLayout(3, 2);
-		dlgTabThresholdColors.init(tabbedPane, capLayout, parent0);
-		dlgTabThresholdFunction.init(tabbedPane, capLayout, parent0);
-		dlgTabThresholdMovement.init(tabbedPane, capLayout, parent0);
+		dlgTabThresholdColors.init(tabbedPane, capLayout, areatrack);
+		dlgTabThresholdFunction.init(tabbedPane, capLayout, areatrack);
+		dlgTabThresholdMovement.init(tabbedPane, capLayout, areatrack);
 		dlgTabOverlay.init(tabbedPane, capLayout);
 		capPanel.add(tabbedPane, BorderLayout.CENTER);
 		
@@ -135,12 +135,12 @@ public class DlgAnalysisParameters extends JPanel implements ChangeListener {
 	
 	private void xmlReadAreaTrackParameters() {
 		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
-		xmlAreaTrack.xmlReadAreaTrackParameters(parent0);
+		xmlAreaTrack.xmlReadAreaTrackParameters(areatrack);
 	}
 	
 	private void xmlWriteAreaTrackParameters() {
 		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
-		xmlAreaTrack.xmlWriteAreaTrackParameters(parent0);
+		xmlAreaTrack.xmlWriteAreaTrackParameters(areatrack);
 	}
 
 	@Override
@@ -164,10 +164,10 @@ public class DlgAnalysisParameters extends JPanel implements ChangeListener {
 			dlgTabThresholdMovement.updateThresholdOverlayParameters();
 			break;
 		case 3:
-			parent0.setOverlayParameters(false, null, null, 0);
+			areatrack.setOverlayParameters(false, null, null, 0);
 			break;
 		default:
-			parent0.setOverlayParameters(false, null, null, 0);
+			areatrack.setOverlayParameters(false, null, null, 0);
 			break;
 		}
 	}

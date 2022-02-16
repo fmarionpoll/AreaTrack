@@ -23,12 +23,12 @@ public class DlgTabThresholdMovement extends JPanel implements ChangeListener {
 	 */
 	private static final long serialVersionUID = 9098711267327847337L;
 	JSpinner threshold2Spinner = new JSpinner(new SpinnerNumberModel(20, 0, 255, 1));
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 
 	
-	public void init(JTabbedPane tab, GridLayout capLayout, Areatrack parent0) {
+	public void init(JTabbedPane tab, GridLayout capLayout, Areatrack areatrack) {
 		
-		this.parent0 = parent0;
+		this.areatrack = areatrack;
 		JComponent panel = new JPanel(false);
 		panel.setLayout(capLayout);
 		
@@ -48,12 +48,12 @@ public class DlgTabThresholdMovement extends JPanel implements ChangeListener {
 	}
 	
 	void updateThresholdOverlayParameters() {
-		parent0.thresholdmovement = Integer.parseInt(threshold2Spinner.getValue().toString());
-		parent0.setOverlayParameters(true, EnumImageOp.REF_PREVIOUS, EnumThresholdType.SINGLE, parent0.thresholdmovement);
+		areatrack.thresholdmovement = Integer.parseInt(threshold2Spinner.getValue().toString());
+		areatrack.setOverlayParameters(true, EnumImageOp.REF_PREVIOUS, EnumThresholdType.SINGLE, areatrack.thresholdmovement);
 	}
 	
 	public void transferParametersToDialog() {	
-		threshold2Spinner.setValue(parent0.thresholdmovement);
+		threshold2Spinner.setValue(areatrack.thresholdmovement);
 	}
 	
 }

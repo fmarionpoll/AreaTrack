@@ -15,7 +15,7 @@ import plugins.fmp.fmpTools.FmpTools;
 
 public class ExportToXLS {
 
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 	SequencePlus vSequence = null;
 	int startFrame= 0;
 	int endFrame = 1;
@@ -128,19 +128,19 @@ public class ExportToXLS {
 		}
 	}
 	
-	public void exportToXLS(Areatrack parent0, String filename) {
+	public void exportToXLS(Areatrack areatrack, String filename) {
 		
-		this.parent0 = parent0;
-		vSequence = parent0.vSequence;
-		startFrame = parent0.startFrame;
-		endFrame = parent0.endFrame;
-		if (parent0.dlgAnalysisRun.analysisThread != null)
-			resultsHeatMap = parent0.dlgAnalysisRun.analysisThread.results;
-		span = Integer.parseInt(parent0.dlgResults.spanTextField.getText());
-		analyzeStep = parent0.analyzeStep;
-		distanceString = String.valueOf(parent0.colorthreshold);
-		threshold2String = String.valueOf(parent0.thresholdmovement);
-		measureHeatmap = parent0.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected();
+		this.areatrack = areatrack;
+		vSequence = areatrack.vSequence;
+		startFrame = areatrack.startFrame;
+		endFrame = areatrack.endFrame;
+		if (areatrack.dlgAnalysisRun.analysisThread != null)
+			resultsHeatMap = areatrack.dlgAnalysisRun.analysisThread.results;
+		span = Integer.parseInt(areatrack.dlgResults.spanTextField.getText());
+		analyzeStep = areatrack.analyzeStep;
+		distanceString = String.valueOf(areatrack.colorthreshold);
+		threshold2String = String.valueOf(areatrack.thresholdmovement);
+		measureHeatmap = areatrack.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected();
 		
 		System.out.println("XLS output");
 		try {

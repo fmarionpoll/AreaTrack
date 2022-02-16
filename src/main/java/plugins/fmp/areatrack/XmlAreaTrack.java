@@ -13,28 +13,28 @@ import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.FmpTools;
 
 public class XmlAreaTrack {
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 	
-	public void xmlReadAreaTrackParameters(Areatrack parent0) {
-		this.parent0 = parent0;
+	public void xmlReadAreaTrackParameters(Areatrack areatrack) {
+		this.areatrack = areatrack;
 		
-		String directory = parent0.vSequence.getDirectory();
-		String fileparameters = directory + File.separator+ parent0.filenameAreatrackXml;
+		String directory = areatrack.vSequence.getDirectory();
+		String fileparameters = directory + File.separator+ areatrack.filenameAreatrackXml;
 		final Document doc = XMLUtil.loadDocument(fileparameters);
 		boolean flag = false;
 		if (doc != null) {
 			flag = xmlReadAreaTrackParameters(doc);
 			if (flag) 
-				parent0.dlgAnalysisParameters.transferParametersToDialog();
+				areatrack.dlgAnalysisParameters.transferParametersToDialog();
 			else
 				new AnnounceFrame("reading data failed");
 		}
 	}
 	
-	public void xmlWriteAreaTrackParameters(Areatrack parent0) {
-		this.parent0 = parent0;
+	public void xmlWriteAreaTrackParameters(Areatrack areatrack) {
+		this.areatrack = areatrack;
 		
-		String csFile = FmpTools.saveFileAs(parent0.filenameAreatrackXml, parent0.vSequence.getDirectory(), "xml");
+		String csFile = FmpTools.saveFileAs(areatrack.filenameAreatrackXml, areatrack.vSequence.getDirectory(), "xml");
 		csFile.toLowerCase();
 		if (!csFile.contains(".xml")) 
 			csFile += ".xml";
@@ -64,26 +64,26 @@ public class XmlAreaTrack {
 
 		Element xmlVal = XMLUtil.getElement(xmlElement, "colormodeselected");
 		boolean iscolorselected = XMLUtil.getAttributeBooleanValue(xmlVal, "value", true );
-		parent0.dlgAnalysisParameters.rbFilterbyColor.setSelected(iscolorselected);
+		areatrack.dlgAnalysisParameters.rbFilterbyColor.setSelected(iscolorselected);
 		
 		xmlVal = XMLUtil.getElement(xmlElement, "colortransformop");	
 		String codestring = XMLUtil.getAttributeValue(xmlVal, "descriptor", "none");		
-		parent0.colortransformop = EnumImageOp.findByText(codestring);
+		areatrack.colortransformop = EnumImageOp.findByText(codestring);
 			
 		xmlVal = XMLUtil.getElement(xmlElement, "simpletransformop");
 		codestring = XMLUtil.getAttributeValue(xmlVal, "descriptor", "none");
-		parent0.simpletransformop = EnumImageOp.findByText(codestring);
+		areatrack.simpletransformop = EnumImageOp.findByText(codestring);
 
 		xmlVal = XMLUtil.getElement(xmlElement, "thresholdmovement");
-		parent0.thresholdmovement = XMLUtil.getAttributeIntValue(xmlVal, "value", 20);
+		areatrack.thresholdmovement = XMLUtil.getAttributeIntValue(xmlVal, "value", 20);
 		
 		xmlVal = XMLUtil.getElement(xmlElement, "colordistanceType");
-		parent0.colordistanceType = XMLUtil.getAttributeIntValue(xmlVal, "value", 0);
+		areatrack.colordistanceType = XMLUtil.getAttributeIntValue(xmlVal, "value", 0);
 		
 		xmlVal = XMLUtil.getElement(xmlElement, "colorthreshold");
-		parent0.colorthreshold = XMLUtil.getAttributeIntValue(xmlVal, "value", 20);
+		areatrack.colorthreshold = XMLUtil.getAttributeIntValue(xmlVal, "value", 20);
 		
-		parent0.colorarray.clear();
+		areatrack.colorarray.clear();
 		xmlVal = XMLUtil.getElement(xmlElement, "ncolors");
 		int ncolors = XMLUtil.getAttributeIntValue(xmlVal, "value", 0);
 		for (int i= 0; i<ncolors; i++) {
@@ -93,7 +93,7 @@ public class XmlAreaTrack {
 			int blue = XMLUtil.getAttributeIntValue(xmlVal, "b", 0);
 			int green = XMLUtil.getAttributeIntValue(xmlVal, "g", 0);
 			Color color = new Color(red, green, blue, alpha);
-			parent0.colorarray.add(color);
+			areatrack.colorarray.add(color);
 		}
 		return true;
 	}
@@ -109,33 +109,33 @@ public class XmlAreaTrack {
 		Element xmlElement = XMLUtil.addElement(node, "Parameters");
 		
 		Element xmlVal = XMLUtil.addElement(xmlElement, "colormodeselected");
-		XMLUtil.setAttributeBooleanValue(xmlVal, "value", parent0.dlgAnalysisParameters.rbFilterbyColor.isSelected() );
+		XMLUtil.setAttributeBooleanValue(xmlVal, "value", areatrack.dlgAnalysisParameters.rbFilterbyColor.isSelected() );
 	
 		xmlVal = XMLUtil.addElement(xmlElement, "simpletransformop");
-		XMLUtil.setAttributeValue(xmlVal, "descriptor", parent0.simpletransformop.toString());
+		XMLUtil.setAttributeValue(xmlVal, "descriptor", areatrack.simpletransformop.toString());
 		
 		xmlVal = XMLUtil.addElement(xmlElement, "simplethreshold");
-		XMLUtil.setAttributeIntValue(xmlVal, "value", parent0.simplethreshold);
+		XMLUtil.setAttributeIntValue(xmlVal, "value", areatrack.simplethreshold);
 		
 		xmlVal = XMLUtil.addElement(xmlElement, "colortransformop");
-		XMLUtil.setAttributeValue(xmlVal, "descriptor", parent0.colortransformop.toString());
+		XMLUtil.setAttributeValue(xmlVal, "descriptor", areatrack.colortransformop.toString());
 		
 		xmlVal = XMLUtil.addElement(xmlElement, "thresholdtype");
-		XMLUtil.setAttributeValue(xmlVal, "descriptor", parent0.thresholdtype.toString());	
+		XMLUtil.setAttributeValue(xmlVal, "descriptor", areatrack.thresholdtype.toString());	
 		
 		xmlVal = XMLUtil.addElement(xmlElement, "colordistanceType");
-		XMLUtil.setAttributeIntValue(xmlVal, "value", parent0.colordistanceType);
+		XMLUtil.setAttributeIntValue(xmlVal, "value", areatrack.colordistanceType);
 
 		xmlVal = XMLUtil.addElement(xmlElement, "thresholdmovement");
-		XMLUtil.setAttributeIntValue(xmlVal, "value", parent0.thresholdmovement);
+		XMLUtil.setAttributeIntValue(xmlVal, "value", areatrack.thresholdmovement);
 		
 		xmlVal = XMLUtil.addElement(xmlElement, "colorthreshold");
-		XMLUtil.setAttributeIntValue(xmlVal, "value", parent0.colorthreshold);
+		XMLUtil.setAttributeIntValue(xmlVal, "value", areatrack.colorthreshold);
 		
 		xmlVal = XMLUtil.addElement(xmlElement, "ncolors");
-		XMLUtil.setAttributeIntValue(xmlVal, "value", parent0.colorarray.size());
-		for (int i = 0; i < parent0.colorarray.size(); i++) {
-			Color color = parent0.colorarray.get(i);
+		XMLUtil.setAttributeIntValue(xmlVal, "value", areatrack.colorarray.size());
+		for (int i = 0; i < areatrack.colorarray.size(); i++) {
+			Color color = areatrack.colorarray.get(i);
 			xmlVal = XMLUtil.addElement(xmlElement, "color"+Integer.toString(i));
 			XMLUtil.setAttributeIntValue(xmlVal, "a", color.getAlpha());
 			XMLUtil.setAttributeIntValue(xmlVal, "r", color.getRed());

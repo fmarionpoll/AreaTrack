@@ -29,13 +29,13 @@ public class DlgResults extends JPanel {
 	private JButton updateChartsButton = new JButton("Chart window");
 	private JButton setGraphsOverlayButton	= new JButton("Curves");
 	private JButton exportToXLSButton = new JButton("Save XLS file..");
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 
 	
 	
-	public void init(Areatrack parent0, IcyFrame mainFrame, JPanel mainPanel) {
+	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
-		this.parent0 = parent0;
+		this.areatrack = areatrack;
 		PopupPanel 	capPopupPanel = new PopupPanel("RESULTS DISPLAY/EXPORT");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(3, 2));
@@ -80,25 +80,25 @@ public class DlgResults extends JPanel {
 	}
 	
 	private void updateCharts() {
-		parent0.displayCharts = new GraphsWindow();
+		areatrack.displayCharts = new GraphsWindow();
 		int span = Integer.parseInt(spanTextField.getText());
 		int filteroption = filterComboBox.getSelectedIndex();
-		parent0.displayCharts.updateCharts(parent0.vSequence, parent0.startFrame, parent0.endFrame, filteroption, span, parent0.analyzeStep); 
+		areatrack.displayCharts.updateCharts(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame, filteroption, span, areatrack.analyzeStep); 
 	}
 	
 	private void setGraphsOverlay() {
 		GraphsOverlay displayGraphs = new GraphsOverlay();
 		int span = Integer.parseInt(spanTextField.getText());
 		int filteroption = filterComboBox.getSelectedIndex();
-		displayGraphs.updateCharts(parent0.vSequence, parent0.startFrame, parent0.endFrame, filteroption, span, parent0.analyzeStep); 
+		displayGraphs.updateCharts(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame, filteroption, span, areatrack.analyzeStep); 
 	}
 	
 	private void exportToXLS() {
-		String file = FmpTools.saveFileAs(null, parent0.vSequence.getDirectory(), "xls");
+		String file = FmpTools.saveFileAs(null, areatrack.vSequence.getDirectory(), "xls");
 		if (file != null) {	
 			ExportToXLS exportToXLS = new ExportToXLS();
 			final String filename = file; 
-			exportToXLS.exportToXLS(parent0, filename);
+			exportToXLS.exportToXLS(areatrack, filename);
 		}
 	}
 

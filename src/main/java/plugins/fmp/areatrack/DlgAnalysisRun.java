@@ -33,12 +33,12 @@ public class DlgAnalysisRun extends JPanel
 	JTextField endFrameTextField = new JTextField("99999999");
 	private JTextField analyzeStepTextField	= new JTextField("1");
 	AreaAnalysisThread analysisThread = null;
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 
 
-	public void init (Areatrack parent0, IcyFrame mainFrame, JPanel mainPanel) {
+	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
-		this.parent0 = parent0;
+		this.areatrack = areatrack;
 		PopupPanel 	capPopupPanel = new PopupPanel("RUN ANALYSIS");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(2, 2));
@@ -91,34 +91,34 @@ public class DlgAnalysisRun extends JPanel
 		
 		analysisThread = new AreaAnalysisThread(); 
 
-		parent0.startFrame 	= Integer.parseInt( startFrameTextField.getText() );
-		parent0.endFrame 	= Integer.parseInt( endFrameTextField.getText() );
-		parent0.analyzeStep = Integer.parseInt( analyzeStepTextField.getText() );
-		parent0.vSequence.analysisStep = parent0.analyzeStep;
+		areatrack.startFrame 	= Integer.parseInt( startFrameTextField.getText() );
+		areatrack.endFrame 	= Integer.parseInt( endFrameTextField.getText() );
+		areatrack.analyzeStep = Integer.parseInt( analyzeStepTextField.getText() );
+		areatrack.vSequence.analysisStep = areatrack.analyzeStep;
 		
-		if (parent0.dlgAnalysisParameters.measureSurfacesCheckBox.isSelected()) 
+		if (areatrack.dlgAnalysisParameters.measureSurfacesCheckBox.isSelected()) 
 		{ 
-			if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) 
+			if (areatrack.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) 
 			{
-				parent0.thresholdtype = EnumThresholdType.SINGLE;
-				analysisThread.initAreaDetectionFromFunction(parent0.vSequence, parent0.startFrame, parent0.endFrame, 
+				areatrack.thresholdtype = EnumThresholdType.SINGLE;
+				analysisThread.initAreaDetectionFromFunction(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame, 
 						getROIsToAnalyze(),  
-						parent0.simpletransformop, parent0.simplethreshold);
+						areatrack.simpletransformop, areatrack.simplethreshold);
 			} 
 			else 
 			{
-				parent0.thresholdtype = EnumThresholdType.COLORARRAY;
-				analysisThread.initAreaDetectionFromColors(parent0.vSequence, parent0.startFrame, parent0.endFrame,
+				areatrack.thresholdtype = EnumThresholdType.COLORARRAY;
+				analysisThread.initAreaDetectionFromColors(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
 						getROIsToAnalyze(),  
-						parent0.colordistanceType, parent0.colorthreshold, parent0.colorarray);
+						areatrack.colordistanceType, areatrack.colorthreshold, areatrack.colorarray);
 			}
 		}
 		
-		if (parent0.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected()) 
+		if (areatrack.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected()) 
 		{
-			analysisThread.initMovementDetection(parent0.vSequence, parent0.startFrame, parent0.endFrame,
+			analysisThread.initMovementDetection(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
 					getROIsToAnalyze(),
-					parent0.thresholdmovement);
+					areatrack.thresholdmovement);
 		}	
 		analysisThread.start();	
 	}
@@ -137,7 +137,7 @@ public class DlgAnalysisRun extends JPanel
 	
 	// TODO : filter out ROIS that are not defining a "cage"
 	private ArrayList<ROI2D> getROIsToAnalyze() {
-		return parent0.vSequence.seq.getROI2Ds();
+		return areatrack.vSequence.seq.getROI2Ds();
 	}
 	
 	

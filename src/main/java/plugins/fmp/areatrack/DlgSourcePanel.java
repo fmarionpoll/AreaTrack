@@ -26,12 +26,12 @@ public class DlgSourcePanel extends JPanel {
 	private static final long serialVersionUID = 6623935409683076615L;
 	private JButton setVideoSourceButton	= new JButton("Open...");
 	private JButton closeAllButton = new JButton("Close");
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 
 	
-	public void init (Areatrack parent0, IcyFrame mainFrame, JPanel mainPanel) {
+	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
-		this.parent0 = parent0;
+		this.areatrack = areatrack;
 		PopupPanel 	capPopupPanel = new PopupPanel("Source data");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new BorderLayout());
@@ -58,39 +58,39 @@ public class DlgSourcePanel extends JPanel {
 		
 		closeAllButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				if (parent0.displayCharts != null && parent0.displayCharts.mainChartFrame != null) 
+				if (areatrack.displayCharts != null && areatrack.displayCharts.mainChartFrame != null) 
 				{
-					parent0.displayCharts.mainChartFrame.removeAll();
-					parent0.displayCharts.mainChartFrame.close();
-					parent0.displayCharts.mainChartFrame = null;
+					areatrack.displayCharts.mainChartFrame.removeAll();
+					areatrack.displayCharts.mainChartFrame.close();
+					areatrack.displayCharts.mainChartFrame = null;
 				}
-				parent0.vSequence.close();
+				areatrack.vSequence.close();
 			} } );
 	}
 	
 	public void openVideoOrStack() {
 		String path = null;
-		if (parent0.vSequence != null)
-			parent0.vSequence.close();
+		if (areatrack.vSequence != null)
+			areatrack.vSequence.close();
 
 		Sequence seq = OpenVirtualSequence.openImagesOrAvi(null);
 		Viewer v = OpenVirtualSequence.initSequenceViewer(seq);
-		v.addListener(parent0);
-		parent0.vSequence = new SequencePlus(seq);
+		v.addListener(areatrack);
+		areatrack.vSequence = new SequencePlus(seq);
 		
-		path = parent0.vSequence.getDirectory();
+		path = areatrack.vSequence.getDirectory();
 		if (path != null) {
-			XMLPreferences guiPrefs = parent0.getPreferences("gui");
+			XMLPreferences guiPrefs = areatrack.getPreferences("gui");
 			guiPrefs.put("lastUsedPath", path);
 		}
 		
 		updateGuiEndFrame();
 		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
-		xmlAreaTrack.xmlReadAreaTrackParameters(parent0);
+		xmlAreaTrack.xmlReadAreaTrackParameters(areatrack);
 	}
 	
 	private void updateGuiEndFrame () {
-		parent0.endFrame = parent0.vSequence.getSizeT()-1;
-		parent0.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(parent0.endFrame));
+		areatrack.endFrame = areatrack.vSequence.getSizeT()-1;
+		areatrack.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
 	}
 }

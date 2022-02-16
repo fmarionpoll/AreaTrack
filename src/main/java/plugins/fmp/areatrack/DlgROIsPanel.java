@@ -24,11 +24,11 @@ public class DlgROIsPanel extends JPanel {
 	private JButton openROIsButton			= new JButton("Load...");
 	private JButton addROIsButton			= new JButton("Add...");
 	private JButton	saveROIsButton			= new JButton("Save...");
-	Areatrack parent0 = null;
+	Areatrack areatrack = null;
 
-	public void init(Areatrack parent0, IcyFrame mainFrame, JPanel mainPanel) {
+	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
-		this.parent0 = parent0;
+		this.areatrack = areatrack;
 		PopupPanel 	capPopupPanel = new PopupPanel("ROIs");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(2, 2));
@@ -55,31 +55,31 @@ public class DlgROIsPanel extends JPanel {
 		openROIsButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				LoadRois loadRois = new LoadRois();
-				loadRois.openROIs(parent0.vSequence); 
+				loadRois.openROIs(areatrack.vSequence); 
 				updateStartAndEndFrameFromvSequence();
 			} } );
 		
 		saveROIsButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) {
-				parent0.vSequence.analysisStart = parent0.startFrame;
-				parent0.vSequence.analysisEnd = parent0.endFrame;
+				areatrack.vSequence.analysisStart = areatrack.startFrame;
+				areatrack.vSequence.analysisEnd = areatrack.endFrame;
 				LoadRois loadRois = new LoadRois();
-				loadRois.saveROIs(parent0.vSequence); 
+				loadRois.saveROIs(areatrack.vSequence); 
 			} } );
 		
 		addROIsButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) {
 				LoadRois loadRois = new LoadRois();
-				loadRois.addROIs(parent0.vSequence);
+				loadRois.addROIs(areatrack.vSequence);
 				updateStartAndEndFrameFromvSequence();
 			} } );
 	}
 	
 	private void updateStartAndEndFrameFromvSequence()
 	{
-		parent0.startFrame = (int) parent0.vSequence.analysisStart;
-		parent0.endFrame = (int) parent0.vSequence.analysisEnd;
-		parent0.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(parent0.endFrame));
-		parent0.dlgAnalysisRun.startFrameTextField.setText( Integer.toString(parent0.startFrame));
+		areatrack.startFrame = (int) areatrack.vSequence.analysisStart;
+		areatrack.endFrame = (int) areatrack.vSequence.analysisEnd;
+		areatrack.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
+		areatrack.dlgAnalysisRun.startFrameTextField.setText( Integer.toString(areatrack.startFrame));
 	}
 }
