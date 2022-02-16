@@ -79,7 +79,7 @@ public class DlgROIsPanel extends JPanel {
 	{
 		parent0.startFrame = (int) parent0.vSequence.analysisStart;
 		parent0.endFrame = (int) parent0.vSequence.analysisEnd;
-		parent0.endFrameTextField.setText( Integer.toString(parent0.endFrame));
-		parent0.startFrameTextField.setText( Integer.toString(parent0.startFrame));
+		parent0.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(parent0.endFrame));
+		parent0.dlgAnalysisRun.startFrameTextField.setText( Integer.toString(parent0.startFrame));
 	}
 }

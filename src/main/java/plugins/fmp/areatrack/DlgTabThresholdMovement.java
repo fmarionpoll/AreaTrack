@@ -23,9 +23,12 @@ public class DlgTabThresholdMovement extends JPanel implements ChangeListener {
 	 */
 	private static final long serialVersionUID = 9098711267327847337L;
 	JSpinner threshold2Spinner = new JSpinner(new SpinnerNumberModel(20, 0, 255, 1));
+	Areatrack parent0 = null;
 
 	
-	public void init(JTabbedPane tab, GridLayout capLayout) {
+	public void init(JTabbedPane tab, GridLayout capLayout, Areatrack parent0) {
+		
+		this.parent0 = parent0;
 		JComponent panel = new JPanel(false);
 		panel.setLayout(capLayout);
 		
@@ -44,34 +47,13 @@ public class DlgTabThresholdMovement extends JPanel implements ChangeListener {
 			updateThresholdOverlayParameters();
 	}
 	
-	private void updateThresholdOverlayParameters() {
-		
-		if (vSequence == null)
-			return;
-		
-		boolean activateThreshold = true;
-		int thresholdForOverlay = 0;
-		EnumImageOp transformOpForOverlay = EnumImageOp.NONE;
-		EnumThresholdType thresholdTypeForOverlay = EnumThresholdType.SINGLE;
-		
-				thresholdmovement = Integer.parseInt(threshold2Spinner.getValue().toString());
-				thresholdForOverlay = thresholdmovement; 
-				thresholdTypeForOverlay = EnumThresholdType.SINGLE;
-				transformOpForOverlay = EnumImageOp.REF_PREVIOUS;
+	void updateThresholdOverlayParameters() {
+		parent0.thresholdmovement = Integer.parseInt(threshold2Spinner.getValue().toString());
+		parent0.setOverlayParameters(true, EnumImageOp.REF_PREVIOUS, EnumThresholdType.SINGLE, parent0.thresholdmovement);
+	}
 	
-		
-		//--------------------------------
-		
-		if (vSequence != null) 
-			vSequence.setThresholdOverlay(activateThreshold);
-		
-		if (activateThreshold && vSequence != null) {
-			vSequence.setThresholdOverlay(activateThreshold);
-			if (thresholdTypeForOverlay == EnumThresholdType.SINGLE)
-				vSequence.setThresholdOverlayParametersSingle(transformOpForOverlay, thresholdForOverlay);
-			else
-				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, colorarray, colordistanceType, colorthreshold);
-		}
+	public void transferParametersToDialog() {	
+		threshold2Spinner.setValue(parent0.thresholdmovement);
 	}
 	
 }

@@ -134,13 +134,13 @@ public class ExportToXLS {
 		vSequence = parent0.vSequence;
 		startFrame = parent0.startFrame;
 		endFrame = parent0.endFrame;
-		if (parent0.analysisThread != null)
-			resultsHeatMap = parent0.analysisThread.results;
-		span = Integer.parseInt(parent0.spanTextField.getText());
+		if (parent0.dlgAnalysisRun.analysisThread != null)
+			resultsHeatMap = parent0.dlgAnalysisRun.analysisThread.results;
+		span = Integer.parseInt(parent0.dlgResults.spanTextField.getText());
 		analyzeStep = parent0.analyzeStep;
-		distanceString = parent0.dlgAnalysis.distanceSpinner.getValue().toString();
-		threshold2String = parent0.dlgAnalysis.threshold2Spinner.getValue().toString();
-		measureHeatmap = parent0.dlgAnalysis.measureHeatmapCheckBox.isSelected();
+		distanceString = String.valueOf(parent0.colorthreshold);
+		threshold2String = String.valueOf(parent0.thresholdmovement);
+		measureHeatmap = parent0.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected();
 		
 		System.out.println("XLS output");
 		try {

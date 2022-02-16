@@ -12,7 +12,6 @@ import java.awt.event.ComponentEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -24,11 +23,10 @@ import javax.swing.event.ChangeListener;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
-import icy.gui.util.GuiUtil;
-import plugins.fmp.fmpTools.EnumImageOp;
 
 
-public class DlgAnalysis extends JPanel implements ChangeListener {
+
+public class DlgAnalysisParameters extends JPanel implements ChangeListener {
 	
 	/**
 	 * 
@@ -80,9 +78,9 @@ public class DlgAnalysis extends JPanel implements ChangeListener {
 		capPanel.add(panel0, BorderLayout.PAGE_START);
 		
 		GridLayout capLayout = new GridLayout(3, 2);
-		dlgTabThresholdColors.init(tabbedPane, capLayout);
-		dlgTabThresholdFunction.init(tabbedPane, capLayout);
-		dlgTabThresholdMovement.init(tabbedPane, capLayout);
+		dlgTabThresholdColors.init(tabbedPane, capLayout, parent0);
+		dlgTabThresholdFunction.init(tabbedPane, capLayout, parent0);
+		dlgTabThresholdMovement.init(tabbedPane, capLayout, parent0);
 		dlgTabOverlay.init(tabbedPane, capLayout);
 		capPanel.add(tabbedPane, BorderLayout.CENTER);
 		
@@ -147,12 +145,38 @@ public class DlgAnalysis extends JPanel implements ChangeListener {
 
 	@Override
 	public void stateChanged (ChangeEvent e) {
-		if (e.getSource() == tabbedPane) 
-			updateThresholdOverlayParameters();
+		if (e.getSource() == tabbedPane) {
+			int selectedTab = tabbedPane.getSelectedIndex();
+			updateThresholdOverlayParameters(selectedTab);
+		}
 	}
 
+	public void updateThresholdOverlayParameters(int selectedTab) {
+		
+		switch( selectedTab) {
+		case 0:
+			dlgTabThresholdColors.updateThresholdOverlayParameters();
+			break;
+		case 1:
+			dlgTabThresholdFunction.updateThresholdOverlayParameters();
+			break;
+		case 2:
+			dlgTabThresholdMovement.updateThresholdOverlayParameters();
+			break;
+		case 3:
+			parent0.setOverlayParameters(false, null, null, 0);
+			break;
+		default:
+			parent0.setOverlayParameters(false, null, null, 0);
+			break;
+		}
+	}
 	
-	
-	
+	public void transferParametersToDialog() {
+		
+		dlgTabThresholdColors.transferParametersToDialog();
+		dlgTabThresholdFunction.transferParametersToDialog();
+		dlgTabThresholdMovement.transferParametersToDialog();
+	}
 
 }

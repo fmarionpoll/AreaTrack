@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,9 +16,10 @@ import javax.swing.JTextField;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
+import icy.roi.ROI2D;
 import plugins.fmp.fmpTools.EnumImageOp;
 
-public class DlgRunAnalysis extends JPanel 
+public class DlgAnalysisRun extends JPanel 
 {
 	/**
 	 * 
@@ -27,11 +29,14 @@ public class DlgRunAnalysis extends JPanel
 	private JButton stopComputationButton = new JButton("Stop");
 	JTextField startFrameTextField	= new JTextField("0");
 	JTextField endFrameTextField = new JTextField("99999999");
-	
 	private JTextField analyzeStepTextField	= new JTextField("1");
+	AreaAnalysisThread analysisThread = null;
+	Areatrack parent0 = null;
 
 
-	public void init (Areatrack parent0, IcyFrame mainFrame, JPanel mainPanel) {		
+	public void init (Areatrack parent0, IcyFrame mainFrame, JPanel mainPanel) {
+		
+		this.parent0 = parent0;
 		PopupPanel 	capPopupPanel = new PopupPanel("RUN ANALYSIS");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(2, 2));
@@ -82,34 +87,35 @@ public class DlgRunAnalysis extends JPanel
 		stopAnalysisThread();
 		
 		analysisThread = new AreaAnalysisThread(); 
-		updateThresholdOverlayParameters();
+		parent0.dlgAnalysisParameters.updateThresholdOverlayParameters(-1);
 		
-		startFrame 	= Integer.parseInt( startFrameTextField.getText() );
-		endFrame 	= Integer.parseInt( endFrameTextField.getText() );
-		analyzeStep = Integer.parseInt( analyzeStepTextField.getText() );
-		vSequence.analysisStep = analyzeStep;
+		parent0.startFrame 	= Integer.parseInt( startFrameTextField.getText() );
+		parent0.endFrame 	= Integer.parseInt( endFrameTextField.getText() );
+		parent0.analyzeStep = Integer.parseInt( analyzeStepTextField.getText() );
+		parent0.vSequence.analysisStep = parent0.analyzeStep;
 		
 		EnumImageOp transformop = EnumImageOp.NONE;
-		if (rbFilterbyFunction.isSelected())
-			transformop = (EnumImageOp) transformsComboBox.getSelectedItem();
-		int thresholdforsurface = Integer.parseInt(thresholdSpinner.getValue().toString());
-		int thresholdformovement = Integer.parseInt(threshold2Spinner.getValue().toString());
+		if (parent0.dlgAnalysisParameters.rbFilterbyFunction.isSelected())
+			transformop = parent0.simpletransformop;
+		int thresholdforsurface = parent0.simplethreshold;
+		int thresholdformovement = parent0.thresholdmovement;
 		
 		analysisThread.setAnalysisThreadParameters(
-			vSequence, 
+			parent0.vSequence, 
 			getROIsToAnalyze(), 
-			startFrame, 
-			endFrame,  
+			parent0.startFrame, 
+			parent0.endFrame,  
 			transformop, 
 			thresholdforsurface,
 			thresholdformovement,
-			measureSurfacesCheckBox.isSelected(), 
-			measureHeatmapCheckBox.isSelected());
+			parent0.dlgAnalysisParameters.measureSurfacesCheckBox.isSelected(), 
+			parent0.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected());
+		
 		analysisThread.setAnalysisThreadParametersColors (
-			thresholdtype, 
-			colordistanceType, 
-			colorthreshold, 
-			colorarray);
+			parent0.thresholdtype, 
+			parent0.colordistanceType, 
+			parent0.colorthreshold, 
+			parent0.colorarray);
 		analysisThread.start();	
 	}
 	
@@ -124,5 +130,10 @@ public class DlgRunAnalysis extends JPanel
 			}
 		}
 	}
+	
+	private ArrayList<ROI2D> getROIsToAnalyze() {
+		return parent0.vSequence.seq.getROI2Ds();
+	}
+	
 	
 }

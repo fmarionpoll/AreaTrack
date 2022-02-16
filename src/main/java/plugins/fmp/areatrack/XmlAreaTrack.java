@@ -19,13 +19,13 @@ public class XmlAreaTrack {
 		this.parent0 = parent0;
 		
 		String directory = parent0.vSequence.getDirectory();
-		String fileparameters = directory + File.separator+ parent0.filename;
+		String fileparameters = directory + File.separator+ parent0.filenameAreatrackXml;
 		final Document doc = XMLUtil.loadDocument(fileparameters);
 		boolean flag = false;
 		if (doc != null) {
 			flag = xmlReadAreaTrackParameters(doc);
 			if (flag) 
-				transferParametersToDialog();
+				parent0.dlgAnalysisParameters.transferParametersToDialog();
 			else
 				new AnnounceFrame("reading data failed");
 		}
@@ -34,7 +34,7 @@ public class XmlAreaTrack {
 	public void xmlWriteAreaTrackParameters(Areatrack parent0) {
 		this.parent0 = parent0;
 		
-		String csFile = FmpTools.saveFileAs(parent0.filename, parent0.vSequence.getDirectory(), "xml");
+		String csFile = FmpTools.saveFileAs(parent0.filenameAreatrackXml, parent0.vSequence.getDirectory(), "xml");
 		csFile.toLowerCase();
 		if (!csFile.contains(".xml")) 
 			csFile += ".xml";
@@ -64,7 +64,7 @@ public class XmlAreaTrack {
 
 		Element xmlVal = XMLUtil.getElement(xmlElement, "colormodeselected");
 		boolean iscolorselected = XMLUtil.getAttributeBooleanValue(xmlVal, "value", true );
-		parent0.dlgAnalysis.rbFilterbyColor.setSelected(iscolorselected);
+		parent0.dlgAnalysisParameters.rbFilterbyColor.setSelected(iscolorselected);
 		
 		xmlVal = XMLUtil.getElement(xmlElement, "colortransformop");	
 		String codestring = XMLUtil.getAttributeValue(xmlVal, "descriptor", "none");		
@@ -109,13 +109,13 @@ public class XmlAreaTrack {
 		Element xmlElement = XMLUtil.addElement(node, "Parameters");
 		
 		Element xmlVal = XMLUtil.addElement(xmlElement, "colormodeselected");
-		XMLUtil.setAttributeBooleanValue(xmlVal, "value", parent0.dlgAnalysis.rbFilterbyColor.isSelected() );
+		XMLUtil.setAttributeBooleanValue(xmlVal, "value", parent0.dlgAnalysisParameters.rbFilterbyColor.isSelected() );
 	
 		xmlVal = XMLUtil.addElement(xmlElement, "simpletransformop");
 		XMLUtil.setAttributeValue(xmlVal, "descriptor", parent0.simpletransformop.toString());
 		
 		xmlVal = XMLUtil.addElement(xmlElement, "simplethreshold");
-		XMLUtil.setAttributeIntValue(xmlVal, "value", Integer.parseInt(parent0.thresholdSpinner.getValue().toString()));
+		XMLUtil.setAttributeIntValue(xmlVal, "value", parent0.simplethreshold);
 		
 		xmlVal = XMLUtil.addElement(xmlElement, "colortransformop");
 		XMLUtil.setAttributeValue(xmlVal, "descriptor", parent0.colortransformop.toString());
@@ -144,33 +144,6 @@ public class XmlAreaTrack {
 		}
 		return true;
 	}
-	
-	private void transferParametersToDialog() {
-		
-		parent0.distanceSpinner.setValue(parent0.colorthreshold);
-		parent0.dlgAnalysis.tabbedPane.setSelectedIndex(3);
-		switch (parent0.colortransformop) {
-		case RGB_TO_HSV:
-			parent0.rbHSV.setSelected(true);
-			break;
-		case RGB_TO_H1H2H3:
-			parent0.rbH1H2H3.setSelected(true);
-			break;
-		case NONE:
-		default:
-			parent0.rbRGB.setSelected(true);
-			break;
-		}
-		parent0.colorPickCombo.removeAll();
-		for (int i=0; i < parent0.colorarray.size(); i++)
-			parent0.colorPickCombo.addItem(parent0.colorarray.get(i));
-		if (parent0.colordistanceType == 1)
-			parent0.rbL1.setSelected(true);
-		else
-			parent0.rbL2.setSelected(true);
-		parent0.transformsComboBox.setSelectedItem(parent0.simpletransformop);
-		parent0.thresholdSpinner.setValue(parent0.simplethreshold);
-		parent0.threshold2Spinner.setValue(parent0.thresholdmovement);
-	}
+
 	
 }

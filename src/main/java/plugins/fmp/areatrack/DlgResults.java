@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
+import plugins.fmp.fmpTools.FmpTools;
 
 public class DlgResults extends JPanel {
 
@@ -28,10 +29,13 @@ public class DlgResults extends JPanel {
 	private JButton updateChartsButton = new JButton("Chart window");
 	private JButton setGraphsOverlayButton	= new JButton("Curves");
 	private JButton exportToXLSButton = new JButton("Save XLS file..");
+	Areatrack parent0 = null;
 
 	
 	
 	public void init(Areatrack parent0, IcyFrame mainFrame, JPanel mainPanel) {
+		
+		this.parent0 = parent0;
 		PopupPanel 	capPopupPanel = new PopupPanel("RESULTS DISPLAY/EXPORT");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(3, 2));
@@ -74,5 +78,29 @@ public class DlgResults extends JPanel {
 				exportToXLS();
 			} } );
 	}
+	
+	private void updateCharts() {
+		parent0.displayCharts = new GraphsWindow();
+		int span = Integer.parseInt(spanTextField.getText());
+		int filteroption = filterComboBox.getSelectedIndex();
+		parent0.displayCharts.updateCharts(parent0.vSequence, parent0.startFrame, parent0.endFrame, filteroption, span, parent0.analyzeStep); 
+	}
+	
+	private void setGraphsOverlay() {
+		GraphsOverlay displayGraphs = new GraphsOverlay();
+		int span = Integer.parseInt(spanTextField.getText());
+		int filteroption = filterComboBox.getSelectedIndex();
+		displayGraphs.updateCharts(parent0.vSequence, parent0.startFrame, parent0.endFrame, filteroption, span, parent0.analyzeStep); 
+	}
+	
+	private void exportToXLS() {
+		String file = FmpTools.saveFileAs(null, parent0.vSequence.getDirectory(), "xls");
+		if (file != null) {	
+			ExportToXLS exportToXLS = new ExportToXLS();
+			final String filename = file; 
+			exportToXLS.exportToXLS(parent0, filename);
+		}
+	}
+
 
 }

@@ -45,10 +45,13 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 		JRadioButton rbH1H2H3 			= new JRadioButton("H1H2H3");
 	private JLabel distanceLabel 			= new JLabel("Distance  ");
 	private JLabel colorspaceLabel 			= new JLabel("Color space ");
+	Areatrack parent0 = null;
 
 
 
-	public void init(JTabbedPane tab, GridLayout capLayout) {
+	public void init(JTabbedPane tab, GridLayout capLayout, Areatrack parent0) {
+		
+		this.parent0 = parent0;
 		JComponent panel = new JPanel(false);
 		panel.setLayout(capLayout);
 		
@@ -92,19 +95,19 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 	private void declareActionListeners() {
 		rbRGB.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				colortransformop = EnumImageOp.NONE;
+				parent0.colortransformop = EnumImageOp.NONE;
 				updateThresholdOverlayParameters();
 			} } );
 		
 		rbHSV.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				colortransformop = EnumImageOp.RGB_TO_HSV;
+				parent0.colortransformop = EnumImageOp.RGB_TO_HSV;
 				updateThresholdOverlayParameters();
 			} } );
 		
 		rbH1H2H3.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				colortransformop = EnumImageOp.RGB_TO_H1H2H3;
+				parent0.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
 				updateThresholdOverlayParameters();
 			} } );
 		
@@ -141,8 +144,6 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 		colorPickCombo.addItemListener(new ItemChangeListener());
 	}
 
-
-
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		if (e.getSource() == distanceSpinner)  
@@ -150,41 +151,19 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 		
 	}
 	
-private void updateThresholdOverlayParameters() {
-		
-		if (vSequence == null)
-			return;
-		
-		boolean activateThreshold = true;
-		int thresholdForOverlay = 0;
-		EnumImageOp transformOpForOverlay = EnumImageOp.NONE;
-		EnumThresholdType thresholdTypeForOverlay = EnumThresholdType.SINGLE;
-	
-				colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
-				thresholdForOverlay = colorthreshold;
-				thresholdtype = EnumThresholdType.COLORARRAY;
-				thresholdTypeForOverlay = thresholdtype;
-				transformOpForOverlay = colortransformop;
-				colorarray.clear();
-				for (int i=0; i<colorPickCombo.getItemCount(); i++) {
-					colorarray.add(colorPickCombo.getItemAt(i));
-				}
-				colordistanceType = 1;
-				if (rbL2.isSelected()) 
-					colordistanceType = 2;
-				
-		//--------------------------------
-		
-		if (vSequence != null) 
-			vSequence.setThresholdOverlay(activateThreshold);
-		
-		if (activateThreshold && vSequence != null) {
-			vSequence.setThresholdOverlay(activateThreshold);
-			if (thresholdTypeForOverlay == EnumThresholdType.SINGLE)
-				vSequence.setThresholdOverlayParametersSingle(transformOpForOverlay, thresholdForOverlay);
-			else
-				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, colorarray, colordistanceType, colorthreshold);
+    void updateThresholdOverlayParameters() {
+    	
+		parent0.colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
+		parent0.thresholdtype = EnumThresholdType.COLORARRAY;
+		parent0.colorarray.clear();
+		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
+			parent0.colorarray.add(colorPickCombo.getItemAt(i));
 		}
+		parent0.colordistanceType = 1;
+		if (rbL2.isSelected()) 
+			parent0.colordistanceType = 2;
+
+		parent0.setOverlayParameters(true, parent0.colortransformop, parent0.thresholdtype, parent0.colorthreshold);
 	}
 	
 	private void pickColor() {
@@ -202,7 +181,31 @@ private void updateThresholdOverlayParameters() {
 			pickColorButton.setBackground(Color.DARK_GRAY);
 			bActiveTrapOverlay = true;
 		}	
-		vSequence.setMouseTrapOverlay(bActiveTrapOverlay, pickColorButton, colorPickCombo);
+		parent0.vSequence.setMouseTrapOverlay(bActiveTrapOverlay, pickColorButton, colorPickCombo);
+	}
+	
+	public void transferParametersToDialog() {
+		
+		distanceSpinner.setValue(parent0.colorthreshold);
+		switch (parent0.colortransformop) {
+			case RGB_TO_HSV:
+				rbHSV.setSelected(true);
+				break;
+			case RGB_TO_H1H2H3:
+				rbH1H2H3.setSelected(true);
+				break;
+			case NONE:
+			default:
+				rbRGB.setSelected(true);
+				break;
+		}
+		colorPickCombo.removeAll();
+		for (int i = 0; i < parent0.colorarray.size(); i++)
+			colorPickCombo.addItem(parent0.colorarray.get(i));
+		if (parent0.colordistanceType == 1)
+			rbL1.setSelected(true);
+		else
+			rbL2.setSelected(true);
 	}
 
 }

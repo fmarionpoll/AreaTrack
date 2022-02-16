@@ -70,26 +70,27 @@ public class DlgSourcePanel extends JPanel {
 	
 	public void openVideoOrStack() {
 		String path = null;
-		if (vSequence != null)
-			vSequence.close();
+		if (parent0.vSequence != null)
+			parent0.vSequence.close();
 
 		Sequence seq = OpenVirtualSequence.openImagesOrAvi(null);
 		Viewer v = OpenVirtualSequence.initSequenceViewer(seq);
-		v.addListener(Areatrack.this);
-		vSequence = new SequencePlus(seq);
+		v.addListener(parent0);
+		parent0.vSequence = new SequencePlus(seq);
 		
-		path = vSequence.getDirectory();
+		path = parent0.vSequence.getDirectory();
 		if (path != null) {
-			XMLPreferences guiPrefs = this.getPreferences("gui");
+			XMLPreferences guiPrefs = parent0.getPreferences("gui");
 			guiPrefs.put("lastUsedPath", path);
 		}
 		
 		updateGuiEndFrame();
-		xmlReadAreaTrackParameters();
+		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
+		xmlAreaTrack.xmlReadAreaTrackParameters(parent0);
 	}
 	
 	private void updateGuiEndFrame () {
-		endFrame = vSequence.getSizeT()-1;
-		endFrameTextField.setText( Integer.toString(endFrame));
+		parent0.endFrame = parent0.vSequence.getSizeT()-1;
+		parent0.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(parent0.endFrame));
 	}
 }
