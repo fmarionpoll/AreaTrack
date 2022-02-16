@@ -15,7 +15,7 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 
-public class DlgROIsPanel extends JPanel {
+public class DlgRoisPanel extends JPanel {
 
 	/**
 	 * 

@@ -18,7 +18,6 @@ import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import icy.roi.ROI2D;
 
-import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumThresholdType;
 
 public class DlgAnalysisRun extends JPanel 

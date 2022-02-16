@@ -31,7 +31,7 @@ public class Areatrack extends PluginActionable implements ViewerListener
 			GraphsWindow displayCharts = null;
 	
 			DlgSourcePanel dlgSourcePanel = new DlgSourcePanel();
-			DlgROIsPanel dlgRoisPanel = new DlgROIsPanel();
+			DlgRoisPanel dlgRoisPanel = new DlgRoisPanel();
 			DlgAnalysisParameters dlgAnalysisParameters = new DlgAnalysisParameters();
 			DlgAnalysisRun dlgAnalysisRun = new DlgAnalysisRun();
 			DlgResults dlgResults = new DlgResults();

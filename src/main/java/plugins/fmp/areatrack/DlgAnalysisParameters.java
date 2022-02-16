@@ -102,7 +102,6 @@ public class DlgAnalysisParameters extends JPanel implements ChangeListener {
 		declareActionListeners();
 		
 		tabbedPane.addChangeListener(this);
-		
 	}
 	
 	private void declareActionListeners() {
@@ -148,6 +147,10 @@ public class DlgAnalysisParameters extends JPanel implements ChangeListener {
 		if (e.getSource() == tabbedPane) {
 			int selectedTab = tabbedPane.getSelectedIndex();
 			updateThresholdOverlayParameters(selectedTab);
+			if (selectedTab == 0)
+				rbFilterbyColor.setSelected(true);
+			else if (selectedTab == 1)
+				rbFilterbyFunction.setSelected(true);
 		}
 	}
 
