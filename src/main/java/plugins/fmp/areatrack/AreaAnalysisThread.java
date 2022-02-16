@@ -21,7 +21,6 @@ import icy.type.collection.array.Array1DUtil;
 import plugins.fmp.fmpSequence.SequenceVirtual;
 import plugins.fmp.fmpTools.FmpTools;
 import plugins.fmp.fmpTools.EnumImageOp;
-import plugins.fmp.fmpTools.EnumThresholdType;
 import plugins.fmp.fmpTools.ImageOperations;
 
 
@@ -51,7 +50,6 @@ public class AreaAnalysisThread extends Thread {
 	
 	public ArrayList<MeasureAndName> results = null;
 	
-	private EnumThresholdType thresholdtype = EnumThresholdType.SINGLE;
 	private ImageOperations imgOp1;
 	private ImageOperations imgOp2;
 	 
