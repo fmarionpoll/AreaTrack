@@ -28,20 +28,21 @@ public class DlgDefineLinesManually extends JPanel implements ChangeListener {
 	 * 
 	 */
 	private static final long serialVersionUID = -9143775308853070401L;
+	
 	JLabel txtSplitAsComboBox = new JLabel("Split polygon as ");
 	JComboBox<String> splitAsComboBox = new JComboBox<String> (new String[] {"vertical lines", "polygons", "circles"});
 	JLabel txtNumberOfColumns = new JLabel("N columns ");
-	JSpinner ezNumberOfColumns = new JSpinner(new SpinnerNumberModel(5, 1, 1000, 1));
+	JSpinner ezNumberOfColumns = new JSpinner(new SpinnerNumberModel(5, 1, 10000, 1));
 	JLabel txtColumnWidth = new JLabel ("column width");
-	JSpinner columnWidth = new JSpinner (new SpinnerNumberModel(10, 0, 1000, 1));
+	JSpinner columnWidth = new JSpinner (new SpinnerNumberModel(10, 0, 10000, 1));
 	JLabel txtColumnSpan = new JLabel("space btw. col. ");
-	JSpinner columnSpan = new JSpinner (new SpinnerNumberModel( 1, 0, 1000, 1));
+	JSpinner columnSpan = new JSpinner (new SpinnerNumberModel( 1, 0, 10000, 1));
 	JLabel txtNumberOfRows = new JLabel("N rows ");
-	JSpinner ezNumberOfRows = new JSpinner(new SpinnerNumberModel(10, 1, 1000, 1));
+	JSpinner ezNumberOfRows = new JSpinner(new SpinnerNumberModel(10, 1, 10000, 1));
 	JLabel txtRowHeight = new JLabel ("row height ");
-	JSpinner rowHeight = new JSpinner(new SpinnerNumberModel( 0, 0, 1000, 1)); 
+	JSpinner rowHeight = new JSpinner(new SpinnerNumberModel( 10, 0, 10000, 1)); 
 	JLabel txtRowSpan = new JLabel("space btw. row ");
-	JSpinner rowInterval = new JSpinner(new SpinnerNumberModel(1, 0, 1000, 1));
+	JSpinner rowInterval = new JSpinner(new SpinnerNumberModel(1, 0, 10000, 1));
 	JButton generateGridButton = new JButton("Create grid");
 
 	Areatrack areatrack = null;
@@ -89,12 +90,12 @@ public class DlgDefineLinesManually extends JPanel implements ChangeListener {
 	{
 		String choice = (String) splitAsComboBox.getSelectedItem();
 		Sequence seq = sequenceVirtual.seq;
-		double colSpan = (double) columnSpan.getValue();
-		double colSize = (double) columnWidth.getValue();
-		double nbcols = (double) ezNumberOfColumns.getValue(); 
-		double rowSpan = (double) rowInterval.getValue();
-		double rowSize = (double) rowHeight.getValue();
-		double nbrows = (double) ezNumberOfRows.getValue();
+		double colSpan = (double)((int)columnSpan.getValue());
+		double colSize = (double) ((int)columnWidth.getValue());
+		double nbcols = (double) ((int)ezNumberOfColumns.getValue()); 
+		double rowSpan = (double)((int) rowInterval.getValue());
+		double rowSize = (double) ((int)rowHeight.getValue());
+		double nbrows = (double) ((int)ezNumberOfRows.getValue());
 		String rootName = (String) dlgOutputData.ezRootnameComboBox.getSelectedItem();
 		
 		if (choice == "vertical lines") 

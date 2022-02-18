@@ -46,6 +46,7 @@ public class DlgSTDDetectLines extends JPanel implements ChangeListener {
 		
 		this.areatrack  = areatrack;
 		this.dlgOutputData = dlgOutputData;
+		this.sequenceVirtual = areatrack.vSequence;
 		
 		PopupPanel popuppanel1 = new PopupPanel("detect lines using STD") ; 
 		JPanel panel1 = popuppanel1.getMainPanel(); 
