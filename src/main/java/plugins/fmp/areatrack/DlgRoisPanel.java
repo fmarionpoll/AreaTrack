@@ -55,7 +55,7 @@ public class DlgRoisPanel extends JPanel {
 		buildROISButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				SplitRoiToArray buildRois = new SplitRoiToArray();
-				buildRois.setSequence(areatrack.vSequence);
+				buildRois.initialize(areatrack);
 //				loadRois.openROIs(areatrack.vSequence); 
 //				updateStartAndEndFrameFromvSequence();
 			} } );
