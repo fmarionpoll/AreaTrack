@@ -146,6 +146,10 @@ public class SplitRoiToArray extends EzPlug implements ViewerListener, FoldListe
 	}
 	
 // -----------------------------------	
+	public void setSequence(SequenceVirtual sequenceVirtual) 
+	{
+		this.sequenceVirtual = sequenceVirtual;
+	}
 	
 	private void openFile() 
 	{

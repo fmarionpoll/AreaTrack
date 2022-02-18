@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
+import plugins.fmp.splitroitoarray.SplitRoiToArray;
 
 public class DlgRoisPanel extends JPanel {
 
@@ -21,9 +22,10 @@ public class DlgRoisPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 323538974587966282L;
-	private JButton openROIsButton			= new JButton("Load...");
-	private JButton addROIsButton			= new JButton("Add...");
-	private JButton	saveROIsButton			= new JButton("Save...");
+	private JButton buildROISButton = new JButton("Build ROIs array...");
+	private JButton openROIsButton	= new JButton("Load...");
+	private JButton addROIsButton	= new JButton("Add...");
+	private JButton	saveROIsButton	= new JButton("Save...");
 	Areatrack areatrack = null;
 
 	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
@@ -42,16 +44,22 @@ public class DlgRoisPanel extends JPanel {
 			}});
 		mainPanel.add(capPopupPanel);
 		
-		JLabel commentText1 = new JLabel ("Use ROItoArray plugin to create polygons ");
-		commentText1.setHorizontalAlignment(SwingConstants.LEFT);
-		capPanel.add(GuiUtil.besidesPanel(commentText1));
-		JLabel emptyText1	= new JLabel (" ");
+		JLabel emptyText0 = new JLabel ("Draw Polygon and split into array : ", SwingConstants.RIGHT);
+		capPanel.add(GuiUtil.besidesPanel(emptyText0, buildROISButton));
+		JLabel emptyText1 = new JLabel ("File  : ", SwingConstants.RIGHT);
 		capPanel.add(GuiUtil.besidesPanel(emptyText1, openROIsButton, addROIsButton, saveROIsButton));
-		
 		declareActionListeners();
 	}
 	
 	private void declareActionListeners() {
+		buildROISButton.addActionListener(new ActionListener () { 
+			@Override public void actionPerformed( final ActionEvent e ) { 
+				SplitRoiToArray buildRois = new SplitRoiToArray();
+				buildRois.setSequence(areatrack.vSequence);
+//				loadRois.openROIs(areatrack.vSequence); 
+//				updateStartAndEndFrameFromvSequence();
+			} } );
+		
 		openROIsButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				LoadRois loadRois = new LoadRois();
