@@ -36,7 +36,6 @@ public class Areatrack extends PluginActionable implements ViewerListener
 			DlgAnalysisRun dlgAnalysisRun = new DlgAnalysisRun();
 			DlgResults dlgResults = new DlgResults();
 
-			SequencePlus vSequence 			= null;
 			int	 analyzeStep 				= 1;
 			int  startFrame 				= 1;
 			int  endFrame 					= 99999999;
@@ -49,7 +48,8 @@ public class Areatrack extends PluginActionable implements ViewerListener
 			int colorthreshold 				= 20;
 			ArrayList <Color> colorarray 	= new ArrayList <Color>();
 			int thresholdmovement 			= 20;
-				
+			
+	public 	SequencePlus vSequence 			= null;
 	final 	String filenameAreatrackXml 	= "areatrack.xml";
 	
 	// --------------------------------------------------------------------------

@@ -34,18 +34,18 @@ public class DlgTabThresholdColors extends JPanel implements ChangeListener {
 	JComboBox<Color> colorPickCombo = new JComboBox<Color>();
 	private ComboBoxColorRenderer colorPickComboRenderer = new ComboBoxColorRenderer(colorPickCombo);
 	
-	private String textPickAPixel 			= "Pick a pixel";
-	private JButton pickColorButton			= new JButton(textPickAPixel);
-	private JButton	deleteColorButton		= new JButton("Delete color");
+	private String textPickAPixel 		= "Pick a pixel";
+	private JButton pickColorButton		= new JButton(textPickAPixel);
+	private JButton	deleteColorButton	= new JButton("Delete color");
 		JRadioButton rbL1 				= new JRadioButton("L1");
 		JRadioButton rbL2 				= new JRadioButton("L2");
 		JSpinner distanceSpinner 		= new JSpinner(new SpinnerNumberModel(10, 0, 800, 1));
 		JRadioButton rbRGB 				= new JRadioButton("RGB");
 		JRadioButton rbHSV 				= new JRadioButton("HSV");
 		JRadioButton rbH1H2H3 			= new JRadioButton("H1H2H3");
-	private JLabel distanceLabel 			= new JLabel("Distance  ");
-	private JLabel colorspaceLabel 			= new JLabel("Color space ");
-	Areatrack areatrack = null;
+	private JLabel distanceLabel 		= new JLabel("Distance  ");
+	private JLabel colorspaceLabel 		= new JLabel("Color space ");
+	Areatrack areatrack 				= null;
 
 
 
