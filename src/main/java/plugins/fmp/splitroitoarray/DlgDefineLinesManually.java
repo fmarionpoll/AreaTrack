@@ -30,7 +30,7 @@ public class DlgDefineLinesManually extends JPanel implements ChangeListener {
 	private static final long serialVersionUID = -9143775308853070401L;
 	
 	JLabel txtSplitAsComboBox = new JLabel("Split polygon as ");
-	JComboBox<String> splitAsComboBox = new JComboBox<String> (new String[] {"vertical lines", "polygons", "circles"});
+	JComboBox<String> splitAsComboBox = new JComboBox<String> (new String[] {"lines", "polygons", "circles"});
 	JLabel txtNumberOfColumns = new JLabel("N columns ");
 	JSpinner ezNumberOfColumns = new JSpinner(new SpinnerNumberModel(5, 1, 10000, 1));
 	JLabel txtColumnWidth = new JLabel ("column width");

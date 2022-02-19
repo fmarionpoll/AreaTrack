@@ -67,6 +67,8 @@ public class DlgSTDDetectLines extends JPanel implements ChangeListener {
 			}});
 		popuppanel1.expand();
 		
+		thresholdSTDFromChanComboBox.setSelectedIndex(3);
+		
 		addActionListeners();
 	}
 

@@ -30,7 +30,7 @@ public class DlgTabThresholdFunction extends JPanel implements ChangeListener{
 			EnumImageOp.R2MINUS_GB, EnumImageOp.G2MINUS_RB, EnumImageOp.B2MINUS_RG, 
 			EnumImageOp.NORM_BRMINUSG, EnumImageOp.RGB,
 			EnumImageOp.H_HSB, EnumImageOp.S_HSB, EnumImageOp.B_HSB	});
-	JSpinner thresholdSpinner = new JSpinner(new SpinnerNumberModel(70, 0, 255, 1));
+	JSpinner thresholdSpinner = new JSpinner(new SpinnerNumberModel(35, 0, 255, 1));
 	Areatrack areatrack = null;
 	
 	
@@ -51,7 +51,7 @@ public class DlgTabThresholdFunction extends JPanel implements ChangeListener{
 		panel.add(panel1);
 		tab.addTab("Filters", null, panel, "Display parameters for thresholding a transformed image with different filters");
 		
-		transformsComboBox.setSelectedIndex(EnumImageOp.B2MINUS_RG.ordinal());
+		transformsComboBox.setSelectedItem(EnumImageOp.NORM_BRMINUSG);
 		
 		thresholdSpinner.addChangeListener(this);
 		

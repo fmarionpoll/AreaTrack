@@ -11,7 +11,7 @@ public enum EnumImageOp {
 	H_HSB ("H(HSB)"), S_HSB ("S(HSB)"), B_HSB("B(HSB)"),  
 	XDIFFN("XDiffn"), YDIFFN("YDiffn"), XYDIFFN( "XYDiffn"), 
 	REF_T0("subtract t[start]"), REF_PREVIOUS("subtract t[i-step]"), REF("subtract ref"),
-	NORM_BRMINUSG("F. Rebaudo"),
+	NORM_BRMINUSG("B+R-G"),
 	COLORARRAY1("color array"), RGB_TO_HSV("HSV"), RGB_TO_H1H2H3("H1H2H3"), 
 	RTOGB ("R to G&B") ;
 	
