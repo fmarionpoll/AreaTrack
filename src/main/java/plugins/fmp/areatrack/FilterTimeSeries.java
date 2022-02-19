@@ -17,6 +17,9 @@ public class FilterTimeSeries {
 		vSequence = sequence;
 		startFrame = start;
 		endFrame = end;
+		if (end > (vSequence.nTotalFrames-1)) {
+			endFrame = vSequence.nTotalFrames-1;
+		}
 		filterMeasures_parameters (filteroption, span);
 	}
 
@@ -41,7 +44,7 @@ public class FilterTimeSeries {
 				filterMeasures_RunningMedian(span);
 				break;
 			default:
-				for ( int t = 0; t < endFrame-startFrame +1;  t += vSequence.analysisStep ) {
+				for ( int t = 0; t < endFrame-startFrame + 1;  t += vSequence.analysisStep ) {
 					int bin = t /  vSequence.analysisStep ;	
 					for (int iroi = 0; iroi < nrois; iroi++) 
 						vSequence.data_filtered[iroi][bin] = vSequence.data_raw[iroi][t];

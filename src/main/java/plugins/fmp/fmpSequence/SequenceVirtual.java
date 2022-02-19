@@ -66,7 +66,7 @@ public class SequenceVirtual
 		this.seq = seq;
 		statusSequenceVirtual = EnumStatus.REGULAR;
 		nTotalFrames = seq.getSizeT();
-		analysisEnd = nTotalFrames;
+		analysisEnd = nTotalFrames-1;
 		String filename = seq.getFilename();
 		Path path = Paths.get(filename); 
 		Path parent = path.getParent();
