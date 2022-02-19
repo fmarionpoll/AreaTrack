@@ -15,10 +15,12 @@ import icy.gui.util.GuiUtil;
 import icy.gui.viewer.Viewer;
 import icy.preferences.XMLPreferences;
 import icy.sequence.Sequence;
+import icy.sequence.SequenceEvent;
+import icy.sequence.SequenceListener;
 import plugins.fmp.fmpSequence.OpenVirtualSequence;
 import plugins.fmp.fmpSequence.SequencePlus;
 
-public class DlgSourcePanel extends JPanel {
+public class DlgSourcePanel extends JPanel implements SequenceListener {
 	
 	/**
 	 * 
@@ -74,6 +76,7 @@ public class DlgSourcePanel extends JPanel {
 			areatrack.vSequence.close();
 
 		Sequence seq = OpenVirtualSequence.openImagesOrAvi(null);
+		seq.addListener(this);
 		Viewer v = OpenVirtualSequence.initSequenceViewer(seq);
 		v.addListener(areatrack);
 		areatrack.vSequence = new SequencePlus(seq);
@@ -83,14 +86,22 @@ public class DlgSourcePanel extends JPanel {
 			XMLPreferences guiPrefs = areatrack.getPreferences("gui");
 			guiPrefs.put("lastUsedPath", path);
 		}
-		
 		updateGuiEndFrame();
-		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
-		xmlAreaTrack.xmlReadAreaTrackParameters(areatrack);
 	}
 	
 	private void updateGuiEndFrame () {
 		areatrack.endFrame = areatrack.vSequence.getSizeT()-1;
 		areatrack.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
+	}
+
+	@Override
+	public void sequenceChanged(SequenceEvent sequenceEvent) {
+		updateGuiEndFrame();
+	}
+
+	@Override
+	public void sequenceClosed(Sequence sequence) {
+		// TODO Auto-generated method stub
+		
 	}
 }
