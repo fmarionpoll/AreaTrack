@@ -11,6 +11,7 @@ import icy.file.Loader;
 import icy.file.SequenceFileImporter;
 import icy.gui.dialog.LoaderDialog;
 import icy.gui.dialog.MessageDialog;
+import icy.gui.frame.progress.ProgressFrame;
 import icy.gui.viewer.Viewer;
 import icy.image.IcyBufferedImage;
 import icy.image.ImageUtil;
@@ -197,13 +198,20 @@ public class OpenVirtualSequence {
 		  ThreadUtil.bgRun( new Runnable() { 
 			@Override public void run() 
 			{
+				ProgressFrame progress = new ProgressFrame("Loading images...");
 				seq.setVolatile(true);
 				seq.beginUpdate();
 				try
 				{
-					for (int t = 1; t < imagesList.size(); t++)
+					final int nbframes = imagesList.size();
+					for (int t = 1; t < nbframes; t++)
 					{
+						int pos = (int)(100d * (double)t / (double) nbframes);
+						progress.setPosition( pos );
+						
 						BufferedImage img = ImageUtil.load(imagesList.get(t));
+						progress.setMessage( "Processing image: " + pos + "/" + nbframes);
+							
 						if (img != null)
 						{
 							IcyBufferedImage icyImg = IcyBufferedImage.createFrom(img);
@@ -215,6 +223,7 @@ public class OpenVirtualSequence {
 				finally
 				{
 					seq.endUpdate();
+					progress.close();
 				}
 			}});	
 		return seq;
