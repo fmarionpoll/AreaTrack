@@ -13,7 +13,7 @@
 
     <!-- Project Information -->
     <artifactId>AreaTrack</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     
     <packaging>jar</packaging>
 
@@ -112,5 +112,5 @@
             <url>server's url</url>
         </repository>
     </distributionManagement>
-    <description>Icy plugin</description>
+    <description>Icy plugin to measure surface of objects of a given color from a stack of images</description>
 </project>

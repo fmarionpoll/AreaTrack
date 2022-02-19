@@ -27,7 +27,7 @@ import plugins.fmp.fmpSequence.SequencePlus;
 
 public class Areatrack extends PluginActionable implements ViewerListener
 {	
-			IcyFrame mainFrame = new IcyFrame("AreaTrack 15-02-2022", true, true, true, true);
+			IcyFrame mainFrame = new IcyFrame("AreaTrack 19-02-2022", true, true, true, true);
 			GraphsWindow displayCharts = null;
 	
 			DlgSourcePanel dlgSourcePanel = new DlgSourcePanel();

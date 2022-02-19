@@ -31,7 +31,7 @@ public class DlgRoisPanel extends JPanel {
 	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
 		this.areatrack = areatrack;
-		PopupPanel 	capPopupPanel = new PopupPanel("ROIs grid(s)");
+		PopupPanel 	capPopupPanel = new PopupPanel("GRIDS");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(2, 2));
 		capPopupPanel.collapse();

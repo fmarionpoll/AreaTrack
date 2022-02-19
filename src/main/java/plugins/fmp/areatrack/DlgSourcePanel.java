@@ -32,7 +32,7 @@ public class DlgSourcePanel extends JPanel {
 	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
 		this.areatrack = areatrack;
-		PopupPanel 	capPopupPanel = new PopupPanel("Source data");
+		PopupPanel 	capPopupPanel = new PopupPanel("IMAGES STACK");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new BorderLayout());
 		capPopupPanel.addComponentListener(new ComponentAdapter() {
