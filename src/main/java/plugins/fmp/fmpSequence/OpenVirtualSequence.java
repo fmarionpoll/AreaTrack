@@ -1,5 +1,6 @@
 package plugins.fmp.fmpSequence;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,9 +12,11 @@ import icy.file.SequenceFileImporter;
 import icy.gui.dialog.LoaderDialog;
 import icy.gui.dialog.MessageDialog;
 import icy.gui.viewer.Viewer;
+import icy.image.IcyBufferedImage;
+import icy.image.ImageUtil;
 import icy.main.Icy;
 import icy.sequence.Sequence;
-
+import icy.system.thread.ThreadUtil;
 import plugins.fmp.fmpTools.StringSorter;
 import plugins.stef.importer.xuggler.VideoImporter;
 
@@ -180,11 +183,41 @@ public class OpenVirtualSequence {
 		return false;
 	}	
 
-	private static Sequence loadV2SequenceFromImagesList(List <String> imagesList) 
+	public static Sequence loadV1SequenceFromImagesList(List <String> imagesList) 
 	{
 		SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
 		Sequence seq = Loader.loadSequence(seqFileImporter, imagesList, false);
 		return seq;
 	}
+	
+	public static Sequence loadV2SequenceFromImagesList(List <String> imagesList) 
+	{
+		  SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
+		  Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);
+		  ThreadUtil.bgRun( new Runnable() { 
+			@Override public void run() 
+			{
+				seq.setVolatile(true);
+				seq.beginUpdate();
+				try
+				{
+					for (int t = 1; t < imagesList.size(); t++)
+					{
+						BufferedImage img = ImageUtil.load(imagesList.get(t));
+						if (img != null)
+						{
+							IcyBufferedImage icyImg = IcyBufferedImage.createFrom(img);
+							icyImg.setVolatile(true);
+							seq.setImage(t, 0, icyImg);
+						}
+					}
+				}
+				finally
+				{
+					seq.endUpdate();
+				}
+			}});	
+		return seq;
+	 }
 	
 }
