@@ -17,7 +17,7 @@ import javax.swing.event.ChangeListener;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumThresholdType;
 
-public class DlgTabThresholdFunction extends JPanel implements ChangeListener{
+public class Dlg3TabFilter extends JPanel implements ChangeListener{
 
 	/**
 	 * 

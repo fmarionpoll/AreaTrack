@@ -19,7 +19,7 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import plugins.fmp.areatrack.Areatrack;
-import plugins.fmp.fmpSequence.OpenVirtualSequence;
+import plugins.fmp.fmpSequence.OpenSequencePlus;
 import plugins.fmp.fmpSequence.SequenceVirtual;
 
 public class DlgSTDDetectLines extends JPanel implements ChangeListener {
@@ -76,7 +76,7 @@ public class DlgSTDDetectLines extends JPanel implements ChangeListener {
 		
 		buildHistogramsButton.addActionListener(new ActionListener() { 
 		public void actionPerformed(ActionEvent e) { 	
-			OpenVirtualSequence.initSequenceViewer(sequenceVirtual.seq);
+			OpenSequencePlus.initSequenceViewer(sequenceVirtual.seq);
 			sequenceVirtual = new SequenceVirtual(sequenceVirtual.seq);
 			DetectLinesSTD.findLines(sequenceVirtual.seq, sequenceVirtual.currentFrame); 
 			}});

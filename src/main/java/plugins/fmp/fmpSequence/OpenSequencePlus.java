@@ -23,7 +23,7 @@ import plugins.stef.importer.xuggler.VideoImporter;
 
 
 
-public class OpenVirtualSequence {
+public class OpenSequencePlus {
 	
 	public static EnumStatus statusSequence = EnumStatus.REGULAR;
 	protected static VideoImporter importer = null;
@@ -44,7 +44,7 @@ public class OpenVirtualSequence {
 		return v;
 	}
 	
-	public static Sequence openImagesOrAvi(String path) 
+	public static SequencePlus openImagesOrAvi(String path) 
 	{
 		LoaderDialog dialog = new LoaderDialog(false);
 		if (path != null) 
@@ -62,6 +62,7 @@ public class OpenVirtualSequence {
 			return null;
 
 		Sequence seq = null;
+		int nTotalFrames = 1;
 		String [] list;
 		if (selectedFiles.length == 1) 
 		{
@@ -71,13 +72,16 @@ public class OpenVirtualSequence {
 			
 			if (!selectedFiles[0].isDirectory())  
 			{
-				if (selectedFiles[0].getName().toLowerCase().contains(".avi"))
+				if (selectedFiles[0].getName().toLowerCase().contains(".avi")) 
+				{
 					seq = loadSequenceAVI(selectedFiles[0].getAbsolutePath());
+				}
 				else
 				{
 					String[] imagesArray = getAcceptedNamesFromImagesList(list, directory);
 					List <String> imagesList = Arrays.asList(imagesArray);
-					seq = loadV2SequenceFromImagesList(imagesList);
+					nTotalFrames = imagesList.size();
+					seq = loadSequenceFromImagesList_V2(imagesList);
 				}
 			}
 		}
@@ -91,14 +95,18 @@ public class OpenVirtualSequence {
 			}
 			String[] imagesArray = getAcceptedNamesFromImagesList(list, directory);
 			List <String> imagesList = Arrays.asList(imagesArray);
-			seq = loadV2SequenceFromImagesList(imagesList);
+			nTotalFrames = imagesList.size();
+			seq = loadSequenceFromImagesList_V2(imagesList);
 		}
-		return seq;
+		
+		SequencePlus sequencePlus = new SequencePlus(seq);
+		sequencePlus.nTotalFrames = nTotalFrames;
+		return sequencePlus;
 	}
 	
 	private static Sequence loadSequenceAVI(String fileName) 
 	{
-		Sequence sequenceVirtual = null;
+		Sequence sequence = null;
 		if (importer != null )
 		{
 			try 
@@ -124,7 +132,7 @@ public class OpenVirtualSequence {
 			MessageDialog.showDialog( "File type or video-codec not supported.", MessageDialog.ERROR_MESSAGE );
 			statusSequence = EnumStatus.FAILURE;
 		}
-		return sequenceVirtual;
+		return sequence;
 	}
 	
 	private static String[] getAcceptedNamesFromImagesList(String[] list, String directory) 
@@ -184,14 +192,14 @@ public class OpenVirtualSequence {
 		return false;
 	}	
 
-	public static Sequence loadV1SequenceFromImagesList(List <String> imagesList) 
+	public static Sequence loadSequenceFromImagesList_V1(List <String> imagesList) 
 	{
 		SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
 		Sequence seq = Loader.loadSequence(seqFileImporter, imagesList, false);
 		return seq;
 	}
 	
-	public static Sequence loadV2SequenceFromImagesList(List <String> imagesList) 
+	public static Sequence loadSequenceFromImagesList_V2(List <String> imagesList) 
 	{
 		  SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
 		  Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);
@@ -229,7 +237,7 @@ public class OpenVirtualSequence {
 		return seq;
 	 }
 	
-	public static Sequence loadV3SequenceFromImagesList(List <String> imagesList) 
+	public static Sequence loadSequenceFromImagesList_V3(List <String> imagesList) 
 	{
 		  SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
 		  Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);

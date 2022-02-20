@@ -25,7 +25,7 @@ import plugins.fmp.fmpTools.ComboBoxColorRenderer;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumThresholdType;
 
-public class DlgTabThresholdColors extends JPanel implements ChangeListener {
+public class Dlg3TabColors extends JPanel implements ChangeListener {
 
 	/**
 	 * 

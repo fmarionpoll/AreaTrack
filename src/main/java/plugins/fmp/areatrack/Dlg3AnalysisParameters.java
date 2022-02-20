@@ -26,16 +26,16 @@ import icy.gui.util.FontUtil;
 
 
 
-public class DlgAnalysisParameters extends JPanel implements ChangeListener {
+public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -359095233032653215L;
-	DlgTabThresholdColors dlgTabThresholdColors = new DlgTabThresholdColors();
-	DlgTabThresholdFunction dlgTabThresholdFunction = new DlgTabThresholdFunction();
-	DlgTabThresholdMovement dlgTabThresholdMovement = new DlgTabThresholdMovement();
-	DlgTabOverlay dlgTabOverlay = new DlgTabOverlay();
+	Dlg3TabColors dlgTabThresholdColors = new Dlg3TabColors();
+	Dlg3TabFilter dlgTabThresholdFunction = new Dlg3TabFilter();
+	Dlg3TabMovement dlgTabThresholdMovement = new Dlg3TabMovement();
+	Dlg3TabOverlay dlgTabOverlay = new Dlg3TabOverlay();
 	
 	JCheckBox measureSurfacesCheckBox = new JCheckBox("Measure surface using");
 	JRadioButton rbFilterbyColor 	= new JRadioButton("color array");
@@ -52,7 +52,7 @@ public class DlgAnalysisParameters extends JPanel implements ChangeListener {
 		
 		this.areatrack = areatrack;
 		
-		PopupPanel 	capPopupPanel = new PopupPanel("ANALYSIS PARAMETERS");
+		PopupPanel 	capPopupPanel = new PopupPanel("3 - ANALYSIS PARAMETERS");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new BorderLayout());
 		capPopupPanel.expand();

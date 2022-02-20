@@ -17,10 +17,11 @@ import icy.preferences.XMLPreferences;
 import icy.sequence.Sequence;
 import icy.sequence.SequenceEvent;
 import icy.sequence.SequenceListener;
-import plugins.fmp.fmpSequence.OpenVirtualSequence;
+import plugins.fmp.fmpSequence.OpenSequencePlus;
 import plugins.fmp.fmpSequence.SequencePlus;
 
-public class DlgSourcePanel extends JPanel implements SequenceListener {
+
+public class Dlg1Source extends JPanel implements SequenceListener {
 	
 	/**
 	 * 
@@ -34,7 +35,7 @@ public class DlgSourcePanel extends JPanel implements SequenceListener {
 	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
 		this.areatrack = areatrack;
-		PopupPanel 	capPopupPanel = new PopupPanel("IMAGES STACK");
+		PopupPanel 	capPopupPanel = new PopupPanel("1 - IMAGES STACK");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new BorderLayout());
 		capPopupPanel.addComponentListener(new ComponentAdapter() {
@@ -75,12 +76,13 @@ public class DlgSourcePanel extends JPanel implements SequenceListener {
 		if (areatrack.vSequence != null)
 			areatrack.vSequence.close();
 
-		Sequence seq = OpenVirtualSequence.openImagesOrAvi(null);
-		seq.addListener(this);
-		Viewer v = OpenVirtualSequence.initSequenceViewer(seq);
+		SequencePlus sequencePlus = OpenSequencePlus.openImagesOrAvi(null);
+		sequencePlus.seq.addListener(this);
+		Viewer v = OpenSequencePlus.initSequenceViewer(sequencePlus.seq);
 		v.addListener(areatrack);
-		areatrack.vSequence = new SequencePlus(seq);
 		
+		
+		areatrack.vSequence = sequencePlus;
 		path = areatrack.vSequence.getDirectory();
 		if (path != null) {
 			XMLPreferences guiPrefs = areatrack.getPreferences("gui");
@@ -90,7 +92,7 @@ public class DlgSourcePanel extends JPanel implements SequenceListener {
 	}
 	
 	private void updateGuiEndFrame () {
-		areatrack.endFrame = areatrack.vSequence.getSizeT()-1;
+		areatrack.endFrame = areatrack.vSequence.nTotalFrames-1;
 		areatrack.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
 	}
 

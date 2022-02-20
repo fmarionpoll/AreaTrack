@@ -30,11 +30,11 @@ public class Areatrack extends PluginActionable implements ViewerListener
 			IcyFrame mainFrame = new IcyFrame("AreaTrack 19-02-2022", true, true, true, true);
 			GraphsWindow displayCharts = null;
 	
-			DlgSourcePanel dlgSourcePanel = new DlgSourcePanel();
-			DlgRoisPanel dlgRoisPanel = new DlgRoisPanel();
-			DlgAnalysisParameters dlgAnalysisParameters = new DlgAnalysisParameters();
-			DlgAnalysisRun dlgAnalysisRun = new DlgAnalysisRun();
-			DlgResults dlgResults = new DlgResults();
+			Dlg1Source dlgSourcePanel = new Dlg1Source();
+			Dlg2Grids dlgRoisPanel = new Dlg2Grids();
+			Dlg3AnalysisParameters dlgAnalysisParameters = new Dlg3AnalysisParameters();
+			Dlg4AnalysisRun dlgAnalysisRun = new Dlg4AnalysisRun();
+			Dlg5ResultsExport dlgResults = new Dlg5ResultsExport();
 
 			int	 analyzeStep 				= 1;
 			int  startFrame 				= 1;

@@ -20,7 +20,7 @@ import icy.roi.ROI2D;
 
 import plugins.fmp.fmpTools.EnumThresholdType;
 
-public class DlgAnalysisRun extends JPanel 
+public class Dlg4AnalysisRun extends JPanel 
 {
 	/**
 	 * 
@@ -38,7 +38,7 @@ public class DlgAnalysisRun extends JPanel
 	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
 		this.areatrack = areatrack;
-		PopupPanel 	capPopupPanel = new PopupPanel("RUN ANALYSIS");
+		PopupPanel 	capPopupPanel = new PopupPanel("4 - RUN ANALYSIS");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(2, 2));
 		capPopupPanel.collapse();

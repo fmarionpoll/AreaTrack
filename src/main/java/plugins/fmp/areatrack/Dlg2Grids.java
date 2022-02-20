@@ -16,7 +16,7 @@ import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import plugins.fmp.splitroitoarray.SplitRoiToArray;
 
-public class DlgRoisPanel extends JPanel {
+public class Dlg2Grids extends JPanel {
 
 	/**
 	 * 
@@ -31,7 +31,7 @@ public class DlgRoisPanel extends JPanel {
 	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
 		this.areatrack = areatrack;
-		PopupPanel 	capPopupPanel = new PopupPanel("GRIDS");
+		PopupPanel 	capPopupPanel = new PopupPanel("2 - GRIDS");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(2, 2));
 		capPopupPanel.collapse();

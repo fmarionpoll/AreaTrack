@@ -16,7 +16,7 @@ import icy.gui.util.GuiUtil;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumThresholdType;
 
-public class DlgTabThresholdMovement extends JPanel implements ChangeListener {
+public class Dlg3TabMovement extends JPanel implements ChangeListener {
 
 	/**
 	 * 

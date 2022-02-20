@@ -18,7 +18,7 @@ import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import plugins.fmp.fmpTools.FmpTools;
 
-public class DlgResults extends JPanel {
+public class Dlg5ResultsExport extends JPanel {
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class DlgResults extends JPanel {
 	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
 		
 		this.areatrack = areatrack;
-		PopupPanel 	capPopupPanel = new PopupPanel("RESULTS DISPLAY/EXPORT");
+		PopupPanel 	capPopupPanel = new PopupPanel("5 - RESULTS DISPLAY/EXPORT");
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(3, 2));
 		capPopupPanel.collapse();
