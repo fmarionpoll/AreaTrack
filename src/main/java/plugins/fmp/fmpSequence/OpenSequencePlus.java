@@ -289,7 +289,7 @@ public class OpenSequencePlus {
     {  	
 		ProgressFrame progressBar = new ProgressFrame("Loading images "); 
 		int nframes = futuresArray.size();
-		int iiframe =1;
+		int iiframe = 1;
     	 while (!futuresArray.isEmpty())
          {
     		 int frame = futuresArray.size() -1;

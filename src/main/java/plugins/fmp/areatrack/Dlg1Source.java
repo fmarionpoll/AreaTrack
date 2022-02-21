@@ -92,6 +92,7 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 	}
 	
 	private void updateGuiEndFrame () {
+		if (areatrack.vSequence == null) return;
 		areatrack.endFrame = areatrack.vSequence.nTotalFrames-1;
 		areatrack.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
 	}
