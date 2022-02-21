@@ -18,7 +18,7 @@ import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import icy.roi.ROI2D;
 
-import plugins.fmp.fmpTools.EnumThresholdType;
+import plugins.fmp.fmpTools.EnumAreaDetection;
 
 public class Dlg4AnalysisRun extends JPanel 
 {
@@ -96,25 +96,24 @@ public class Dlg4AnalysisRun extends JPanel
 		areatrack.analyzeStep = Integer.parseInt( analyzeStepTextField.getText() );
 		areatrack.vSequence.analysisStep = areatrack.analyzeStep;
 		
-		if (areatrack.dlgAnalysisParameters.measureSurfacesCheckBox.isSelected()) 
+		if (areatrack.analysisParameters.detectArea) 
 		{ 
-			if (areatrack.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) 
+			if (areatrack.analysisParameters.areaDetectionMode == EnumAreaDetection.SINGLE) 
 			{
-				areatrack.analysisParameters.thresholdtype = EnumThresholdType.SINGLE;
 				analysisThread.initAreaDetectionFromFunction(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame, 
 						getROIsToAnalyze(),  
 						areatrack.analysisParameters.simpletransformop, areatrack.analysisParameters.simplethreshold);
 			} 
 			else 
 			{
-				areatrack.analysisParameters.thresholdtype = EnumThresholdType.COLORARRAY;
+				areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
 				analysisThread.initAreaDetectionFromColors(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
 						getROIsToAnalyze(),  
 						areatrack.analysisParameters.colordistanceType, areatrack.analysisParameters.colorthreshold, areatrack.analysisParameters.colorarray);
 			}
 		}
 		
-		if (areatrack.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected()) 
+		if (areatrack.analysisParameters.detectMovement) 
 		{
 			analysisThread.initMovementDetection(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
 					getROIsToAnalyze(),

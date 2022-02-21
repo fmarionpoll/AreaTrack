@@ -1,12 +1,12 @@
 package plugins.fmp.fmpTools;
 
 
-public enum EnumThresholdType 
+public enum EnumAreaDetection 
 { 
 	SINGLE ("simple threshold"), COLORARRAY ("Color array"), NONE("undefined");
 	
 	private String label;
-	EnumThresholdType (String label) 
+	EnumAreaDetection (String label) 
 	{ 
 		this.label = label;
 	}
@@ -16,8 +16,8 @@ public enum EnumThresholdType
 		return label;
 	}	
 	
-	public static EnumThresholdType findByText(String abbr){
-	    for(EnumThresholdType v : values())
+	public static EnumAreaDetection findByText(String abbr){
+	    for(EnumAreaDetection v : values())
 	    { 
 	    	if( v.toString().equals(abbr)) 
 	    	{ 

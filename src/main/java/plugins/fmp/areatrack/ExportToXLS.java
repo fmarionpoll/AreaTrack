@@ -23,7 +23,7 @@ public class ExportToXLS {
 	int	analyzeStep = 1;
 	String distanceString;
 	String threshold2String;
-	boolean measureHeatmap = false;
+	boolean detectMovement = false;
 	private ArrayList<MeasureAndName> resultsHeatMap = null;
 	
 
@@ -80,7 +80,7 @@ public class ExportToXLS {
 			icol1++;
 		}
 		
-		if (measureHeatmap ) {
+		if (detectMovement ) {
 			icol1 = icol0;
 			XLSUtil.setCellString( filteredDataPage, 0, irow+2, "column");
 			XLSUtil.setCellString( filteredDataPage, 0, irow+3, "activity(npixels>"+threshold2String+")");
@@ -140,7 +140,7 @@ public class ExportToXLS {
 		analyzeStep = areatrack.analyzeStep;
 		distanceString = String.valueOf(areatrack.analysisParameters.colorthreshold);
 		threshold2String = String.valueOf(areatrack.analysisParameters.thresholdmovement);
-		measureHeatmap = areatrack.dlgAnalysisParameters.measureHeatmapCheckBox.isSelected();
+		detectMovement = areatrack.analysisParameters.detectMovement;
 		
 		System.out.println("XLS output");
 		try {

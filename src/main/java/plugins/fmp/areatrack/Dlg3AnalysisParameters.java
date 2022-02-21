@@ -23,6 +23,7 @@ import javax.swing.event.ChangeListener;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
+import plugins.fmp.fmpTools.EnumAreaDetection;
 
 
 
@@ -37,10 +38,10 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 	Dlg3TabMovement dlgTabThresholdMovement = new Dlg3TabMovement();
 	Dlg3TabOverlay dlgTabOverlay = new Dlg3TabOverlay();
 	
-	JCheckBox measureSurfacesCheckBox = new JCheckBox("Measure surface using");
+	JCheckBox detectAreaCheckBox = new JCheckBox("Measure surface using");
 	JRadioButton rbFilterbyColor 	= new JRadioButton("color array");
 	JRadioButton rbFilterbyFunction	= new JRadioButton("filters");
-	JCheckBox measureHeatmapCheckBox = new JCheckBox("movement");
+	JCheckBox detectMovementCheckBox = new JCheckBox("movement");
 	JButton loadFiltersButton		= new JButton("Load...");
 	JButton saveFiltersButton		= new JButton("Save...");
 	JTabbedPane tabbedPane 			= new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -68,13 +69,13 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 		FlowLayout layoutLeft = new FlowLayout(FlowLayout.LEFT); 
 		JPanel panel0 = new JPanel(layoutLeft);
 		((FlowLayout)panel0.getLayout()).setVgap(0);
-		panel0.add(measureSurfacesCheckBox);
+		panel0.add(detectAreaCheckBox);
 		panel0.add(rbFilterbyColor);
 		panel0.add(rbFilterbyFunction);
 		ButtonGroup bgchoice = new ButtonGroup();
 		bgchoice.add(rbFilterbyColor);
 		bgchoice.add(rbFilterbyFunction);
-		panel0.add(measureHeatmapCheckBox);
+		panel0.add(detectMovementCheckBox);
 		capPanel.add(panel0, BorderLayout.PAGE_START);
 		
 		GridLayout capLayout = new GridLayout(3, 2);
@@ -94,8 +95,8 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 		panel2.add(saveFiltersButton);
 		capPanel.add(panel2, BorderLayout.PAGE_END);
 		
-		measureSurfacesCheckBox.setSelected(true);
-		measureHeatmapCheckBox.setSelected(false);
+		detectAreaCheckBox.setSelected(true);
+		detectMovementCheckBox.setSelected(false);
 		tabbedPane.setSelectedIndex(0);
 		rbFilterbyColor.setSelected(true);
 		
@@ -148,10 +149,14 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 		if (e.getSource() == tabbedPane) {
 			int selectedTab = tabbedPane.getSelectedIndex();
 			updateThresholdOverlayParameters(selectedTab);
-			if (selectedTab == 0)
+			if (selectedTab == 0) {
 				rbFilterbyColor.setSelected(true);
-			else if (selectedTab == 1)
+				areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
+			}
+			else if (selectedTab == 1) {
 				rbFilterbyFunction.setSelected(true);
+				areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
+			}
 		}
 	}
 
@@ -177,7 +182,13 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 	}
 	
 	public void transferParametersToDialog() {
-		
+		if (areatrack.analysisParameters.areaDetectionMode == EnumAreaDetection.COLORARRAY)
+			rbFilterbyColor.setSelected(true);
+		else
+			rbFilterbyFunction.setSelected(true);
+		detectMovementCheckBox.setSelected(areatrack.analysisParameters.detectMovement);
+		detectAreaCheckBox.setSelected(areatrack.analysisParameters.detectArea);
+			
 		dlgTabThresholdColors.transferParametersToDialog();
 		dlgTabThresholdFunction.transferParametersToDialog();
 		dlgTabThresholdMovement.transferParametersToDialog();

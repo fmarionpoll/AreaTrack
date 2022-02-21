@@ -23,7 +23,7 @@ import javax.swing.event.ChangeListener;
 
 import plugins.fmp.fmpTools.ComboBoxColorRenderer;
 import plugins.fmp.fmpTools.EnumImageOp;
-import plugins.fmp.fmpTools.EnumThresholdType;
+import plugins.fmp.fmpTools.EnumAreaDetection;
 
 public class Dlg3TabColors extends JPanel implements ChangeListener {
 
@@ -154,7 +154,7 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
     void updateThresholdOverlayParameters() {
     	
 		areatrack.analysisParameters.colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
-		areatrack.analysisParameters.thresholdtype = EnumThresholdType.COLORARRAY;
+		areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
 		areatrack.analysisParameters.colorarray.clear();
 		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
 			areatrack.analysisParameters.colorarray.add(colorPickCombo.getItemAt(i));
@@ -163,7 +163,7 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 		if (rbL2.isSelected()) 
 			areatrack.analysisParameters.colordistanceType = 2;
 
-		areatrack.setOverlayParameters(true, areatrack.analysisParameters.colortransformop, areatrack.analysisParameters.thresholdtype, areatrack.analysisParameters.colorthreshold);
+		areatrack.setOverlayParameters(true, areatrack.analysisParameters.colortransformop, areatrack.analysisParameters.areaDetectionMode, areatrack.analysisParameters.colorthreshold);
 	}
 	
 	private void pickColor() {

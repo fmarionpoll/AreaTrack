@@ -12,23 +12,25 @@ import icy.gui.frame.progress.AnnounceFrame;
 import icy.util.XMLUtil;
 import plugins.fmp.fmpSequence.SequencePlus;
 import plugins.fmp.fmpTools.EnumImageOp;
-import plugins.fmp.fmpTools.EnumThresholdType;
+import plugins.fmp.fmpTools.EnumAreaDetection;
 import plugins.fmp.fmpTools.FmpTools;
 
 public class AreatrackAnalysisParameters {
 	
 	final	String filenameAreatrackXml 	= "areatrack.xml";
-
-	public 	EnumThresholdType thresholdtype	= EnumThresholdType.COLORARRAY; 
+	
+	public  boolean detectArea				= true;
+	public 	EnumAreaDetection areaDetectionMode	= EnumAreaDetection.COLORARRAY; 
 	public 	EnumImageOp simpletransformop 	= EnumImageOp.R2MINUS_GB;
 	public 	int simplethreshold 			= 20;
 	public 	EnumImageOp colortransformop 	= EnumImageOp.NONE;
 	public 	int colordistanceType 			= 0;
 	public 	int colorthreshold 				= 20;
 	public 	ArrayList <Color> colorarray 	= new ArrayList <Color>();
+	
+	public	boolean detectMovement			= false;
 	public 	int thresholdmovement 			= 20;
 
-	
 	String ID_PARAMETERS  = "Parameters";
 	String ID_COLORMODESELECTED = "colormodeselected";
 	String ID_COLORTRANSFORMOP = "colortransformop";
@@ -36,6 +38,7 @@ public class AreatrackAnalysisParameters {
 	String ID_THRESHOLDMOVEMENT = "thresholdmovement";
 	String ID_COLORDISTANCETYPE = "colordistanceType";
 	String ID_COLORTHRESHOLD = "colorthreshold";
+	String ID_SIMPLETHRESHOLD = "simplethreshold";
 	String ID_NBCOLORS = "ncolors";
 	String ID_COLOR = "color";
 
@@ -85,18 +88,23 @@ public void xmlLoadAreaTrackParameters(SequencePlus vSequence) {
 
 		Element xmlVal = XMLUtil.getElement(xmlElement, ID_COLORMODESELECTED);
 		boolean iscolorselected = XMLUtil.getAttributeBooleanValue(xmlVal, "value", true );
-		areatrack.dlgAnalysisParameters.rbFilterbyColor.setSelected(iscolorselected);
+		if (iscolorselected)
+			areaDetectionMode = EnumAreaDetection.COLORARRAY;
+		else
+			areaDetectionMode = EnumAreaDetection.SINGLE;
 		
-		xmlVal = XMLUtil.getElement(xmlElement, ID_COLORTRANSFORMOP);	
-		String codestring = XMLUtil.getAttributeValue(xmlVal, "descriptor", "none");		
-		colortransformop = EnumImageOp.findByText(codestring);
-			
 		xmlVal = XMLUtil.getElement(xmlElement, ID_SIMPLETRANSFORMOP);
-		codestring = XMLUtil.getAttributeValue(xmlVal, "descriptor", "none");
+		String codestring = XMLUtil.getAttributeValue(xmlVal, "descriptor", "none");
 		simpletransformop = EnumImageOp.findByText(codestring);
 
+		xmlVal = XMLUtil.getElement(xmlElement, ID_SIMPLETHRESHOLD);
+		simplethreshold = XMLUtil.getAttributeIntValue(xmlVal, "value", 35);
+		
 		xmlVal = XMLUtil.getElement(xmlElement, ID_THRESHOLDMOVEMENT);
 		thresholdmovement = XMLUtil.getAttributeIntValue(xmlVal, "value", 20);
+		
+		xmlVal = XMLUtil.getElement(xmlElement, ID_COLORTRANSFORMOP);	
+		colortransformop = EnumImageOp.findByText(codestring);
 		
 		xmlVal = XMLUtil.getElement(xmlElement, ID_COLORDISTANCETYPE);
 		colordistanceType = XMLUtil.getAttributeIntValue(xmlVal, "value", 0);
@@ -130,26 +138,24 @@ public void xmlLoadAreaTrackParameters(SequencePlus vSequence) {
 		Element xmlElement = XMLUtil.addElement(node, ID_PARAMETERS);
 		
 		Element xmlVal = XMLUtil.addElement(xmlElement, ID_COLORMODESELECTED);
-		XMLUtil.setAttributeBooleanValue(xmlVal, "value", areatrack.dlgAnalysisParameters.rbFilterbyColor.isSelected() );
-	
+		boolean iscolorselected = (areaDetectionMode == EnumAreaDetection.COLORARRAY);
+		XMLUtil.setAttributeBooleanValue(xmlVal, "value", iscolorselected);
+		
 		xmlVal = XMLUtil.addElement(xmlElement, ID_SIMPLETRANSFORMOP);
 		XMLUtil.setAttributeValue(xmlVal, "descriptor", simpletransformop.toString());
 		
-		xmlVal = XMLUtil.addElement(xmlElement, "simplethreshold");
+		xmlVal = XMLUtil.addElement(xmlElement, ID_SIMPLETHRESHOLD);
 		XMLUtil.setAttributeIntValue(xmlVal, "value", simplethreshold);
 		
-		xmlVal = XMLUtil.addElement(xmlElement, ID_COLORTRANSFORMOP);
-		XMLUtil.setAttributeValue(xmlVal, "descriptor", colortransformop.toString());
-		
-		xmlVal = XMLUtil.addElement(xmlElement, "thresholdtype");
-		XMLUtil.setAttributeValue(xmlVal, "descriptor", thresholdtype.toString());	
-		
-		xmlVal = XMLUtil.addElement(xmlElement, ID_COLORDISTANCETYPE);
-		XMLUtil.setAttributeIntValue(xmlVal, "value", colordistanceType);
-
 		xmlVal = XMLUtil.addElement(xmlElement, ID_THRESHOLDMOVEMENT);
 		XMLUtil.setAttributeIntValue(xmlVal, "value", thresholdmovement);
 		
+		xmlVal = XMLUtil.addElement(xmlElement, ID_COLORTRANSFORMOP);
+		XMLUtil.setAttributeValue(xmlVal, "descriptor", colortransformop.toString());
+	
+		xmlVal = XMLUtil.addElement(xmlElement, ID_COLORDISTANCETYPE);
+		XMLUtil.setAttributeIntValue(xmlVal, "value", colordistanceType);
+
 		xmlVal = XMLUtil.addElement(xmlElement, ID_COLORTHRESHOLD);
 		XMLUtil.setAttributeIntValue(xmlVal, "value", colorthreshold);
 		

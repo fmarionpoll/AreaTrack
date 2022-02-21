@@ -14,7 +14,7 @@ import javax.swing.event.ChangeListener;
 
 import icy.gui.util.GuiUtil;
 import plugins.fmp.fmpTools.EnumImageOp;
-import plugins.fmp.fmpTools.EnumThresholdType;
+import plugins.fmp.fmpTools.EnumAreaDetection;
 
 public class Dlg3TabMovement extends JPanel implements ChangeListener {
 
@@ -49,7 +49,7 @@ public class Dlg3TabMovement extends JPanel implements ChangeListener {
 	
 	void updateThresholdOverlayParameters() {
 		areatrack.analysisParameters.thresholdmovement = Integer.parseInt(threshold2Spinner.getValue().toString());
-		areatrack.setOverlayParameters(true, EnumImageOp.REF_PREVIOUS, EnumThresholdType.SINGLE, areatrack.analysisParameters.thresholdmovement);
+		areatrack.setOverlayParameters(true, EnumImageOp.REF_PREVIOUS, EnumAreaDetection.SINGLE, areatrack.analysisParameters.thresholdmovement);
 	}
 	
 	public void transferParametersToDialog() {	
