@@ -42,8 +42,8 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	JRadioButton rbFilterbyColor 	= new JRadioButton("color array");
 	JRadioButton rbFilterbyFunction	= new JRadioButton("filters");
 	JCheckBox detectMovementCheckBox = new JCheckBox("movement");
-	JButton loadFiltersButton		= new JButton("Load...");
-	JButton saveFiltersButton		= new JButton("Save...");
+	JButton loadButton		= new JButton("Load...");
+	JButton saveButton		= new JButton("Save...");
 	JTabbedPane tabbedPane 			= new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 	Areatrack areatrack = null;
 
@@ -91,8 +91,8 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 		FlowLayout layoutRight = new FlowLayout(FlowLayout.RIGHT); 
 		JPanel panel2 = new JPanel(layoutRight);
 		panel2.add(loadsaveText1);
-		panel2.add(loadFiltersButton);
-		panel2.add(saveFiltersButton);
+		panel2.add(loadButton);
+		panel2.add(saveButton);
 		capPanel.add(panel2, BorderLayout.PAGE_END);
 		
 		detectAreaCheckBox.setSelected(true);
@@ -106,14 +106,14 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	}
 	
 	private void declareActionListeners() {
-		loadFiltersButton.addActionListener(new ActionListener () { 
+		loadButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				xmlLoadAreaTrackParameters(); 
+				xmlLoadParameters(); 
 			} } );
 		
-		saveFiltersButton.addActionListener(new ActionListener () {
+		saveButton.addActionListener(new ActionListener () {
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				xmlSaveAreaTrackParameters(); 
+				xmlSaveParameters(); 
 			} } );
 		
 		rbFilterbyColor.addActionListener(new ActionListener () { 
@@ -130,17 +130,19 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	}
 	
 	private void selectTab(int index) {
+		
 		tabbedPane.setSelectedIndex(index);
 	}
 	
-	private void xmlLoadAreaTrackParameters() {
+	private void xmlLoadParameters() {
 		
-		areatrack.detectionParameters.xmlLoadAreaTrackParameters(areatrack.vSequence);
-		transferParametersToDialog();
+		if (areatrack.detectionParameters.xmlLoadAreaTrackParameters(areatrack.vSequence))
+			transferParametersToDialog(areatrack.detectionParameters);
 	}
 	
-	private void xmlSaveAreaTrackParameters() {
-		transferDialogToParameters();
+	private void xmlSaveParameters() {
+		
+		transferDialogToParameters(areatrack.detectionParameters);
 		areatrack.detectionParameters.xmlSaveAreaTrackParameters(areatrack.vSequence);
 	}
 
@@ -181,24 +183,24 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 		}
 	}
 	
-	public void transferParametersToDialog() {
-		if (areatrack.detectionParameters.areaDetectionMode == EnumAreaDetection.COLORARRAY)
+	public void transferParametersToDialog(DetectionParameters detectionParameters) {
+		if (detectionParameters.areaDetectionMode == EnumAreaDetection.COLORARRAY)
 			rbFilterbyColor.setSelected(true);
 		else
 			rbFilterbyFunction.setSelected(true);
-		detectMovementCheckBox.setSelected(areatrack.detectionParameters.detectMovement);
-		detectAreaCheckBox.setSelected(areatrack.detectionParameters.detectArea);
+		detectMovementCheckBox.setSelected(detectionParameters.detectMovement);
+		detectAreaCheckBox.setSelected(detectionParameters.detectArea);
 			
-		dlgTabThresholdColors.transferParametersToDialog();
-		dlgTabThresholdFunction.transferParametersToDialog();
-		dlgTabThresholdMovement.transferParametersToDialog();
+		dlgTabThresholdColors.transferParametersToDialog(detectionParameters);
+		dlgTabThresholdFunction.transferParametersToDialog(detectionParameters);
+		dlgTabThresholdMovement.transferParametersToDialog(detectionParameters);
 	}
 	
-public void transferDialogToParameters() {
+public void transferDialogToParameters(DetectionParameters detectionParameters) {
 		
-		dlgTabThresholdColors.transferDialogToParameters();
-		dlgTabThresholdFunction.transferDialogToParameters();
-		dlgTabThresholdMovement.transferDialogToParameters();
+		dlgTabThresholdColors.transferDialogToParameters(detectionParameters);
+		dlgTabThresholdFunction.transferDialogToParameters(detectionParameters);
+		dlgTabThresholdMovement.transferDialogToParameters(detectionParameters);
 	}
 
 }

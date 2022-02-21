@@ -44,17 +44,20 @@ public class DetectionParameters {
 	String ID_COLOR = "color";
 
 	
-public void xmlLoadAreaTrackParameters(SequencePlus vSequence) {
+public boolean xmlLoadAreaTrackParameters(SequencePlus vSequence) {
 		
-		String directory = vSequence.getDirectory();
-		String fileparameters = directory + File.separator + filenameAreatrackXml;
-		final Document doc = XMLUtil.loadDocument(fileparameters);
+		String directory = "";
+		if (vSequence != null)
+			directory = vSequence.getDirectory() + File.separator;
+		String filename = directory  + filenameAreatrackXml;
+		final Document doc = XMLUtil.loadDocument(filename);
 		boolean flag = false;
 		if (doc != null) {
 			flag = loadAreaTrackParameters(doc);
 			if (!flag)
-				new AnnounceFrame("reading data failed");
+				new AnnounceFrame("Failed reading xml data from " + filename);
 		}
+		return flag;
 	}
 	
 	public void xmlSaveAreaTrackParameters(SequencePlus vSequence) {
@@ -117,8 +120,9 @@ public void xmlLoadAreaTrackParameters(SequencePlus vSequence) {
 		colorarray.clear();
 		xmlVal = XMLUtil.getElement(xmlElement, ID_NBCOLORS);
 		int ncolors = XMLUtil.getAttributeIntValue(xmlVal, "value", 0);
-		for (int i= 0; i<ncolors; i++) {
-			xmlVal = XMLUtil.getElement(xmlElement, ID_COLOR+Integer.toString(i));
+		for (int i= 0; i < ncolors; i++) {
+			String element = ID_COLOR+Integer.toString(i);
+			xmlVal = XMLUtil.getElement(xmlElement, element);
 			int alpha = XMLUtil.getAttributeIntValue(xmlVal, "a", 0);
 			int red = XMLUtil.getAttributeIntValue(xmlVal, "r", 0);
 			int blue = XMLUtil.getAttributeIntValue(xmlVal, "b", 0);

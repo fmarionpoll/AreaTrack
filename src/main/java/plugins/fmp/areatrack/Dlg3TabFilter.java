@@ -82,15 +82,15 @@ public class Dlg3TabFilter extends JPanel implements ChangeListener{
 		areatrack.setOverlayParameters(true, areatrack.detectionParameters.simpletransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.simplethreshold);
 	}
 	
-	public void transferParametersToDialog() {
+	public void transferParametersToDialog(DetectionParameters detectionParameters) {
 		
-		transformsComboBox.setSelectedItem(areatrack.detectionParameters.simpletransformop);
-		thresholdSpinner.setValue(areatrack.detectionParameters.simplethreshold);
+		transformsComboBox.setSelectedItem(detectionParameters.simpletransformop);
+		thresholdSpinner.setValue(detectionParameters.simplethreshold);
 	}
 	
-	public void transferDialogToParameters() {
-		areatrack.detectionParameters.simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
-		areatrack.detectionParameters.simplethreshold = (int) thresholdSpinner.getValue();
+	public void transferDialogToParameters(DetectionParameters detectionParameters) {
+		detectionParameters.simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
+		detectionParameters.simplethreshold = (int) thresholdSpinner.getValue();
 	}
 	
 }

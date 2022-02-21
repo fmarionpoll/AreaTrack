@@ -46,6 +46,8 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 		JRadioButton rbH1H2H3 			= new JRadioButton("H1H2H3");
 	private JLabel distanceLabel 		= new JLabel("Distance  ");
 	private JLabel colorspaceLabel 		= new JLabel("Color space ");
+	
+	boolean	isUpdatingDataFromComboAllowed = true;
 	Areatrack areatrack 				= null;
 
 
@@ -138,7 +140,7 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 		class ItemChangeListener implements ItemListener {
 		    @Override
 		    public void itemStateChanged(ItemEvent event) {
-		       if (event.getStateChange() == ItemEvent.SELECTED) {
+		       if (event.getStateChange() == ItemEvent.SELECTED && isUpdatingDataFromComboAllowed) {
 		    	   updateThresholdOverlayParameters();
 		       }
 		    }       
@@ -186,11 +188,23 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 		areatrack.vSequence.setMouseTrapOverlay(bActiveTrapOverlay, pickColorButton, colorPickCombo);
 	}
 	
-	public void transferParametersToDialog() {
+	public void transferParametersToDialog(DetectionParameters detectionParameters) {
 		
-		distanceSpinner.setValue(areatrack.detectionParameters.colorthreshold);
+		isUpdatingDataFromComboAllowed = false;
+		colorPickCombo.removeAllItems();
+		int nitems = detectionParameters.colorarray.size();
+		for (int i = 0; i < nitems; i++) {
+			Color colorItem = detectionParameters.colorarray.get(i);
+			colorPickCombo.addItem(colorItem);
+		}
+		isUpdatingDataFromComboAllowed = true;
 		
-		switch (areatrack.detectionParameters.colortransformop) {
+		if (detectionParameters.colordistanceType == EnumColorDistanceType.L1)
+			rbL1.setSelected(true);
+		else
+			rbL2.setSelected(true);
+		
+		switch (detectionParameters.colortransformop) {
 			case RGB_TO_HSV:
 				rbHSV.setSelected(true);
 				break;
@@ -203,40 +217,30 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 				break;
 		}
 		
-		colorPickCombo.removeAllItems();
-		int nitems = areatrack.detectionParameters.colorarray.size();
-		for (int i = 0; i < nitems; i++) {
-			Color colorItem = areatrack.detectionParameters.colorarray.get(i);
-			colorPickCombo.addItem(colorItem);
-		}
-		
-		if (areatrack.detectionParameters.colordistanceType == EnumColorDistanceType.L1)
-			rbL1.setSelected(true);
-		else
-			rbL2.setSelected(true);
+		distanceSpinner.setValue(detectionParameters.colorthreshold);
 	}
 	
-	public void transferDialogToParameters() {
+	public void transferDialogToParameters(DetectionParameters detectionParameters) {
 		
-		areatrack.detectionParameters.colorthreshold = (int) distanceSpinner.getValue();
+		detectionParameters.colorthreshold = (int) distanceSpinner.getValue();
 		
 		if (rbHSV.isSelected()) 
-			areatrack.detectionParameters.colortransformop = EnumImageOp.RGB_TO_HSV;
+			detectionParameters.colortransformop = EnumImageOp.RGB_TO_HSV;
 		else if (rbH1H2H3.isSelected())
-			areatrack.detectionParameters.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
+			detectionParameters.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
 		else 
-			areatrack.detectionParameters.colortransformop = EnumImageOp.COLORARRAY1;
+			detectionParameters.colortransformop = EnumImageOp.COLORARRAY1;
 		
-		areatrack.detectionParameters.colorarray.clear();
+		detectionParameters.colorarray.clear();
 		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
 			Color colorItem = colorPickCombo.getItemAt(i);
-			areatrack.detectionParameters.colorarray.add(colorItem);
+			detectionParameters.colorarray.add(colorItem);
 		}
 		
 		if (rbL1.isSelected())
-			areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L1;
+			detectionParameters.colordistanceType = EnumColorDistanceType.L1;
 		else
-			areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L2;
+			detectionParameters.colordistanceType = EnumColorDistanceType.L2;
 	}
 
 }
