@@ -427,16 +427,17 @@ public class DefineLinesManually
 						baseName = rootName + "_line ";
 					addLineROI (seq, points, baseName, column, row);
 					break;
-				case 1:
-					if (baseName == null)
-						baseName = rootName + "_area ";
-					addPolygonROI (seq, points, baseName, column, row);
-					break;
 				case 2:
-				default:
+					
 					if (baseName == null)
 						baseName = rootName + "_circle ";
 					addEllipseROI (seq, points, baseName, column, row);
+					break;
+//				case 1:
+				default:
+					if (baseName == null)
+						baseName = rootName + "_area ";
+					addPolygonROI (seq, points, baseName, column, row);
 					break;
 				}
 			}

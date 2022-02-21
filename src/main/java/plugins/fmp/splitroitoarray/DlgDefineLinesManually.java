@@ -28,9 +28,9 @@ public class DlgDefineLinesManually extends JPanel implements ChangeListener {
 	 * 
 	 */
 	private static final long serialVersionUID = -9143775308853070401L;
-	
+		
 	JLabel txtSplitAsComboBox = new JLabel("Split polygon as ");
-	JComboBox<String> splitAsComboBox = new JComboBox<String> (new String[] {"lines", "polygons", "circles"});
+	JComboBox<String> splitAsComboBox = new JComboBox<String> (new String[] {"vertical lines","polygons", "circles"});
 	JLabel txtNumberOfColumns = new JLabel("N columns ");
 	JSpinner ezNumberOfColumns = new JSpinner(new SpinnerNumberModel(5, 1, 10000, 1));
 	JLabel txtColumnWidth = new JLabel ("column width");
@@ -55,6 +55,7 @@ public class DlgDefineLinesManually extends JPanel implements ChangeListener {
 		this.areatrack  = areatrack;
 		this.dlgOutputData = dlgOutputData;
 		sequenceVirtual = areatrack.vSequence;
+		splitAsComboBox.setSelectedIndex(1);
 		
 		PopupPanel popuppanel2 = new PopupPanel("define lines manually");
 		JPanel panel2 = popuppanel2.getMainPanel();
@@ -82,13 +83,12 @@ public class DlgDefineLinesManually extends JPanel implements ChangeListener {
 	void addActionListeners() {
 		generateGridButton.addActionListener(new ActionListener() { 
 		public void actionPerformed(ActionEvent e) { 
-			execute(); 
+			generateGrid(); 
 			}});
 	}
 	
-	protected void execute() 
+	protected void generateGrid() 
 	{
-		String choice = (String) splitAsComboBox.getSelectedItem();
 		Sequence seq = sequenceVirtual.seq;
 		double colSpan = (double)((int)columnSpan.getValue());
 		double colSize = (double) ((int)columnWidth.getValue());
@@ -98,18 +98,18 @@ public class DlgDefineLinesManually extends JPanel implements ChangeListener {
 		double nbrows = (double) ((int)ezNumberOfRows.getValue());
 		String rootName = (String) dlgOutputData.ezRootnameComboBox.getSelectedItem();
 		
-		if (choice == "vertical lines") 
-		{
-			DefineLinesManually.createROISFromSelectedPolygon(seq, 0, rootName, colSpan, colSize, nbcols, rowSpan, rowSize, nbrows);
+		int choice = splitAsComboBox.getSelectedIndex();
+		switch (choice) {
+			case 0:
+				DefineLinesManually.createROISFromSelectedPolygon(seq, 0, rootName, colSpan, colSize, nbcols, rowSpan, rowSize, nbrows);
+				break;
+			case 2:
+				DefineLinesManually.createROISFromSelectedPolygon(seq, 2, rootName, colSpan, colSize, nbcols, rowSpan, rowSize, nbrows);
+				break;
+			default:
+				DefineLinesManually.createROISFromSelectedPolygon(seq, 1, rootName, colSpan, colSize, nbcols, rowSpan, rowSize, nbrows);
+				break;
 		}
-		else if (choice == "polygons") 
-		{
-			DefineLinesManually.createROISFromSelectedPolygon(seq, 1, rootName, colSpan, colSize, nbcols, rowSpan, rowSize, nbrows);
-		}
-		else if (choice == "circles") 
-		{
-			DefineLinesManually.createROISFromSelectedPolygon(seq, 2, rootName, colSpan, colSize, nbcols, rowSpan, rowSize, nbrows);
-		}		
 	}
 	
 	@Override

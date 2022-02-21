@@ -86,8 +86,10 @@ public class DlgOutputData  extends JPanel implements ChangeListener {
 		for (ROI roi : roisList) {
 			String cs = roi.getName();
 			int firstunderscore = cs.indexOf("_");
-			cs = baseName + cs.substring(firstunderscore);
-			roi.setName(cs);
+			if (firstunderscore > 0) {
+				cs = baseName + cs.substring(firstunderscore);
+				roi.setName(cs);
+			}
 		}
 	}
 
