@@ -41,7 +41,7 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 	JRadioButton rbFilterbyColor 	= new JRadioButton("color array");
 	JRadioButton rbFilterbyFunction	= new JRadioButton("filters");
 	JCheckBox measureHeatmapCheckBox = new JCheckBox("movement");
-	JButton openFiltersButton		= new JButton("Load...");
+	JButton loadFiltersButton		= new JButton("Load...");
 	JButton saveFiltersButton		= new JButton("Save...");
 	JTabbedPane tabbedPane 			= new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 	Areatrack areatrack = null;
@@ -90,7 +90,7 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 		FlowLayout layoutRight = new FlowLayout(FlowLayout.RIGHT); 
 		JPanel panel2 = new JPanel(layoutRight);
 		panel2.add(loadsaveText1);
-		panel2.add(openFiltersButton);
+		panel2.add(loadFiltersButton);
 		panel2.add(saveFiltersButton);
 		capPanel.add(panel2, BorderLayout.PAGE_END);
 		
@@ -105,14 +105,14 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 	}
 	
 	private void declareActionListeners() {
-		openFiltersButton.addActionListener(new ActionListener () { 
+		loadFiltersButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				xmlReadAreaTrackParameters(); 
+				xmlLoadAreaTrackParameters(); 
 			} } );
 		
 		saveFiltersButton.addActionListener(new ActionListener () {
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				xmlWriteAreaTrackParameters(); 
+				xmlSaveAreaTrackParameters(); 
 			} } );
 		
 		rbFilterbyColor.addActionListener(new ActionListener () { 
@@ -132,14 +132,15 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 		tabbedPane.setSelectedIndex(index);
 	}
 	
-	private void xmlReadAreaTrackParameters() {
-		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
-		xmlAreaTrack.xmlReadAreaTrackParameters(areatrack);
+	private void xmlLoadAreaTrackParameters() {
+		
+		areatrack.areatrackParameters.xmlLoadAreaTrackParameters(areatrack.vSequence);
+		transferParametersToDialog();
 	}
 	
-	private void xmlWriteAreaTrackParameters() {
-		XmlAreaTrack xmlAreaTrack = new XmlAreaTrack();
-		xmlAreaTrack.xmlWriteAreaTrackParameters(areatrack);
+	private void xmlSaveAreaTrackParameters() {
+		transferDialogToParameters();
+		areatrack.areatrackParameters.xmlSaveAreaTrackParameters(areatrack.vSequence);
 	}
 
 	@Override
@@ -180,6 +181,13 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 		dlgTabThresholdColors.transferParametersToDialog();
 		dlgTabThresholdFunction.transferParametersToDialog();
 		dlgTabThresholdMovement.transferParametersToDialog();
+	}
+	
+public void transferDialogToParameters() {
+		
+		dlgTabThresholdColors.transferDialogToParameters();
+		dlgTabThresholdFunction.transferDialogToParameters();
+		dlgTabThresholdMovement.transferDialogToParameters();
 	}
 
 }

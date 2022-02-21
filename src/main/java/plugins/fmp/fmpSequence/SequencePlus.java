@@ -24,6 +24,7 @@ import icy.sequence.Sequence;
 import icy.type.geom.Polyline2D;
 import icy.util.XMLUtil;
 import plugins.fmp.fmpTools.FmpTools;
+import plugins.fmp.areatrack.AreatrackAnalysisParameters;
 import plugins.fmp.fmpTools.EnumArrayListType;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.OverlayThreshold;
@@ -345,9 +346,10 @@ public class SequencePlus extends SequenceVirtual  {
 		thresholdOverlay.painterChanged();
 	}
 	
-	public void setThresholdOverlayParametersColors(EnumImageOp transf, ArrayList <Color> colorarray, int colordistancetype, int colorthreshold) {
+	public void setThresholdOverlayParametersColors(EnumImageOp transf, AreatrackAnalysisParameters areatrackParameters) {
+		
 		thresholdOverlay.setTransform(transf);
-		thresholdOverlay.setThresholdColor(colorarray, colordistancetype, colorthreshold);
+		thresholdOverlay.setThresholdColor(areatrackParameters.colorarray, areatrackParameters.colordistanceType, areatrackParameters.colorthreshold);
 		thresholdOverlay.painterChanged();
 	}
 

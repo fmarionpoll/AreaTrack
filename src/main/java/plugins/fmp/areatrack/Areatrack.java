@@ -2,8 +2,6 @@ package plugins.fmp.areatrack;
 
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -27,30 +25,23 @@ import plugins.fmp.fmpSequence.SequencePlus;
 
 public class Areatrack extends PluginActionable implements ViewerListener
 {	
-			IcyFrame mainFrame = new IcyFrame("AreaTrack 19-02-2022", true, true, true, true);
-			GraphsWindow displayCharts = null;
-	
-			Dlg1Source dlgSourcePanel = new Dlg1Source();
-			Dlg2Grids dlgRoisPanel = new Dlg2Grids();
-			Dlg3AnalysisParameters dlgAnalysisParameters = new Dlg3AnalysisParameters();
-			Dlg4AnalysisRun dlgAnalysisRun = new Dlg4AnalysisRun();
-			Dlg5ResultsExport dlgResults = new Dlg5ResultsExport();
+	IcyFrame mainFrame = new IcyFrame("AreaTrack 19-02-2022", true, true, true, true);
+	GraphsWindow displayCharts = null;
 
-			int	 analyzeStep 				= 1;
-			int  startFrame 				= 1;
-			int  endFrame 					= 99999999;
-	
-			EnumThresholdType thresholdtype	= EnumThresholdType.COLORARRAY; 
-			EnumImageOp simpletransformop 	= EnumImageOp.R2MINUS_GB;
-			int simplethreshold 			= 20;
-			EnumImageOp colortransformop 	= EnumImageOp.NONE;
-			int colordistanceType 			= 0;
-			int colorthreshold 				= 20;
-			ArrayList <Color> colorarray 	= new ArrayList <Color>();
-			int thresholdmovement 			= 20;
+	Dlg1Source dlgSourcePanel = new Dlg1Source();
+	Dlg2Grids dlgRoisPanel = new Dlg2Grids();
+	Dlg3AnalysisParameters dlgAnalysisParameters = new Dlg3AnalysisParameters();
+	Dlg4AnalysisRun dlgAnalysisRun = new Dlg4AnalysisRun();
+	Dlg5ResultsExport dlgResults = new Dlg5ResultsExport();
+
+	int	 analyzeStep 				= 1;
+	int  startFrame 				= 1;
+	int  endFrame 					= 99999999;
+
+	AreatrackAnalysisParameters areatrackParameters;
 			
 	public 	SequencePlus vSequence 			= null;
-	final 	String filenameAreatrackXml 	= "areatrack.xml";
+	
 	
 	// --------------------------------------------------------------------------
 
@@ -99,7 +90,7 @@ public class Areatrack extends PluginActionable implements ViewerListener
 			if (thresholdTypeForOverlay == EnumThresholdType.SINGLE)
 				vSequence.setThresholdOverlayParametersSingle(transformOpForOverlay, thresholdForOverlay);
 			else
-				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, colorarray, colordistanceType, colorthreshold);
+				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, areatrackParameters);
 		}
 	}
 	

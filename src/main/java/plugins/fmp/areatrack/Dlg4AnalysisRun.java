@@ -100,17 +100,17 @@ public class Dlg4AnalysisRun extends JPanel
 		{ 
 			if (areatrack.dlgAnalysisParameters.rbFilterbyFunction.isSelected()) 
 			{
-				areatrack.thresholdtype = EnumThresholdType.SINGLE;
+				areatrack.areatrackParameters.thresholdtype = EnumThresholdType.SINGLE;
 				analysisThread.initAreaDetectionFromFunction(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame, 
 						getROIsToAnalyze(),  
-						areatrack.simpletransformop, areatrack.simplethreshold);
+						areatrack.areatrackParameters.simpletransformop, areatrack.areatrackParameters.simplethreshold);
 			} 
 			else 
 			{
-				areatrack.thresholdtype = EnumThresholdType.COLORARRAY;
+				areatrack.areatrackParameters.thresholdtype = EnumThresholdType.COLORARRAY;
 				analysisThread.initAreaDetectionFromColors(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
 						getROIsToAnalyze(),  
-						areatrack.colordistanceType, areatrack.colorthreshold, areatrack.colorarray);
+						areatrack.areatrackParameters.colordistanceType, areatrack.areatrackParameters.colorthreshold, areatrack.areatrackParameters.colorarray);
 			}
 		}
 		
@@ -118,7 +118,7 @@ public class Dlg4AnalysisRun extends JPanel
 		{
 			analysisThread.initMovementDetection(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
 					getROIsToAnalyze(),
-					areatrack.thresholdmovement);
+					areatrack.areatrackParameters.thresholdmovement);
 		}	
 		analysisThread.start();	
 	}
