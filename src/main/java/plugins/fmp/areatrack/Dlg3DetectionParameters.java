@@ -27,7 +27,7 @@ import plugins.fmp.fmpTools.EnumAreaDetection;
 
 
 
-public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
+public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	
 	/**
 	 * 

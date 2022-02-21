@@ -30,7 +30,7 @@ public class Areatrack extends PluginActionable implements ViewerListener
 
 	Dlg1Source dlgSourcePanel = new Dlg1Source();
 	Dlg2Grids dlgRoisPanel = new Dlg2Grids();
-	Dlg3AnalysisParameters dlgAnalysisParameters = new Dlg3AnalysisParameters();
+	Dlg3DetectionParameters dlgAnalysisParameters = new Dlg3DetectionParameters();
 	Dlg4AnalysisRun dlgAnalysisRun = new Dlg4AnalysisRun();
 	Dlg5ResultsExport dlgResults = new Dlg5ResultsExport();
 
@@ -38,11 +38,10 @@ public class Areatrack extends PluginActionable implements ViewerListener
 	int  startFrame 				= 1;
 	int  endFrame 					= 99999999;
 
-	AreatrackAnalysisParameters analysisParameters;
+	DetectionParameters analysisParameters = new DetectionParameters();
 			
 	public 	SequencePlus vSequence 			= null;
-	
-	
+		
 	// --------------------------------------------------------------------------
 
 	@Override

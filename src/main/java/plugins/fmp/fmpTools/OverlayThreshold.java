@@ -52,7 +52,7 @@ public class OverlayThreshold extends Overlay
 		imgOp.setThresholdToSingleValue(threshold);
 	}
 	
-	public void setThresholdColor (ArrayList <Color> colorarray, int distancetype, int threshold)
+	public void setThresholdColor (ArrayList <Color> colorarray, EnumColorDistanceType distancetype, int threshold)
 	{
 		imgOp.setThresholdToColorArray(colorarray, distancetype, threshold);
 	}

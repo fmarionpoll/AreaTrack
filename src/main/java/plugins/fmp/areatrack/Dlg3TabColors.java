@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -24,6 +25,7 @@ import javax.swing.event.ChangeListener;
 import plugins.fmp.fmpTools.ComboBoxColorRenderer;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumAreaDetection;
+import plugins.fmp.fmpTools.EnumColorDistanceType;
 
 public class Dlg3TabColors extends JPanel implements ChangeListener {
 
@@ -113,6 +115,7 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 		
 		rbL1.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
+				areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L1;
 				updateThresholdOverlayParameters();
 			} } );
 		
@@ -159,9 +162,9 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
 			areatrack.analysisParameters.colorarray.add(colorPickCombo.getItemAt(i));
 		}
-		areatrack.analysisParameters.colordistanceType = 1;
+		areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L1;
 		if (rbL2.isSelected()) 
-			areatrack.analysisParameters.colordistanceType = 2;
+			areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L2;
 
 		areatrack.setOverlayParameters(true, areatrack.analysisParameters.colortransformop, areatrack.analysisParameters.areaDetectionMode, areatrack.analysisParameters.colorthreshold);
 	}
@@ -199,10 +202,12 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 				rbRGB.setSelected(true);
 				break;
 		}
-		colorPickCombo.removeAll();
+		
+		colorPickCombo.removeAllItems();
 		for (int i = 0; i < areatrack.analysisParameters.colorarray.size(); i++)
 			colorPickCombo.addItem(areatrack.analysisParameters.colorarray.get(i));
-		if (areatrack.analysisParameters.colordistanceType == 1)
+		
+		if (areatrack.analysisParameters.colordistanceType == EnumColorDistanceType.L1)
 			rbL1.setSelected(true);
 		else
 			rbL2.setSelected(true);
@@ -224,9 +229,9 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 		}
 		
 		if (rbL1.isSelected())
-			areatrack.analysisParameters.colordistanceType = 1;
+			areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L1;
 		else
-			areatrack.analysisParameters.colordistanceType = 2;
+			areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L2;
 	}
 
 }

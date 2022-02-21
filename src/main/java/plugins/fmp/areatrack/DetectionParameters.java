@@ -13,9 +13,10 @@ import icy.util.XMLUtil;
 import plugins.fmp.fmpSequence.SequencePlus;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumAreaDetection;
+import plugins.fmp.fmpTools.EnumColorDistanceType;
 import plugins.fmp.fmpTools.FmpTools;
 
-public class AreatrackAnalysisParameters {
+public class DetectionParameters {
 	
 	final	String filenameAreatrackXml 	= "areatrack.xml";
 	
@@ -24,7 +25,7 @@ public class AreatrackAnalysisParameters {
 	public 	EnumImageOp simpletransformop 	= EnumImageOp.R2MINUS_GB;
 	public 	int simplethreshold 			= 20;
 	public 	EnumImageOp colortransformop 	= EnumImageOp.NONE;
-	public 	int colordistanceType 			= 0;
+	public 	EnumColorDistanceType colordistanceType = EnumColorDistanceType.L2;
 	public 	int colorthreshold 				= 20;
 	public 	ArrayList <Color> colorarray 	= new ArrayList <Color>();
 	
@@ -107,7 +108,8 @@ public void xmlLoadAreaTrackParameters(SequencePlus vSequence) {
 		colortransformop = EnumImageOp.findByText(codestring);
 		
 		xmlVal = XMLUtil.getElement(xmlElement, ID_COLORDISTANCETYPE);
-		colordistanceType = XMLUtil.getAttributeIntValue(xmlVal, "value", 0);
+		codestring = XMLUtil.getAttributeValue(xmlVal, "value", "L1");
+		colordistanceType = EnumColorDistanceType.findByText(codestring);
 		
 		xmlVal = XMLUtil.getElement(xmlElement, ID_COLORTHRESHOLD);
 		colorthreshold = XMLUtil.getAttributeIntValue(xmlVal, "value", 20);
@@ -154,7 +156,7 @@ public void xmlLoadAreaTrackParameters(SequencePlus vSequence) {
 		XMLUtil.setAttributeValue(xmlVal, "descriptor", colortransformop.toString());
 	
 		xmlVal = XMLUtil.addElement(xmlElement, ID_COLORDISTANCETYPE);
-		XMLUtil.setAttributeIntValue(xmlVal, "value", colordistanceType);
+		XMLUtil.setAttributeValue(xmlVal, "value", colordistanceType.toString());
 
 		xmlVal = XMLUtil.addElement(xmlElement, ID_COLORTHRESHOLD);
 		XMLUtil.setAttributeIntValue(xmlVal, "value", colorthreshold);

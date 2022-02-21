@@ -23,6 +23,7 @@ import icy.type.DataType;
 import icy.type.collection.array.Array1DUtil;
 import plugins.fmp.fmpSequence.SequenceVirtual;
 import plugins.fmp.fmpTools.FmpTools;
+import plugins.fmp.fmpTools.EnumColorDistanceType;
 import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.ImageOperations;
 
@@ -76,7 +77,7 @@ public class AreaAnalysisThread extends Thread {
 	
 	public void initAreaDetectionFromColors(SequenceVirtual sequenceVirtual, int startFrame, int endFrame,  
 			ArrayList<ROI2D> roiList,  
-			int distanceType, int colorthreshold, ArrayList<Color> colorarray) {
+			EnumColorDistanceType distanceType, int colorthreshold, ArrayList<Color> colorarray) {
 		
 		vSequence = sequenceVirtual;
 		this.roiList = roiList;

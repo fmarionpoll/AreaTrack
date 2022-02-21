@@ -11,7 +11,7 @@ public class ImageOperationsStruct
 {
 	
 	int 				fromFrame		= -1;
-	int 				colordistanceType 	= 0;
+	EnumColorDistanceType colordistanceType  = EnumColorDistanceType.L1;
 	int					simplethreshold = 255;
 	int 				colorthreshold	= 0;
 	ArrayList <Color> 	colorarray 		= null;

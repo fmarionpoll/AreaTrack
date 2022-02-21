@@ -12,7 +12,7 @@ public class ImageThresholdTools {
 
 	// parameters passed by caller
 	private int colorthreshold;
-	private int colordistanceType;
+	private EnumColorDistanceType colordistanceType = EnumColorDistanceType.L1;
 	private int simplethreshold = 255;
 	
 	// local variables
@@ -27,7 +27,7 @@ public class ImageThresholdTools {
 		this.simplethreshold = simplethreshold;
 	}
 	
-	public void setColorArrayThreshold (int colordistanceType, int colorthreshold, ArrayList<Color> colorarray)
+	public void setColorArrayThreshold (EnumColorDistanceType colordistanceType, int colorthreshold, ArrayList<Color> colorarray)
 	{
 		this.colordistanceType = colordistanceType;
 		this.colorthreshold = colorthreshold;
@@ -71,7 +71,7 @@ public class ImageThresholdTools {
 		}
 		
 		NHColorDistance distance; 
-		if (colordistanceType == 1)
+		if (colordistanceType == EnumColorDistanceType.L1)
 			distance = new NHColorDistanceL1();
 		else
 			distance = new NHColorDistanceL2();

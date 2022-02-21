@@ -109,7 +109,9 @@ public class Dlg4AnalysisRun extends JPanel
 				areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
 				analysisThread.initAreaDetectionFromColors(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
 						getROIsToAnalyze(),  
-						areatrack.analysisParameters.colordistanceType, areatrack.analysisParameters.colorthreshold, areatrack.analysisParameters.colorarray);
+						areatrack.analysisParameters.colordistanceType, 
+						areatrack.analysisParameters.colorthreshold, 
+						areatrack.analysisParameters.colorarray);
 			}
 		}
 		

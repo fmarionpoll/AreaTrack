@@ -34,7 +34,7 @@ public class ImageOperations {
 		imgThresh.setSingleThreshold(threshold);
 	}
 	
-	public void setThresholdToColorArray (ArrayList <Color> colorarray, int distanceType, int colorthreshold) {
+	public void setThresholdToColorArray (ArrayList <Color> colorarray, EnumColorDistanceType distanceType, int colorthreshold) {
 		opThresh.thresholdtype = EnumAreaDetection.COLORARRAY;
 		opThresh.colorarray = colorarray;
 		opThresh.colordistanceType = distanceType;
