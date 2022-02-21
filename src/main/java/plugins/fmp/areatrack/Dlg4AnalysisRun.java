@@ -31,6 +31,7 @@ public class Dlg4AnalysisRun extends JPanel
 	JTextField startFrameTextField	= new JTextField("0");
 	JTextField endFrameTextField = new JTextField("99999999");
 	private JTextField analyzeStepTextField	= new JTextField("1");
+	
 	AreaAnalysisThread analysisThread = null;
 	Areatrack areatrack = null;
 

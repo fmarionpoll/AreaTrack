@@ -2,12 +2,15 @@ package plugins.fmp.fmpSequence;
 
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import icy.image.IcyBufferedImage;
 import icy.image.IcyBufferedImageUtil;
@@ -260,4 +263,18 @@ public class SequenceVirtual
 //		LocalDateTime loc = LocalDateTime.ofInstant(fileTime.toInstant(), ZoneOffset.UTC);
 		return fileTime;
 	}
+	
+	 public IcyBufferedImage imageIORead(String name) 
+		{
+	    	BufferedImage image = null;
+			try 
+			{
+		    	image = ImageIO.read(new File(name));
+			} 
+			catch (IOException e) 
+			{
+				 e.printStackTrace();
+			}
+			return IcyBufferedImage.createFrom(image);
+		}
 }

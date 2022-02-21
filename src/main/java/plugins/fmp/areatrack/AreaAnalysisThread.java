@@ -3,6 +3,8 @@ package plugins.fmp.areatrack;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import icy.canvas.Canvas2D;
 import icy.gui.frame.progress.ProgressFrame;
@@ -16,6 +18,7 @@ import icy.roi.ROI2D;
 import icy.sequence.Sequence;
 import icy.sequence.SequenceDataIterator;
 import icy.system.profile.Chronometer;
+import icy.system.thread.Processor;
 import icy.type.DataType;
 import icy.type.collection.array.Array1DUtil;
 import plugins.fmp.fmpSequence.SequenceVirtual;
@@ -111,47 +114,65 @@ public class AreaAnalysisThread extends Thread {
 
 		System.out.println("Computation over frames: " + startFrame + " - " + endFrame );
 		Chronometer chrono = new Chronometer("Tracking computation" );
-		ProgressFrame progress = new ProgressFrame("Checking ROIs...");
+		ProgressFrame progress = new ProgressFrame("Anayze images...");
 		
 		Viewer viewer = Icy.getMainInterface().getFirstViewer(vSequence.seq);
 		if (!measureROIsEvolution)
 			viewer = resultOFFViewer;
 		vSequence.seq.beginUpdate();
 		
+//		final Processor processor = new Processor(SystemUtil.getNumberOfCPUs());
+//	    processor.setThreadName("buildkymo2");
+//	    processor.setPriority(Processor.NORM_PRIORITY);
+//        ArrayList<Future<?>> futuresArray = new ArrayList<Future<?>>(nbframes);
+//		futuresArray.clear();
+//		ProgressFrame progressBar = new ProgressFrame("Processing with subthreads started");
+		
 		// loop over all images
-		for (int t = startFrame ; t <= endFrame && !isInterrupted(); t  += analyzeStep ) {				
-
-			viewer.setPositionT(t);
-			updateDisplay (t, nbframes, chrono, progress);
-
-			if (measureROIsEvolution) {
-				IcyBufferedImage binaryMap = imgOp1.run(t);	
-				boolean[] boolMap = imgOp1.convertToBoolean(binaryMap);
-				BooleanMask2D maskAll2D = new BooleanMask2D(binaryMap.getBounds(), boolMap); 
-				for (int iiroi = 0; iiroi < areaMasks.size(); iiroi++ )
-				{
-					BooleanMask2D areaMask = areaMasks.get(iiroi);
-					BooleanMask2D intersectionMask = maskAll2D.getIntersection( areaMask );
-					int sum = intersectionMask.getNumberOfPoints();
-					vSequence.data_raw[iiroi][t-startFrame] = sum;
-				}
-			}
+		for (int iiframe = startFrame ; iiframe <= endFrame && !isInterrupted(); iiframe  += analyzeStep ) 
+		{				
+			final int iframe =  iiframe;	
 			
-			if (measureROIsMove && t < startFrame+20) {
-
-				IcyBufferedImage binaryMap = imgOp2.run_nocache();
-				int [] binaryArray = Array1DUtil.arrayToIntArray(binaryMap.getDataXY(0), binaryMap.isSignedDataType());
-				double [] resultOFFArray = resultOFFImage.getDataXYAsDouble(0);
-				double [] resultONArray = resultONImage.getDataXYAsDouble(0);
-				for (int i= 0; i< binaryArray.length; i++) {
-					if (binaryArray[i] == 0)
-						resultOFFArray[i] += 1;
-					else
-						resultONArray[i] += 1;
-				}
-			}
+//			futuresArray.add(processor.submit(new Runnable () {
+//				@Override
+//				public void run() {						
+//					IcyBufferedImage sourceImage = vSequence.imageIORead(vSequence.getFileName(iframe));
+					
+					viewer.setPositionT(iframe);
+					updateDisplay (iframe, nbframes, chrono, progress);
+		
+					if (measureROIsEvolution) 
+					{
+						IcyBufferedImage binaryMap = imgOp1.run(iframe);	
+						boolean[] boolMap = imgOp1.convertToBoolean(binaryMap);
+						BooleanMask2D maskAll2D = new BooleanMask2D(binaryMap.getBounds(), boolMap); 
+						for (int iiroi = 0; iiroi < areaMasks.size(); iiroi++ )
+						{
+							BooleanMask2D areaMask = areaMasks.get(iiroi);
+							BooleanMask2D intersectionMask = maskAll2D.getIntersection( areaMask );
+							int sum = intersectionMask.getNumberOfPoints();
+							vSequence.data_raw[iiroi][iframe-startFrame] = sum;
+						}
+					}
+					
+					if (measureROIsMove && iframe < startFrame+20) 
+					{
+						IcyBufferedImage binaryMap = imgOp2.run_nocache();
+						int [] binaryArray = Array1DUtil.arrayToIntArray(binaryMap.getDataXY(0), binaryMap.isSignedDataType());
+						double [] resultOFFArray = resultOFFImage.getDataXYAsDouble(0);
+						double [] resultONArray = resultONImage.getDataXYAsDouble(0);
+						for (int i= 0; i< binaryArray.length; i++) 
+						{
+							if (binaryArray[i] == 0)
+								resultOFFArray[i] += 1;
+							else
+								resultONArray[i] += 1;
+						}
+					}
+//				}}));
 		}
-
+//		waitFuturesCompletion(processor, futuresArray, progressBar);
+		
 		progress.close();
 		vSequence.seq.endUpdate();
 		
@@ -257,6 +278,32 @@ public class AreaAnalysisThread extends Thread {
 		resultONSequence.setName("Heatmap ON thresh:"+ thresholdForHeatMap);
 		resultONViewer = new Viewer(resultONSequence, false);
 		resultONCanvas = new Canvas2D(resultONViewer);
+	}
+	
+	protected void waitFuturesCompletion(Processor processor, ArrayList<Future<?>> futuresArray,  ProgressFrame progressBar) 
+	{  	
+		int frame= 1;
+		int nframes = futuresArray.size();
+		while (!futuresArray.isEmpty())
+		{
+			final Future<?> f = futuresArray.get(futuresArray.size() - 1);
+			if (progressBar != null)
+				 progressBar.setMessage("Analyze frame: " + (frame) + "//" + nframes);
+			try
+			{
+			     f.get();
+			}
+			catch (ExecutionException e)
+			{
+			     System.out.println("series analysis - Warning: " + e);
+			}
+			catch (InterruptedException e)
+			{
+			// ignore
+			}
+			futuresArray.remove(f);
+			frame ++;
 		}
+	}
 
 }
