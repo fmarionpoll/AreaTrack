@@ -134,13 +134,13 @@ public class Dlg3AnalysisParameters extends JPanel implements ChangeListener {
 	
 	private void xmlLoadAreaTrackParameters() {
 		
-		areatrack.areatrackParameters.xmlLoadAreaTrackParameters(areatrack.vSequence);
+		areatrack.analysisParameters.xmlLoadAreaTrackParameters(areatrack.vSequence);
 		transferParametersToDialog();
 	}
 	
 	private void xmlSaveAreaTrackParameters() {
 		transferDialogToParameters();
-		areatrack.areatrackParameters.xmlSaveAreaTrackParameters(areatrack.vSequence);
+		areatrack.analysisParameters.xmlSaveAreaTrackParameters(areatrack.vSequence);
 	}
 
 	@Override

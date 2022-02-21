@@ -95,19 +95,19 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	private void declareActionListeners() {
 		rbRGB.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				areatrack.areatrackParameters.colortransformop = EnumImageOp.NONE;
+				areatrack.analysisParameters.colortransformop = EnumImageOp.NONE;
 				updateThresholdOverlayParameters();
 			} } );
 		
 		rbHSV.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				areatrack.areatrackParameters.colortransformop = EnumImageOp.RGB_TO_HSV;
+				areatrack.analysisParameters.colortransformop = EnumImageOp.RGB_TO_HSV;
 				updateThresholdOverlayParameters();
 			} } );
 		
 		rbH1H2H3.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				areatrack.areatrackParameters.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
+				areatrack.analysisParameters.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
 				updateThresholdOverlayParameters();
 			} } );
 		
@@ -153,17 +153,17 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	
     void updateThresholdOverlayParameters() {
     	
-		areatrack.areatrackParameters.colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
-		areatrack.areatrackParameters.thresholdtype = EnumThresholdType.COLORARRAY;
-		areatrack.areatrackParameters.colorarray.clear();
+		areatrack.analysisParameters.colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
+		areatrack.analysisParameters.thresholdtype = EnumThresholdType.COLORARRAY;
+		areatrack.analysisParameters.colorarray.clear();
 		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
-			areatrack.areatrackParameters.colorarray.add(colorPickCombo.getItemAt(i));
+			areatrack.analysisParameters.colorarray.add(colorPickCombo.getItemAt(i));
 		}
-		areatrack.areatrackParameters.colordistanceType = 1;
+		areatrack.analysisParameters.colordistanceType = 1;
 		if (rbL2.isSelected()) 
-			areatrack.areatrackParameters.colordistanceType = 2;
+			areatrack.analysisParameters.colordistanceType = 2;
 
-		areatrack.setOverlayParameters(true, areatrack.areatrackParameters.colortransformop, areatrack.areatrackParameters.thresholdtype, areatrack.areatrackParameters.colorthreshold);
+		areatrack.setOverlayParameters(true, areatrack.analysisParameters.colortransformop, areatrack.analysisParameters.thresholdtype, areatrack.analysisParameters.colorthreshold);
 	}
 	
 	private void pickColor() {
@@ -186,8 +186,8 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	
 	public void transferParametersToDialog() {
 		
-		distanceSpinner.setValue(areatrack.areatrackParameters.colorthreshold);
-		switch (areatrack.areatrackParameters.colortransformop) {
+		distanceSpinner.setValue(areatrack.analysisParameters.colorthreshold);
+		switch (areatrack.analysisParameters.colortransformop) {
 			case RGB_TO_HSV:
 				rbHSV.setSelected(true);
 				break;
@@ -200,9 +200,9 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 				break;
 		}
 		colorPickCombo.removeAll();
-		for (int i = 0; i < areatrack.areatrackParameters.colorarray.size(); i++)
-			colorPickCombo.addItem(areatrack.areatrackParameters.colorarray.get(i));
-		if (areatrack.areatrackParameters.colordistanceType == 1)
+		for (int i = 0; i < areatrack.analysisParameters.colorarray.size(); i++)
+			colorPickCombo.addItem(areatrack.analysisParameters.colorarray.get(i));
+		if (areatrack.analysisParameters.colordistanceType == 1)
 			rbL1.setSelected(true);
 		else
 			rbL2.setSelected(true);
@@ -210,27 +210,23 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	
 	public void transferDialogToParameters() {
 		
-		areatrack.areatrackParameters.colorthreshold = (int) distanceSpinner.getValue();
-		if (rbHSV.isSelected() areatrack.areatrackParameters.colortransformop = EnumImageOp.
-		switch (areatrack.areatrackParameters.colortransformop) {
-			case RGB_TO_HSV:
-				rbHSV.setSelected(true);
-				break;
-			case RGB_TO_H1H2H3:
-				rbH1H2H3.setSelected(true);
-				break;
-			case NONE:
-			default:
-				rbRGB.setSelected(true);
-				break;
+		areatrack.analysisParameters.colorthreshold = (int) distanceSpinner.getValue();
+		if (rbHSV.isSelected()) 
+			areatrack.analysisParameters.colortransformop = EnumImageOp.RGB_TO_HSV;
+		else if (rbH1H2H3.isSelected())
+			areatrack.analysisParameters.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
+		else 
+			areatrack.analysisParameters.colortransformop = EnumImageOp.COLORARRAY1;
+		
+		areatrack.analysisParameters.colorarray.clear();
+		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
+			areatrack.analysisParameters.colorarray.add(colorPickCombo.getItemAt(i));
 		}
-		colorPickCombo.removeAll();
-		for (int i = 0; i < areatrack.areatrackParameters.colorarray.size(); i++)
-			colorPickCombo.addItem(areatrack.areatrackParameters.colorarray.get(i));
-		if (areatrack.areatrackParameters.colordistanceType == 1)
-			rbL1.setSelected(true);
+		
+		if (rbL1.isSelected())
+			areatrack.analysisParameters.colordistanceType = 1;
 		else
-			rbL2.setSelected(true);
+			areatrack.analysisParameters.colordistanceType = 2;
 	}
 
 }
