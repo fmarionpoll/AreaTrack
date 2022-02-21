@@ -253,8 +253,7 @@ public class OpenSequencePlus {
 				try
 				{
 					final int nframes = imagesList.size();
-					ProgressFrame progressBar = new ProgressFrame("Loading images ");
-				    final Processor processor = new Processor(SystemUtil.getNumberOfCPUs());
+					final Processor processor = new Processor(SystemUtil.getNumberOfCPUs());
 				    processor.setThreadName("loadimages");
 				    processor.setPriority(Processor.NORM_PRIORITY);
 			        ArrayList<Future<?>> futuresArray = new ArrayList<Future<?>>(nframes);
@@ -276,8 +275,7 @@ public class OpenSequencePlus {
 								}
 							}}));
 					}
-					waitFuturesCompletion(processor, futuresArray, progressBar);
-					progressBar.close();
+					waitFuturesCompletion(processor, futuresArray);
 				}
 				finally
 				{
@@ -287,15 +285,17 @@ public class OpenSequencePlus {
 		return seq;
 	 }
 	
-	protected static void waitFuturesCompletion(Processor processor, ArrayList<Future<?>> futuresArray,  ProgressFrame progressBar) 
+	protected static void waitFuturesCompletion(Processor processor, ArrayList<Future<?>> futuresArray) 
     {  	
-  		 int nframes = futuresArray.size();
+		ProgressFrame progressBar = new ProgressFrame("Loading images "); 
+		int nframes = futuresArray.size();
+		int iiframe =1;
     	 while (!futuresArray.isEmpty())
          {
     		 int frame = futuresArray.size() -1;
              final Future<?> f = futuresArray.get(frame);
-             if (progressBar != null)
-   				 progressBar.setMessage("Loading images... " + (frame) + "//" + nframes);
+   			 progressBar.setMessage("Loading images... " + (iiframe) + "//" + nframes);
+   			 iiframe++;
              try
              {
                  f.get();
@@ -310,6 +310,7 @@ public class OpenSequencePlus {
              }
              futuresArray.remove(f);
          }
+    	 progressBar.close();
    }
 	
 }
