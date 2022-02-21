@@ -9,7 +9,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -97,25 +96,25 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	private void declareActionListeners() {
 		rbRGB.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				areatrack.analysisParameters.colortransformop = EnumImageOp.NONE;
+				areatrack.detectionParameters.colortransformop = EnumImageOp.NONE;
 				updateThresholdOverlayParameters();
 			} } );
 		
 		rbHSV.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				areatrack.analysisParameters.colortransformop = EnumImageOp.RGB_TO_HSV;
+				areatrack.detectionParameters.colortransformop = EnumImageOp.RGB_TO_HSV;
 				updateThresholdOverlayParameters();
 			} } );
 		
 		rbH1H2H3.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				areatrack.analysisParameters.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
+				areatrack.detectionParameters.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
 				updateThresholdOverlayParameters();
 			} } );
 		
 		rbL1.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L1;
+				areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L1;
 				updateThresholdOverlayParameters();
 			} } );
 		
@@ -156,17 +155,17 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	
     void updateThresholdOverlayParameters() {
     	
-		areatrack.analysisParameters.colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
-		areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
-		areatrack.analysisParameters.colorarray.clear();
+		areatrack.detectionParameters.colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
+		areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
+		areatrack.detectionParameters.colorarray.clear();
 		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
-			areatrack.analysisParameters.colorarray.add(colorPickCombo.getItemAt(i));
+			areatrack.detectionParameters.colorarray.add(colorPickCombo.getItemAt(i));
 		}
-		areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L1;
+		areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L1;
 		if (rbL2.isSelected()) 
-			areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L2;
+			areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L2;
 
-		areatrack.setOverlayParameters(true, areatrack.analysisParameters.colortransformop, areatrack.analysisParameters.areaDetectionMode, areatrack.analysisParameters.colorthreshold);
+		areatrack.setOverlayParameters(true, areatrack.detectionParameters.colortransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.colorthreshold);
 	}
 	
 	private void pickColor() {
@@ -189,8 +188,9 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	
 	public void transferParametersToDialog() {
 		
-		distanceSpinner.setValue(areatrack.analysisParameters.colorthreshold);
-		switch (areatrack.analysisParameters.colortransformop) {
+		distanceSpinner.setValue(areatrack.detectionParameters.colorthreshold);
+		
+		switch (areatrack.detectionParameters.colortransformop) {
 			case RGB_TO_HSV:
 				rbHSV.setSelected(true);
 				break;
@@ -204,10 +204,13 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 		}
 		
 		colorPickCombo.removeAllItems();
-		for (int i = 0; i < areatrack.analysisParameters.colorarray.size(); i++)
-			colorPickCombo.addItem(areatrack.analysisParameters.colorarray.get(i));
+		int nitems = areatrack.detectionParameters.colorarray.size();
+		for (int i = 0; i < nitems; i++) {
+			Color colorItem = areatrack.detectionParameters.colorarray.get(i);
+			colorPickCombo.addItem(colorItem);
+		}
 		
-		if (areatrack.analysisParameters.colordistanceType == EnumColorDistanceType.L1)
+		if (areatrack.detectionParameters.colordistanceType == EnumColorDistanceType.L1)
 			rbL1.setSelected(true);
 		else
 			rbL2.setSelected(true);
@@ -215,23 +218,25 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	
 	public void transferDialogToParameters() {
 		
-		areatrack.analysisParameters.colorthreshold = (int) distanceSpinner.getValue();
-		if (rbHSV.isSelected()) 
-			areatrack.analysisParameters.colortransformop = EnumImageOp.RGB_TO_HSV;
-		else if (rbH1H2H3.isSelected())
-			areatrack.analysisParameters.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
-		else 
-			areatrack.analysisParameters.colortransformop = EnumImageOp.COLORARRAY1;
+		areatrack.detectionParameters.colorthreshold = (int) distanceSpinner.getValue();
 		
-		areatrack.analysisParameters.colorarray.clear();
+		if (rbHSV.isSelected()) 
+			areatrack.detectionParameters.colortransformop = EnumImageOp.RGB_TO_HSV;
+		else if (rbH1H2H3.isSelected())
+			areatrack.detectionParameters.colortransformop = EnumImageOp.RGB_TO_H1H2H3;
+		else 
+			areatrack.detectionParameters.colortransformop = EnumImageOp.COLORARRAY1;
+		
+		areatrack.detectionParameters.colorarray.clear();
 		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
-			areatrack.analysisParameters.colorarray.add(colorPickCombo.getItemAt(i));
+			Color colorItem = colorPickCombo.getItemAt(i);
+			areatrack.detectionParameters.colorarray.add(colorItem);
 		}
 		
 		if (rbL1.isSelected())
-			areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L1;
+			areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L1;
 		else
-			areatrack.analysisParameters.colordistanceType = EnumColorDistanceType.L2;
+			areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L2;
 	}
 
 }

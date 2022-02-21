@@ -48,16 +48,16 @@ public class Dlg3TabMovement extends JPanel implements ChangeListener {
 	}
 	
 	void updateThresholdOverlayParameters() {
-		areatrack.analysisParameters.thresholdmovement = Integer.parseInt(threshold2Spinner.getValue().toString());
-		areatrack.setOverlayParameters(true, EnumImageOp.REF_PREVIOUS, EnumAreaDetection.SINGLE, areatrack.analysisParameters.thresholdmovement);
+		areatrack.detectionParameters.thresholdmovement = Integer.parseInt(threshold2Spinner.getValue().toString());
+		areatrack.setOverlayParameters(true, EnumImageOp.REF_PREVIOUS, EnumAreaDetection.SINGLE, areatrack.detectionParameters.thresholdmovement);
 	}
 	
 	public void transferParametersToDialog() {	
-		threshold2Spinner.setValue(areatrack.analysisParameters.thresholdmovement);
+		threshold2Spinner.setValue(areatrack.detectionParameters.thresholdmovement);
 	}
 	
 	public void transferDialogToParameters() {
-		areatrack.analysisParameters.thresholdmovement = (int) threshold2Spinner.getValue();
+		areatrack.detectionParameters.thresholdmovement = (int) threshold2Spinner.getValue();
 	}
 	
 }

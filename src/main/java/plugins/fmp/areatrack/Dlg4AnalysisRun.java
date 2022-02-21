@@ -96,30 +96,30 @@ public class Dlg4AnalysisRun extends JPanel
 		areatrack.analyzeStep = Integer.parseInt( analyzeStepTextField.getText() );
 		areatrack.vSequence.analysisStep = areatrack.analyzeStep;
 		
-		if (areatrack.analysisParameters.detectArea) 
+		if (areatrack.detectionParameters.detectArea) 
 		{ 
-			if (areatrack.analysisParameters.areaDetectionMode == EnumAreaDetection.SINGLE) 
+			if (areatrack.detectionParameters.areaDetectionMode == EnumAreaDetection.SINGLE) 
 			{
 				analysisThread.initAreaDetectionFromFunction(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame, 
 						getROIsToAnalyze(),  
-						areatrack.analysisParameters.simpletransformop, areatrack.analysisParameters.simplethreshold);
+						areatrack.detectionParameters.simpletransformop, areatrack.detectionParameters.simplethreshold);
 			} 
 			else 
 			{
-				areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
+				areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
 				analysisThread.initAreaDetectionFromColors(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
 						getROIsToAnalyze(),  
-						areatrack.analysisParameters.colordistanceType, 
-						areatrack.analysisParameters.colorthreshold, 
-						areatrack.analysisParameters.colorarray);
+						areatrack.detectionParameters.colordistanceType, 
+						areatrack.detectionParameters.colorthreshold, 
+						areatrack.detectionParameters.colorarray);
 			}
 		}
 		
-		if (areatrack.analysisParameters.detectMovement) 
+		if (areatrack.detectionParameters.detectMovement) 
 		{
 			analysisThread.initMovementDetection(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
 					getROIsToAnalyze(),
-					areatrack.analysisParameters.thresholdmovement);
+					areatrack.detectionParameters.thresholdmovement);
 		}	
 		analysisThread.start();	
 	}

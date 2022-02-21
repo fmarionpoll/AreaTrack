@@ -138,9 +138,9 @@ public class ExportToXLS {
 			resultsHeatMap = areatrack.dlgAnalysisRun.analysisThread.results;
 		span = Integer.parseInt(areatrack.dlgResults.spanTextField.getText());
 		analyzeStep = areatrack.analyzeStep;
-		distanceString = String.valueOf(areatrack.analysisParameters.colorthreshold);
-		threshold2String = String.valueOf(areatrack.analysisParameters.thresholdmovement);
-		detectMovement = areatrack.analysisParameters.detectMovement;
+		distanceString = String.valueOf(areatrack.detectionParameters.colorthreshold);
+		threshold2String = String.valueOf(areatrack.detectionParameters.thresholdmovement);
+		detectMovement = areatrack.detectionParameters.detectMovement;
 		
 		System.out.println("XLS output");
 		try {

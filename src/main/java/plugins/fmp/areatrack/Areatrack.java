@@ -38,7 +38,7 @@ public class Areatrack extends PluginActionable implements ViewerListener
 	int  startFrame 				= 1;
 	int  endFrame 					= 99999999;
 
-	DetectionParameters analysisParameters = new DetectionParameters();
+	DetectionParameters detectionParameters = new DetectionParameters();
 			
 	public 	SequencePlus vSequence 			= null;
 		
@@ -89,7 +89,7 @@ public class Areatrack extends PluginActionable implements ViewerListener
 			if (thresholdTypeForOverlay == EnumAreaDetection.SINGLE)
 				vSequence.setThresholdOverlayParametersSingle(transformOpForOverlay, thresholdForOverlay);
 			else
-				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, analysisParameters);
+				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, detectionParameters);
 		}
 	}
 	

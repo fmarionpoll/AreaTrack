@@ -75,22 +75,22 @@ public class Dlg3TabFilter extends JPanel implements ChangeListener{
 	
 	void updateThresholdOverlayParameters() {
 			
-		areatrack.analysisParameters.simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
-		areatrack.analysisParameters.simplethreshold = Integer.parseInt(thresholdSpinner.getValue().toString());
-		areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
+		areatrack.detectionParameters.simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
+		areatrack.detectionParameters.simplethreshold = Integer.parseInt(thresholdSpinner.getValue().toString());
+		areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
 		
-		areatrack.setOverlayParameters(true, areatrack.analysisParameters.simpletransformop, areatrack.analysisParameters.areaDetectionMode, areatrack.analysisParameters.simplethreshold);
+		areatrack.setOverlayParameters(true, areatrack.detectionParameters.simpletransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.simplethreshold);
 	}
 	
 	public void transferParametersToDialog() {
 		
-		transformsComboBox.setSelectedItem(areatrack.analysisParameters.simpletransformop);
-		thresholdSpinner.setValue(areatrack.analysisParameters.simplethreshold);
+		transformsComboBox.setSelectedItem(areatrack.detectionParameters.simpletransformop);
+		thresholdSpinner.setValue(areatrack.detectionParameters.simplethreshold);
 	}
 	
 	public void transferDialogToParameters() {
-		areatrack.analysisParameters.simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
-		areatrack.analysisParameters.simplethreshold = (int) thresholdSpinner.getValue();
+		areatrack.detectionParameters.simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
+		areatrack.detectionParameters.simplethreshold = (int) thresholdSpinner.getValue();
 	}
 	
 }

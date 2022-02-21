@@ -135,13 +135,13 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	
 	private void xmlLoadAreaTrackParameters() {
 		
-		areatrack.analysisParameters.xmlLoadAreaTrackParameters(areatrack.vSequence);
+		areatrack.detectionParameters.xmlLoadAreaTrackParameters(areatrack.vSequence);
 		transferParametersToDialog();
 	}
 	
 	private void xmlSaveAreaTrackParameters() {
 		transferDialogToParameters();
-		areatrack.analysisParameters.xmlSaveAreaTrackParameters(areatrack.vSequence);
+		areatrack.detectionParameters.xmlSaveAreaTrackParameters(areatrack.vSequence);
 	}
 
 	@Override
@@ -151,11 +151,11 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 			updateThresholdOverlayParameters(selectedTab);
 			if (selectedTab == 0) {
 				rbFilterbyColor.setSelected(true);
-				areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
+				areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
 			}
 			else if (selectedTab == 1) {
 				rbFilterbyFunction.setSelected(true);
-				areatrack.analysisParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
+				areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
 			}
 		}
 	}
@@ -182,12 +182,12 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	}
 	
 	public void transferParametersToDialog() {
-		if (areatrack.analysisParameters.areaDetectionMode == EnumAreaDetection.COLORARRAY)
+		if (areatrack.detectionParameters.areaDetectionMode == EnumAreaDetection.COLORARRAY)
 			rbFilterbyColor.setSelected(true);
 		else
 			rbFilterbyFunction.setSelected(true);
-		detectMovementCheckBox.setSelected(areatrack.analysisParameters.detectMovement);
-		detectAreaCheckBox.setSelected(areatrack.analysisParameters.detectArea);
+		detectMovementCheckBox.setSelected(areatrack.detectionParameters.detectMovement);
+		detectAreaCheckBox.setSelected(areatrack.detectionParameters.detectArea);
 			
 		dlgTabThresholdColors.transferParametersToDialog();
 		dlgTabThresholdFunction.transferParametersToDialog();
