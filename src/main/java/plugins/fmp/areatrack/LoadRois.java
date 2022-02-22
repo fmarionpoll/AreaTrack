@@ -16,7 +16,7 @@ public class LoadRois {
 	public void saveROIs(SequencePlus vSequence) {
 		if (vSequence == null) return;
 		
-		vSequence.capillariesRoi2RoiArray.xmlWriteROIsAndData("areatrack.xml", vSequence);
+		vSequence.capillariesRoi2RoiArray.xmlWriteROIsAndDataNoFilter("roisarray.xml", vSequence);
 	}
 	
 	public void addROIs(SequencePlus vSequence) {

@@ -12,15 +12,13 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import icy.common.CollapsibleEvent;
-import icy.common.listener.ChangeListener;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import icy.roi.ROI;
 import plugins.fmp.areatrack.Areatrack;
 
-public class DlgOutputData  extends JPanel implements ChangeListener {
+public class DlgOutputData  extends JPanel {
 
 	/**
 	 * 
@@ -65,16 +63,9 @@ public class DlgOutputData  extends JPanel implements ChangeListener {
 			changeGridName(); 
 			}});
 	}
-	
-	@Override
-	public void onChanged(CollapsibleEvent event) {
-		// TODO Auto-generated method stub
 		
-	}
-	
 	private void saveXMLFile() 
 	{
-		areatrack.vSequence.capillariesRoi2RoiArray.grouping = 1;
 		areatrack.vSequence.capillariesRoi2RoiArray.xmlWriteROIsAndDataNoFilter("roisarray.xml", areatrack.vSequence);
 	}
 	

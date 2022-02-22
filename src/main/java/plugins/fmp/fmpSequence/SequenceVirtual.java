@@ -152,16 +152,16 @@ public class SequenceVirtual
 	// --------------------------------------------------------------------
 
 	 public IcyBufferedImage imageIORead(String name) 
+	{
+    	BufferedImage image = null;
+		try 
 		{
-	    	BufferedImage image = null;
-			try 
-			{
-		    	image = ImageIO.read(new File(name));
-			} 
-			catch (IOException e) 
-			{
-				 e.printStackTrace();
-			}
-			return IcyBufferedImage.createFrom(image);
+	    	image = ImageIO.read(new File(name));
+		} 
+		catch (IOException e) 
+		{
+			 e.printStackTrace();
 		}
+		return IcyBufferedImage.createFrom(image);
+	}
 }
