@@ -157,15 +157,8 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	
     void updateThresholdOverlayParameters() {
     	
-		areatrack.detectionParameters.colorthreshold = Integer.parseInt(distanceSpinner.getValue().toString());
 		areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
-		areatrack.detectionParameters.colorarray.clear();
-		for (int i = 0; i < colorPickCombo.getItemCount(); i++) {
-			areatrack.detectionParameters.colorarray.add(colorPickCombo.getItemAt(i));
-		}
-		areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L1;
-		if (rbL2.isSelected()) 
-			areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L2;
+		transferDialogToParameters(areatrack.detectionParameters);
 
 		//areatrack.setOverlayParameters(true, areatrack.detectionParameters.colortransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.colorthreshold);
 	}

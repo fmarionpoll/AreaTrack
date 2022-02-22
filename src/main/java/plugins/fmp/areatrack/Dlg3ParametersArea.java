@@ -27,7 +27,7 @@ import plugins.fmp.fmpTools.EnumAreaDetection;
 
 
 
-public class Dlg3DetectionSurfaces extends JPanel implements ChangeListener {
+public class Dlg3ParametersArea extends JPanel implements ChangeListener {
 	
 	/**
 	 * 
@@ -187,12 +187,16 @@ public class Dlg3DetectionSurfaces extends JPanel implements ChangeListener {
 		else
 			rbFilterbyFunction.setSelected(true);
 		detectAreaCheckBox.setSelected(detectionParameters.detectArea);
+		overlayCheckBox.setSelected(detectionParameters.displayOverlay);
 	}
 	
 public void transferDialogToParameters(DetectionParameters detectionParameters) {
 		
 		dlgTabThresholdColors.transferDialogToParameters(detectionParameters);
 		dlgTabThresholdFunction.transferDialogToParameters(detectionParameters);
+		detectionParameters.detectArea = detectAreaCheckBox.isSelected();
+		detectionParameters.areaDetectionMode = rbFilterbyColor.isSelected()? EnumAreaDetection.COLORARRAY : EnumAreaDetection.SINGLE;
+		detectionParameters.displayOverlay = overlayCheckBox.isSelected();
 	}
 
 }

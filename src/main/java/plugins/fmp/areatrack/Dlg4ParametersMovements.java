@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -18,12 +17,12 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 
 
-public class Dlg4DetectionMovements extends JPanel implements ChangeListener {
+public class Dlg4ParametersMovements extends JPanel implements ChangeListener {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2921692090190746442L;
-	JCheckBox detectAreaCheckBox = new JCheckBox("Detect ");
+	JCheckBox detectCheckBox = new JCheckBox("Detect ");
 	JSpinner threshold2Spinner = new JSpinner(new SpinnerNumberModel(20, 0, 255, 1));
 	Areatrack areatrack = null;
 
@@ -49,7 +48,7 @@ public class Dlg4DetectionMovements extends JPanel implements ChangeListener {
 		FlowLayout layoutRight = new FlowLayout(FlowLayout.LEFT); 
 		JPanel panel1 = new JPanel(layoutRight);
 		JLabel thresholdLabel2 = new JLabel("'move' threshold ");
-		panel1.add(detectAreaCheckBox);
+		panel1.add(detectCheckBox);
 		panel1.add(thresholdLabel2);
 		panel1.add(threshold2Spinner);
 		capPanel.add(panel1);
@@ -65,17 +64,19 @@ public class Dlg4DetectionMovements extends JPanel implements ChangeListener {
 	}
 	
 	void updateThresholdOverlayParameters() {
-		areatrack.detectionParameters.thresholdmovement = Integer.parseInt(threshold2Spinner.getValue().toString());
+		areatrack.detectionParameters.thresholdmovement = (int) threshold2Spinner.getValue();
 		//areatrack.setOverlayParameters(true, EnumImageOp.REF_PREVIOUS, EnumAreaDetection.SINGLE, areatrack.detectionParameters.thresholdmovement);
 	}
 	
 	public void transferParametersToDialog(DetectionParameters detectionParameters) {
 		
+		detectCheckBox.setSelected(detectionParameters.detectMovement);
 		threshold2Spinner.setValue(detectionParameters.thresholdmovement);
 	}
 	
 	public void transferDialogToParameters(DetectionParameters detectionParameters) {
 		
 		detectionParameters.thresholdmovement = (int) threshold2Spinner.getValue();
+		detectionParameters.detectMovement = detectCheckBox.isSelected();
 	}
 }

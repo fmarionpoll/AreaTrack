@@ -30,10 +30,10 @@ public class Areatrack extends PluginActionable implements ViewerListener
 
 	Dlg1Source dlg1Source = new Dlg1Source();
 	Dlg2Grids dlg2Grids = new Dlg2Grids();
-	Dlg3DetectionSurfaces dlg3AnalysisParameters = new Dlg3DetectionSurfaces();
-	Dlg4DetectionMovements dlg4DetectionMovements = new Dlg4DetectionMovements();
+	Dlg3ParametersArea dlg3ParametersArea = new Dlg3ParametersArea();
+	Dlg4ParametersMovements dlg4ParametersMovements = new Dlg4ParametersMovements();
 	Dlg5AnalysisRun dlg5AnalysisRun = new Dlg5AnalysisRun();
-	Dlg6ResultsExport dlg6Results = new Dlg6ResultsExport();
+	Dlg6ResultsExport dlg6ResultsExport = new Dlg6ResultsExport();
 
 	int	 analyzeStep = 1;
 	int  startFrame = 1;
@@ -54,10 +54,10 @@ public class Areatrack extends PluginActionable implements ViewerListener
 		DlgMenuBar.panelSetMenuBar(mainFrame, mainPanel);
 		dlg1Source.init(this, mainFrame, mainPanel, "1 - IMAGES STACK");
 		dlg2Grids.init(this, mainFrame, mainPanel, "2 - DEFINE/LOAD GRID");
-		dlg3AnalysisParameters.init(this, mainFrame, mainPanel, "3 - PARAMETERS: SURFACE");
-		dlg4DetectionMovements.init(this, mainFrame, mainPanel, "4 - PARAMETERS: MOVEMENTS");
+		dlg3ParametersArea.init(this, mainFrame, mainPanel, "3 - PARAMETERS: SURFACE");
+		dlg4ParametersMovements.init(this, mainFrame, mainPanel, "4 - PARAMETERS: MOVEMENTS");
 		dlg5AnalysisRun.init(this, mainFrame, mainPanel, "5 - RUN ANALYSIS");
-		dlg6Results.init(this, mainFrame, mainPanel, "6 - RESULTS DISPLAY/EXPORT");
+		dlg6ResultsExport.init(this, mainFrame, mainPanel, "6 - RESULTS DISPLAY/EXPORT");
 		
 		mainFrame.pack();
 		mainFrame.center();

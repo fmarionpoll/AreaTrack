@@ -21,6 +21,7 @@ public class DetectionParameters {
 	final	String filenameAreatrackXml 	= "areatrack.xml";
 	
 	public  boolean detectArea				= true;
+	public  boolean displayOverlay			= true;
 	public 	EnumAreaDetection areaDetectionMode	= EnumAreaDetection.COLORARRAY; 
 	public 	EnumImageOp simpletransformop 	= EnumImageOp.R2MINUS_GB;
 	public 	int simplethreshold 			= 20;

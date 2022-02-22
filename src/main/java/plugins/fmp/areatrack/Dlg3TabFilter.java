@@ -74,8 +74,7 @@ public class Dlg3TabFilter extends JPanel implements ChangeListener{
 	
 	void updateThresholdOverlayParameters() {
 			
-		areatrack.detectionParameters.simpletransformop = (EnumImageOp) transformsComboBox.getSelectedItem();
-		areatrack.detectionParameters.simplethreshold = Integer.parseInt(thresholdSpinner.getValue().toString());
+		transferDialogToParameters(areatrack.detectionParameters);
 		areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
 		
 		//areatrack.setOverlayParameters(true, areatrack.detectionParameters.simpletransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.simplethreshold);

@@ -136,7 +136,7 @@ public class ExportToXLS {
 		endFrame = areatrack.endFrame;
 		if (areatrack.dlg5AnalysisRun.analysisThread != null)
 			resultsHeatMap = areatrack.dlg5AnalysisRun.analysisThread.results;
-		span = Integer.parseInt(areatrack.dlg6Results.spanTextField.getText());
+		span = Integer.parseInt(areatrack.dlg6ResultsExport.spanTextField.getText());
 		analyzeStep = areatrack.analyzeStep;
 		distanceString = String.valueOf(areatrack.detectionParameters.colorthreshold);
 		threshold2String = String.valueOf(areatrack.detectionParameters.thresholdmovement);
