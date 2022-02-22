@@ -16,7 +16,10 @@ import javax.swing.SwingConstants;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
+
 import plugins.fmp.splitroitoarray.SplitRoiToArray;
+
+
 
 public class Dlg2Grids extends JPanel {
 
@@ -101,7 +104,6 @@ public class Dlg2Grids extends JPanel {
 	{
 		areatrack.startFrame = (int) areatrack.vSequence.analysisStart;
 		areatrack.endFrame = (int) areatrack.vSequence.analysisEnd;
-		areatrack.dlg5AnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
-		areatrack.dlg5AnalysisRun.startFrameTextField.setText( Integer.toString(areatrack.startFrame));
+		areatrack.dlg5AnalysisRun.updateStartAndEndFrameFromvSequence(areatrack.vSequence);
 	}
 }

@@ -11,14 +11,17 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import icy.roi.ROI2D;
-
+import plugins.fmp.fmpSequence.SequencePlus;
 import plugins.fmp.fmpTools.EnumAreaDetection;
+
+
 
 public class Dlg5AnalysisRun extends JPanel 
 {
@@ -26,11 +29,12 @@ public class Dlg5AnalysisRun extends JPanel
 	 * 
 	 */
 	private static final long serialVersionUID = 939455785786474853L;
-	private JButton startComputationButton 	= new JButton("Start");
+	private JButton startComputationButton = new JButton("Start");
 	private JButton stopComputationButton = new JButton("Stop");
-	JTextField startFrameTextField	= new JTextField("0");
-	JTextField endFrameTextField = new JTextField("99999999");
-	private JTextField analyzeStepTextField	= new JTextField("1");
+	JSpinner startFrameSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
+	JSpinner endFrameSpinner = new JSpinner(new SpinnerNumberModel(99999999, 0, 99999999, 1));
+	private JSpinner analyzeStepSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 10000, 1));
+	
 	
 	AreaAnalysisThread analysisThread = null;
 	Areatrack areatrack = null;
@@ -54,19 +58,19 @@ public class Dlg5AnalysisRun extends JPanel
 		
 		capPanel.add( GuiUtil.besidesPanel( startComputationButton, stopComputationButton ) );
 		
-		JLabel startLabel 	= new JLabel("from ");
-		JLabel endLabel 	= new JLabel("to ");
-		JLabel stepLabel 	= new JLabel("step ");
+		JLabel startLabel = new JLabel("from ");
+		JLabel endLabel = new JLabel("to ");
+		JLabel stepLabel = new JLabel("step ");
 		
 		FlowLayout layoutLeft = new FlowLayout(FlowLayout.LEFT); 
 		JPanel panel0 = new JPanel(layoutLeft);
 		((FlowLayout)panel0.getLayout()).setVgap(0);
 		panel0.add(startLabel);
-		panel0.add(startFrameTextField);
+		panel0.add(startFrameSpinner);
 		panel0.add(endLabel);
-		panel0.add(endFrameTextField);
+		panel0.add(endFrameSpinner);
 		panel0.add(stepLabel);
-		panel0.add(analyzeStepTextField);
+		panel0.add(analyzeStepSpinner);
 		capPanel.add(panel0);
 
 		declareActionListeners();
@@ -85,15 +89,21 @@ public class Dlg5AnalysisRun extends JPanel
 			} } );	
 	}
 	
+	public void updateStartAndEndFrameFromvSequence(SequencePlus vSequence)
+	{
+		endFrameSpinner.setValue( vSequence.analysisEnd);
+		startFrameSpinner.setValue( vSequence.analysisStart);
+	}
+	
 	private void startAnalysisThread() {
 		
 		stopAnalysisThread();
 		
 		analysisThread = new AreaAnalysisThread(); 
 
-		areatrack.startFrame 	= Integer.parseInt( startFrameTextField.getText() );
-		areatrack.endFrame 	= Integer.parseInt( endFrameTextField.getText() );
-		areatrack.analyzeStep = Integer.parseInt( analyzeStepTextField.getText() );
+		areatrack.startFrame = (int) startFrameSpinner.getValue() ;
+		areatrack.endFrame 	= (int) endFrameSpinner.getValue();
+		areatrack.analyzeStep = (int) analyzeStepSpinner.getValue();
 		areatrack.vSequence.analysisStep = areatrack.analyzeStep;
 		
 		if (areatrack.detectionParameters.detectArea) 

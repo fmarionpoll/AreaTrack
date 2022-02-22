@@ -53,7 +53,7 @@ public class Areatrack extends PluginActionable implements ViewerListener
 		DlgMenuBar.panelSetMenuBar(mainFrame, mainPanel);
 		dlg1Source.init(this, mainFrame, mainPanel, "1 - IMAGES STACK");
 		dlg2Grids.init(this, mainFrame, mainPanel, "2 - DEFINE/LOAD GRID");
-		dlg3ParametersArea.init(this, mainFrame, mainPanel, "3 - PARAMETERS: SURFACE");
+		dlg3ParametersArea.init(this, mainFrame, mainPanel, "3 - PARAMETERS: AREA");
 		dlg4ParametersMovements.init(this, mainFrame, mainPanel, "4 - PARAMETERS: MOVEMENTS");
 		dlg5AnalysisRun.init(this, mainFrame, mainPanel, "5 - RUN ANALYSIS");
 		dlg6ResultsExport.init(this, mainFrame, mainPanel, "6 - RESULTS DISPLAY/EXPORT");
