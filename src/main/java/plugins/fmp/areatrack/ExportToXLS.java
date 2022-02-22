@@ -132,12 +132,12 @@ public class ExportToXLS {
 		
 		this.areatrack = areatrack;
 		vSequence = areatrack.vSequence;
-		startFrame = areatrack.startFrame;
-		endFrame = areatrack.endFrame;
+		startFrame = vSequence.analysisStart;
+		endFrame = vSequence.analysisEnd;
 		if (areatrack.dlg5AnalysisRun.analysisThread != null)
 			resultsHeatMap = areatrack.dlg5AnalysisRun.analysisThread.results;
 		span = Integer.parseInt(areatrack.dlg6ResultsExport.spanTextField.getText());
-		analyzeStep = areatrack.analyzeStep;
+		analyzeStep = vSequence.analysisStep;
 		distanceString = String.valueOf(areatrack.detectionParameters.colorthreshold);
 		threshold2String = String.valueOf(areatrack.detectionParameters.thresholdmovement);
 		detectMovement = areatrack.detectionParameters.detectMovement;
@@ -145,13 +145,13 @@ public class ExportToXLS {
 		System.out.println("XLS output");
 		try {
 			WritableWorkbook xlsWorkBook = XLSUtil.createWorkbook( filename);
-			FilterTimeSeries.filterMeasures (vSequence, startFrame, endFrame, 0, span);
+			FilterTimeSeries.filterMeasures (vSequence, 0, span);
 			exportToXLSWorksheet(xlsWorkBook, "raw");
 			if (span / 2 < (endFrame - startFrame)) 
 			{
-				FilterTimeSeries.filterMeasures (vSequence, startFrame, endFrame, 1, span);
+				FilterTimeSeries.filterMeasures (vSequence, 1, span);
 				exportToXLSWorksheet(xlsWorkBook, "avg");
-				FilterTimeSeries.filterMeasures (vSequence, startFrame, endFrame, 2, span);
+				FilterTimeSeries.filterMeasures (vSequence, 2, span);
 				exportToXLSWorksheet(xlsWorkBook, "median");
 			}
 

@@ -1,5 +1,6 @@
 package plugins.fmp.areatrack;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -16,7 +17,6 @@ import javax.swing.SpinnerNumberModel;
 
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
-import icy.gui.util.GuiUtil;
 import icy.roi.ROI2D;
 import plugins.fmp.fmpSequence.SequencePlus;
 import plugins.fmp.fmpTools.EnumAreaDetection;
@@ -31,10 +31,9 @@ public class Dlg5AnalysisRun extends JPanel
 	private static final long serialVersionUID = 939455785786474853L;
 	private JButton startComputationButton = new JButton("Start");
 	private JButton stopComputationButton = new JButton("Stop");
-	JSpinner startFrameSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
-	JSpinner endFrameSpinner = new JSpinner(new SpinnerNumberModel(99999999, 0, 99999999, 1));
+	JSpinner analysisStartSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
+	JSpinner analysisEndSpinner = new JSpinner(new SpinnerNumberModel(9999999, 0, 9999999, 1));
 	private JSpinner analyzeStepSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 10000, 1));
-	
 	
 	AreaAnalysisThread analysisThread = null;
 	Areatrack areatrack = null;
@@ -56,19 +55,30 @@ public class Dlg5AnalysisRun extends JPanel
 			}});
 		mainPanel.add(capPopupPanel);
 		
-		capPanel.add( GuiUtil.besidesPanel( startComputationButton, stopComputationButton ) );
+		FlowLayout layoutLeft = new FlowLayout(FlowLayout.LEFT); 
+		JPanel panel1 = new JPanel(layoutLeft);
+		((FlowLayout)panel1.getLayout()).setVgap(0);
+		panel1.add(startComputationButton);
+		panel1.add(stopComputationButton);
+		stopComputationButton.setEnabled(false);
+		capPanel.add(panel1 );
 		
 		JLabel startLabel = new JLabel("from ");
 		JLabel endLabel = new JLabel("to ");
 		JLabel stepLabel = new JLabel("step ");
 		
-		FlowLayout layoutLeft = new FlowLayout(FlowLayout.LEFT); 
+		int bWidth = 50;
+		int bHeight = 21;
+		analysisStartSpinner.setPreferredSize(new Dimension(bWidth, bHeight));
+		analysisEndSpinner.setPreferredSize(new Dimension(100, bHeight));
+		analyzeStepSpinner.setPreferredSize(new Dimension(bWidth, bHeight));
+		
 		JPanel panel0 = new JPanel(layoutLeft);
 		((FlowLayout)panel0.getLayout()).setVgap(0);
 		panel0.add(startLabel);
-		panel0.add(startFrameSpinner);
+		panel0.add(analysisStartSpinner);
 		panel0.add(endLabel);
-		panel0.add(endFrameSpinner);
+		panel0.add(analysisEndSpinner);
 		panel0.add(stepLabel);
 		panel0.add(analyzeStepSpinner);
 		capPanel.add(panel0);
@@ -81,18 +91,28 @@ public class Dlg5AnalysisRun extends JPanel
 		stopComputationButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				stopAnalysisThread();
+				setButtonsStateAsAnalysisRunning(false);
 			} } );
 		
 		startComputationButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) {  
 				startAnalysisThread(); 
+				setButtonsStateAsAnalysisRunning(true);
 			} } );	
+	}
+	
+	private void setButtonsStateAsAnalysisRunning(boolean isRunning)
+	{
+		stopComputationButton.setEnabled(isRunning);
+		startComputationButton.setEnabled(!isRunning);
 	}
 	
 	public void updateStartAndEndFrameFromvSequence(SequencePlus vSequence)
 	{
-		endFrameSpinner.setValue( vSequence.analysisEnd);
-		startFrameSpinner.setValue( vSequence.analysisStart);
+		if (vSequence == null) return;
+		analysisEndSpinner.setValue( vSequence.analysisEnd);
+		analysisStartSpinner.setValue( vSequence.analysisStart);
+		analyzeStepSpinner.setValue( vSequence.analysisStep);
 	}
 	
 	private void startAnalysisThread() {
@@ -101,23 +121,22 @@ public class Dlg5AnalysisRun extends JPanel
 		
 		analysisThread = new AreaAnalysisThread(); 
 
-		areatrack.startFrame = (int) startFrameSpinner.getValue() ;
-		areatrack.endFrame 	= (int) endFrameSpinner.getValue();
-		areatrack.analyzeStep = (int) analyzeStepSpinner.getValue();
-		areatrack.vSequence.analysisStep = areatrack.analyzeStep;
+		areatrack.vSequence.analysisStart = (int) analysisStartSpinner.getValue() ;
+		areatrack.vSequence.analysisEnd = (int) analysisEndSpinner.getValue();
+		areatrack.vSequence.analysisStep = (int) analyzeStepSpinner.getValue();
 		
 		if (areatrack.detectionParameters.detectArea) 
 		{ 
 			if (areatrack.detectionParameters.areaDetectionMode == EnumAreaDetection.SINGLE) 
 			{
-				analysisThread.initAreaDetectionFromFunction(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame, 
+				analysisThread.initAreaDetectionFromFunction(areatrack.vSequence,  
 						getROIsToAnalyze(),  
 						areatrack.detectionParameters.simpletransformop, areatrack.detectionParameters.simplethreshold);
 			} 
 			else 
 			{
 				areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
-				analysisThread.initAreaDetectionFromColors(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
+				analysisThread.initAreaDetectionFromColors(areatrack.vSequence, 
 						getROIsToAnalyze(),  
 						areatrack.detectionParameters.colordistanceType, 
 						areatrack.detectionParameters.colorthreshold, 
@@ -127,7 +146,7 @@ public class Dlg5AnalysisRun extends JPanel
 		
 		if (areatrack.detectionParameters.detectMovement) 
 		{
-			analysisThread.initMovementDetection(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame,
+			analysisThread.initMovementDetection(areatrack.vSequence, 
 					getROIsToAnalyze(),
 					areatrack.detectionParameters.thresholdmovement);
 		}	
@@ -144,6 +163,7 @@ public class Dlg5AnalysisRun extends JPanel
 				e1.printStackTrace();
 			}
 		}
+		setButtonsStateAsAnalysisRunning(false);
 	}
 	
 	// TODO : filter out ROIS that are not defining a "cage"

@@ -86,8 +86,6 @@ public class Dlg2Grids extends JPanel {
 		
 		saveROIsButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) {
-				areatrack.vSequence.analysisStart = areatrack.startFrame;
-				areatrack.vSequence.analysisEnd = areatrack.endFrame;
 				LoadRois loadRois = new LoadRois();
 				loadRois.saveROIs(areatrack.vSequence); 
 			} } );
@@ -102,8 +100,6 @@ public class Dlg2Grids extends JPanel {
 	
 	private void updateStartAndEndFrameFromvSequence()
 	{
-		areatrack.startFrame = (int) areatrack.vSequence.analysisStart;
-		areatrack.endFrame = (int) areatrack.vSequence.analysisEnd;
 		areatrack.dlg5AnalysisRun.updateStartAndEndFrameFromvSequence(areatrack.vSequence);
 	}
 }

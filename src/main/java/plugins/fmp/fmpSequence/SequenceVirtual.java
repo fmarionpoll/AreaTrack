@@ -27,9 +27,9 @@ public class SequenceVirtual
 	protected String 		csCamFileName 	= null;
 	public IcyBufferedImage refImage 		= null;
 	
-	public long				analysisStart 	= 0;
-	public long 			analysisEnd		= 99999999;
-	public int 				analysisStep 	= 1;
+	public int				analysisStart 	= 0;
+	public int 				analysisEnd		= 99999999;
+	public int				analysisStep 	= 1;
 	public int 				currentFrame 	= 0;
 	public int				nTotalFrames 	= 0;
 	

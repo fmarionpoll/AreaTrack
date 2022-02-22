@@ -29,9 +29,9 @@ public class GraphsWindow {
 	JPanel 	mainChartPanel = null;
 	
 	
-	public void updateCharts(SequencePlus vSequence, int startFrame, int endFrame, int filteroption, int span, int step) {
+	public void updateCharts(SequencePlus vSequence,  int filteroption, int span) {
 		
-		FilterTimeSeries.filterMeasures (vSequence, startFrame, endFrame, filteroption, span);
+		FilterTimeSeries.filterMeasures (vSequence, filteroption, span);
 		
 		String title = "Measures from " + vSequence.getFileName(0);
 		Point pt = new Point(10, 10);
@@ -55,6 +55,9 @@ public class GraphsWindow {
 		
 		int nrois = vSequence.data_filtered.length;
 		XYSeries [] cropSeries = new XYSeries [nrois];
+		int startFrame = vSequence.analysisStart;
+		int endFrame = vSequence.analysisEnd;
+		int step = vSequence.analysisStep;
 		for (int iroi = 0; iroi < nrois; iroi++) {
 			cropSeries[iroi] = new XYSeries (vSequence.seriesname[iroi]);
 			cropSeries[iroi].clear();

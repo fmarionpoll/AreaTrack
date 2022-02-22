@@ -32,8 +32,6 @@ public class Dlg6ResultsExport extends JPanel {
 	private JButton setGraphsOverlayButton	= new JButton("Curves");
 	private JButton exportToXLSButton = new JButton("Save XLS file..");
 	Areatrack areatrack = null;
-
-	
 	
 	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel, String title) {
 		
@@ -98,14 +96,14 @@ public class Dlg6ResultsExport extends JPanel {
 		areatrack.displayCharts = new GraphsWindow();
 		int span = Integer.parseInt(spanTextField.getText());
 		int filteroption = filterComboBox.getSelectedIndex();
-		areatrack.displayCharts.updateCharts(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame, filteroption, span, areatrack.analyzeStep); 
+		areatrack.displayCharts.updateCharts(areatrack.vSequence, filteroption, span); 
 	}
 	
 	private void setGraphsOverlay() {
 		GraphsOverlay displayGraphs = new GraphsOverlay();
 		int span = Integer.parseInt(spanTextField.getText());
 		int filteroption = filterComboBox.getSelectedIndex();
-		displayGraphs.updateCharts(areatrack.vSequence, areatrack.startFrame, areatrack.endFrame, filteroption, span, areatrack.analyzeStep); 
+		displayGraphs.updateCharts(areatrack.vSequence, filteroption, span); 
 	}
 	
 	private void exportToXLS() {

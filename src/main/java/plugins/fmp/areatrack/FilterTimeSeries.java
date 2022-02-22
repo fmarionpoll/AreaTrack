@@ -12,12 +12,12 @@ public class FilterTimeSeries {
 	static int startFrame= 0;
 	static int endFrame = 1;
 	
-	public static void filterMeasures (SequencePlus sequence, int start, int end, int filteroption, int span) 
+	public static void filterMeasures (SequencePlus sequence, int filteroption, int span) 
 	{	
 		vSequence = sequence;
-		startFrame = start;
-		endFrame = end;
-		if (end > (vSequence.nTotalFrames-1)) {
+		startFrame = vSequence.analysisStart;
+		endFrame = vSequence.analysisEnd;
+		if (endFrame > (vSequence.nTotalFrames-1)) {
 			endFrame = vSequence.nTotalFrames-1;
 		}
 		filterMeasures_parameters (filteroption, span);

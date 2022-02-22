@@ -36,7 +36,7 @@ public class AreaAnalysisThread extends Thread {
 	private ArrayList<ROI2D> roiList = null;
 
 	private int startFrame = 0;
-	private int endFrame = 99999999;
+	private int endFrame = 1;
 	private int analyzeStep = 1;
 	private boolean measureROIsEvolution = false;
 	private boolean measureROIsMove = false;
@@ -59,14 +59,14 @@ public class AreaAnalysisThread extends Thread {
 	 
 	// --------------------------------------------------------------------------------------
 	
-	public void initAreaDetectionFromFunction(SequenceVirtual sequenceVirtual, int startFrame, int endFrame,  
+	public void initAreaDetectionFromFunction(SequenceVirtual sequenceVirtual, 
 			ArrayList<ROI2D> roiList,  
 			EnumImageOp transformOpForOperation1, int thresholdForSurface) {
 		
 		vSequence = sequenceVirtual;
 		this.roiList = roiList;
-		this.startFrame = startFrame;
-		this.endFrame = endFrame;
+		this.startFrame = vSequence.analysisStart;
+		this.endFrame = vSequence.analysisEnd;
 		
 		imgOp1 = new ImageOperations (sequenceVirtual);
 		imgOp1.setTransform(transformOpForOperation1);
@@ -75,14 +75,14 @@ public class AreaAnalysisThread extends Thread {
 		measureROIsEvolution = true;
 	}
 	
-	public void initAreaDetectionFromColors(SequenceVirtual sequenceVirtual, int startFrame, int endFrame,  
+	public void initAreaDetectionFromColors(SequenceVirtual sequenceVirtual,   
 			ArrayList<ROI2D> roiList,  
 			EnumColorDistanceType distanceType, int colorthreshold, ArrayList<Color> colorarray) {
 		
 		vSequence = sequenceVirtual;
 		this.roiList = roiList;
-		this.startFrame = startFrame;
-		this.endFrame = endFrame;
+		this.startFrame = vSequence.analysisStart;
+		this.endFrame = vSequence.analysisEnd;
 		
 		imgOp1 = new ImageOperations (sequenceVirtual);
 		imgOp1.setTransform(EnumImageOp.NONE);
@@ -91,10 +91,10 @@ public class AreaAnalysisThread extends Thread {
 		measureROIsEvolution = true;
 	}
 	
-	public void initMovementDetection(SequenceVirtual sequenceVirtual, int startFrame, int endFrame,  
+	public void initMovementDetection(SequenceVirtual sequenceVirtual,   
 			ArrayList<ROI2D> roiList,
 			int thresholdForHeatMap) {
-		prepareImagesForMovementDetection (sequenceVirtual, startFrame, endFrame, roiList, thresholdForHeatMap);
+		prepareImagesForMovementDetection (sequenceVirtual, roiList, thresholdForHeatMap);
 		measureROIsMove = true;
 	}
 	
@@ -108,7 +108,7 @@ public class AreaAnalysisThread extends Thread {
 		Collections.sort(roiList, new FmpTools.ROI2DNameComparator());
 		if ( vSequence.nTotalFrames < endFrame+1 )
 			endFrame = (int) vSequence.nTotalFrames - 1;
-		int nbframes = endFrame - startFrame +1;
+		int nbframes = (int) (endFrame - startFrame +1);
 		int nrois = roiList.size();
 		vSequence.data_raw = new int [nrois][nbframes];
 		ArrayList<BooleanMask2D> areaMasks = getMasksFromRois();
@@ -132,7 +132,7 @@ public class AreaAnalysisThread extends Thread {
 		// loop over all images
 		for (int iiframe = startFrame ; iiframe <= endFrame && !isInterrupted(); iiframe  += analyzeStep ) 
 		{				
-			final int iframe =  iiframe;	
+			final int iframe = iiframe;	
 			
 //			futuresArray.add(processor.submit(new Runnable () {
 //				@Override
@@ -152,7 +152,8 @@ public class AreaAnalysisThread extends Thread {
 							BooleanMask2D areaMask = areaMasks.get(iiroi);
 							BooleanMask2D intersectionMask = maskAll2D.getIntersection( areaMask );
 							int sum = intersectionMask.getNumberOfPoints();
-							vSequence.data_raw[iiroi][iframe-startFrame] = sum;
+							int index = iframe - startFrame;
+							vSequence.data_raw[iiroi][index] = sum;
 						}
 					}
 					
@@ -260,7 +261,7 @@ public class AreaAnalysisThread extends Thread {
 		// compute movements over the rest of the image and store it as reference
 	}
 
-	private void prepareImagesForMovementDetection (SequenceVirtual sequenceVirtual, int startFrame, int endFrame,  ArrayList<ROI2D> roiList,
+	private void prepareImagesForMovementDetection (SequenceVirtual sequenceVirtual, ArrayList<ROI2D> roiList,
 			int thresholdForHeatMap) {
 		
 		imgOp2 = new ImageOperations (sequenceVirtual);
