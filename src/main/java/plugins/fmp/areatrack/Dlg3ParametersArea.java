@@ -107,24 +107,29 @@ public class Dlg3ParametersArea extends JPanel implements ChangeListener {
 		loadButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				loadParameters(); 
-			} } );
+			}});
 		
 		saveButton.addActionListener(new ActionListener () {
 			@Override public void actionPerformed( final ActionEvent e ) { 
 				saveParameters(); 
-			} } );
+			}});
 		
 		rbFilterbyColor.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) {
 			if (rbFilterbyColor.isSelected())
 				selectTab(0);
-		} } );
+			}});
 		
 		rbFilterbyFunction.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) {
 			if (rbFilterbyFunction.isSelected())
 				selectTab(1);
-		} } );
+			}});
+		
+		overlayCheckBox.addActionListener(new ActionListener () {
+			@Override public void actionPerformed( final ActionEvent e) {
+				areatrack.setOverlay(overlayCheckBox.isSelected());
+			}});
 	}
 	
 	private void selectTab(int index) {
@@ -167,11 +172,13 @@ public class Dlg3ParametersArea extends JPanel implements ChangeListener {
 		
 		switch( selectedTab) {
 			case 1:
+				areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
 				dlgTabThresholdFunction.updateThresholdOverlayParameters();
 				break;
 
 			case 0:
 			default:
+				areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
 				dlgTabThresholdColors.updateThresholdOverlayParameters();
 				break;
 		}

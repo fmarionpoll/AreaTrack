@@ -22,9 +22,11 @@ public class DetectionParameters {
 	
 	public  boolean detectArea				= true;
 	public  boolean displayOverlay			= true;
+	
 	public 	EnumAreaDetection areaDetectionMode	= EnumAreaDetection.COLORARRAY; 
 	public 	EnumImageOp simpletransformop 	= EnumImageOp.R2MINUS_GB;
 	public 	int simplethreshold 			= 20;
+	
 	public 	EnumImageOp colortransformop 	= EnumImageOp.NONE;
 	public 	EnumColorDistanceType colordistanceType = EnumColorDistanceType.L2;
 	public 	int colorthreshold 				= 20;

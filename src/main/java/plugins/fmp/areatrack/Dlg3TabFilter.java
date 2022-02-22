@@ -15,7 +15,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import plugins.fmp.fmpTools.EnumImageOp;
-import plugins.fmp.fmpTools.EnumAreaDetection;
+
 
 public class Dlg3TabFilter extends JPanel implements ChangeListener{
 
@@ -73,11 +73,9 @@ public class Dlg3TabFilter extends JPanel implements ChangeListener{
 	}
 	
 	void updateThresholdOverlayParameters() {
-			
+//		areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
 		transferDialogToParameters(areatrack.detectionParameters);
-		areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
-		
-		//areatrack.setOverlayParameters(true, areatrack.detectionParameters.simpletransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.simplethreshold);
+		areatrack.setOverlay(areatrack.detectionParameters.displayOverlay);
 	}
 	
 	public void transferParametersToDialog(DetectionParameters detectionParameters) {

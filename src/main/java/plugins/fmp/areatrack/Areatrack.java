@@ -17,7 +17,6 @@ import icy.plugin.PluginLoader;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.DimensionId;
 
-import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.EnumAreaDetection;
 import plugins.fmp.fmpSequence.SequencePlus;
 
@@ -82,15 +81,15 @@ public class Areatrack extends PluginActionable implements ViewerListener
 		PluginLauncher.start(PluginLoader.getPlugin(Areatrack.class.getName()));
 	}
 
-	public void setOverlayParameters(boolean activateThreshold, EnumImageOp transformOpForOverlay, EnumAreaDetection thresholdTypeForOverlay, int thresholdForOverlay) {
+	public void setOverlay(boolean displayOverlay) {
 		if (vSequence == null) return;
-				
-		vSequence.setThresholdOverlay(activateThreshold);
-		if (activateThreshold ) {
-			if (thresholdTypeForOverlay == EnumAreaDetection.SINGLE)
-				vSequence.setThresholdOverlayParametersSingle(transformOpForOverlay, thresholdForOverlay);
+		detectionParameters.displayOverlay = displayOverlay;
+		vSequence.setThresholdOverlay(displayOverlay);
+		if (displayOverlay) {
+			if (detectionParameters.areaDetectionMode == EnumAreaDetection.SINGLE)
+				vSequence.setThresholdOverlayParametersSingle(detectionParameters);
 			else
-				vSequence.setThresholdOverlayParametersColors(transformOpForOverlay, detectionParameters);
+				vSequence.setThresholdOverlayParametersColors(detectionParameters);
 		}
 	}
 	

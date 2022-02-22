@@ -10,7 +10,6 @@ import icy.image.IcyBufferedImage;
 import icy.sequence.Sequence;
 
 import plugins.fmp.areatrack.DetectionParameters;
-import plugins.fmp.fmpTools.EnumImageOp;
 import plugins.fmp.fmpTools.OverlayThreshold;
 import plugins.fmp.fmpTools.OverlayTrapMouse;
 
@@ -52,16 +51,19 @@ public class SequencePlus extends SequenceVirtual  {
 		}
 	}
 	
-	public void setThresholdOverlayParametersSingle(EnumImageOp transf, int threshold) {
-		thresholdOverlay.setTransform(transf);
-		thresholdOverlay.setThresholdSingle(threshold);
+	public void setThresholdOverlayParametersSingle(DetectionParameters detectionParameters) {
+		thresholdOverlay.setTransform(detectionParameters.simpletransformop);
+		thresholdOverlay.setThresholdSingle(detectionParameters.simplethreshold);
 		thresholdOverlay.painterChanged();
 	}
 	
-	public void setThresholdOverlayParametersColors(EnumImageOp transf, DetectionParameters areatrackParameters) {
+	public void setThresholdOverlayParametersColors(DetectionParameters detectionParameters) {
 		
-		thresholdOverlay.setTransform(transf);
-		thresholdOverlay.setThresholdColor(areatrackParameters.colorarray, areatrackParameters.colordistanceType, areatrackParameters.colorthreshold);
+		thresholdOverlay.setTransform(detectionParameters.colortransformop);
+		thresholdOverlay.setThresholdColor(
+				detectionParameters.colorarray, 
+				detectionParameters.colordistanceType, 
+				detectionParameters.colorthreshold);
 		thresholdOverlay.painterChanged();
 	}
 

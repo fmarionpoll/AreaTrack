@@ -23,7 +23,6 @@ import javax.swing.event.ChangeListener;
 
 import plugins.fmp.fmpTools.ComboBoxColorRenderer;
 import plugins.fmp.fmpTools.EnumImageOp;
-import plugins.fmp.fmpTools.EnumAreaDetection;
 import plugins.fmp.fmpTools.EnumColorDistanceType;
 
 public class Dlg3TabColors extends JPanel implements ChangeListener {
@@ -157,10 +156,9 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 	
     void updateThresholdOverlayParameters() {
     	
-		areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
+//		areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.COLORARRAY;
 		transferDialogToParameters(areatrack.detectionParameters);
-
-		//areatrack.setOverlayParameters(true, areatrack.detectionParameters.colortransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.colorthreshold);
+		areatrack.setOverlay(areatrack.detectionParameters.displayOverlay);
 	}
 	
 	private void pickColor() {

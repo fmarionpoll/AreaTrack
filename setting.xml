@@ -6,6 +6,7 @@
 <key name="mainMenuTip" value="false"/>
 <key name="virtualMode" value="false"/>
 <key name="magicWand" value="false"/>
+<key name="viewerVirtual" value="false"/>
 </section>
 <section name="confirms">
 <key name="exit" value="false"/>
@@ -52,9 +53,9 @@
 </section>
 <section name="export"/>
 </section>
-<key name="lastUpdateCheckTime" value="1644741369479"/>
-<key name="virtualMode" value="false"/>
-<key name="loaderFolder" value="C:\Users\fred\Desktop\ava\expt1"/>
+<key name="lastUpdateCheckTime" value="1645513329292"/>
+<key name="virtualMode" value="true"/>
+<key name="loaderFolder" value="C:\Users\fred\Desktop\herbivory assay"/>
 <key name="sequencePersistence" value="true"/>
 <key name="saveNewSequence" value="false"/>
 <key name="autoUpdate" value="true"/>
@@ -112,10 +113,10 @@
 </section>
 <section name="online"/>
 </section>
-<key name="id" value="241396624"/>
+<key name="id" value="185171831"/>
 <key name="os" value="win64"/>
-<key name="clientCpuNumber" value="8"/>
-<key name="clientTotalMemory" value="34161254400"/>
+<key name="clientCpuNumber" value="12"/>
+<key name="clientTotalMemory" value="34308091904"/>
 <key name="appFolder" value="C:/Users/fred/.m2/repository/org/bioimageanalysis/icy/icy-kernel/2.1.4"/>
 <section name="loader">
 <section name="entry0">
@@ -159,7 +160,7 @@
 </section>
 </section>
 <section name="gui.histo"/>
-<key name="lastUploadDate" value="1644743676630"/>
+<key name="lastUploadDate" value="1645538770970"/>
 <key name="cacheMemoryPercent" value="40"/>
 <key name="cacheMemoryPath" value="C:/Users/fred/AppData/Local/Temp"/>
 </section>
@@ -172,25 +173,32 @@
 </section>
 </section>
 </section>
+<section name="areatrack">
+<section name="Areatrack">
+<section name="gui">
+<key name="lastUsedPath" value="C:\Users\fred\Desktop\herbivory assay"/>
+</section>
+</section>
+</section>
 </section>
 </section>
 <section name="frame">
 <section name="main">
-<key name="XE" value="44"/>
-<key name="YE" value="75"/>
-<key name="WidthE" value="1351"/>
-<key name="HeightE" value="740"/>
-<key name="MaximizedE" value="true"/>
+<key name="XE" value="-2152"/>
+<key name="YE" value="177"/>
+<key name="WidthE" value="1842"/>
+<key name="HeightE" value="936"/>
+<key name="MaximizedE" value="false"/>
 </section>
 <section name="inspector">
-<key name="XC" value="1620"/>
+<key name="XC" value="1534"/>
 <key name="YC" value="0"/>
 <key name="XE" value="600"/>
 <key name="YE" value="140"/>
 <key name="XI" value="600"/>
 <key name="YI" value="140"/>
 <key name="WidthC" value="300"/>
-<key name="HeightC" value="878"/>
+<key name="HeightC" value="774"/>
 <key name="WidthE" value="300"/>
 <key name="HeightE" value="600"/>
 <key name="WidthI" value="300"/>
@@ -208,7 +216,7 @@
 <key name="XI" value="100"/>
 <key name="YI" value="100"/>
 <key name="WidthC" value="292"/>
-<key name="HeightC" value="788"/>
+<key name="HeightC" value="684"/>
 <key name="WidthE" value="400"/>
 <key name="HeightE" value="600"/>
 <key name="WidthI" value="400"/>
@@ -226,7 +234,7 @@
 <key name="XI" value="200"/>
 <key name="YI" value="200"/>
 <key name="WidthC" value="292"/>
-<key name="HeightC" value="788"/>
+<key name="HeightC" value="684"/>
 <key name="WidthE" value="400"/>
 <key name="HeightE" value="300"/>
 <key name="WidthI" value="400"/>
