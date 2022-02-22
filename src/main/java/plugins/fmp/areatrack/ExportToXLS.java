@@ -134,9 +134,9 @@ public class ExportToXLS {
 		vSequence = areatrack.vSequence;
 		startFrame = areatrack.startFrame;
 		endFrame = areatrack.endFrame;
-		if (areatrack.dlg4AnalysisRun.analysisThread != null)
-			resultsHeatMap = areatrack.dlg4AnalysisRun.analysisThread.results;
-		span = Integer.parseInt(areatrack.dlg5Results.spanTextField.getText());
+		if (areatrack.dlg5AnalysisRun.analysisThread != null)
+			resultsHeatMap = areatrack.dlg5AnalysisRun.analysisThread.results;
+		span = Integer.parseInt(areatrack.dlg6Results.spanTextField.getText());
 		analyzeStep = areatrack.analyzeStep;
 		distanceString = String.valueOf(areatrack.detectionParameters.colorthreshold);
 		threshold2String = String.valueOf(areatrack.detectionParameters.thresholdmovement);

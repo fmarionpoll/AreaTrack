@@ -30,12 +30,10 @@ public class Dlg2Grids extends JPanel {
 	private JButton	saveROIsButton	= new JButton("Save...");
 	Areatrack areatrack = null;
 
-	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
+	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel, String title) {
 		
 		this.areatrack = areatrack;
-		PopupPanel 	capPopupPanel = new PopupPanel("2 - GRIDS");
-		JPanel capPanel = capPopupPanel.getMainPanel();
-		capPanel.setLayout(new GridLayout(2, 2));
+		PopupPanel 	capPopupPanel = new PopupPanel(title);
 		capPopupPanel.collapse();
 		capPopupPanel.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -45,6 +43,9 @@ public class Dlg2Grids extends JPanel {
 				mainFrame.repaint();
 			}});
 		mainPanel.add(capPopupPanel);
+		
+		JPanel capPanel = capPopupPanel.getMainPanel();
+		capPanel.setLayout(new GridLayout(2, 2));
 		
 		JLabel emptyText0 = new JLabel ("Draw Polygon and split into array: ", SwingConstants.RIGHT); 
 		FlowLayout layoutRight = new FlowLayout(FlowLayout.RIGHT); 
@@ -100,7 +101,7 @@ public class Dlg2Grids extends JPanel {
 	{
 		areatrack.startFrame = (int) areatrack.vSequence.analysisStart;
 		areatrack.endFrame = (int) areatrack.vSequence.analysisEnd;
-		areatrack.dlg4AnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
-		areatrack.dlg4AnalysisRun.startFrameTextField.setText( Integer.toString(areatrack.startFrame));
+		areatrack.dlg5AnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
+		areatrack.dlg5AnalysisRun.startFrameTextField.setText( Integer.toString(areatrack.startFrame));
 	}
 }

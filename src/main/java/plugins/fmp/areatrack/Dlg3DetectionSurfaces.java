@@ -27,7 +27,7 @@ import plugins.fmp.fmpTools.EnumAreaDetection;
 
 
 
-public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
+public class Dlg3DetectionSurfaces extends JPanel implements ChangeListener {
 	
 	/**
 	 * 
@@ -35,28 +35,28 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	private static final long serialVersionUID = -359095233032653215L;
 	Dlg3TabColors dlgTabThresholdColors = new Dlg3TabColors();
 	Dlg3TabFilter dlgTabThresholdFunction = new Dlg3TabFilter();
-	Dlg3TabMovement dlgTabThresholdMovement = new Dlg3TabMovement();
 	Dlg3TabOverlay dlgTabOverlay = new Dlg3TabOverlay();
 	
-	JCheckBox detectAreaCheckBox = new JCheckBox("Measure surface using");
-	JRadioButton rbFilterbyColor 	= new JRadioButton("color array");
+	JCheckBox detectAreaCheckBox = new JCheckBox("Detect ");
+	JRadioButton rbFilterbyColor = new JRadioButton("color array");
 	JRadioButton rbFilterbyFunction	= new JRadioButton("filters");
-	JCheckBox detectMovementCheckBox = new JCheckBox("movement");
-	JButton loadButton		= new JButton("Load...");
-	JButton saveButton		= new JButton("Save...");
-	JTabbedPane tabbedPane 			= new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+	JCheckBox overlayCheckBox = new JCheckBox("overlay");
+	JButton loadButton = new JButton("Load...");
+	JButton saveButton = new JButton("Save...");
+	JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 	Areatrack areatrack = null;
 
 	
 
-	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
+	public void init(Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel, String title) {
 		
 		this.areatrack = areatrack;
 		
-		PopupPanel 	capPopupPanel = new PopupPanel("3 - ANALYSIS PARAMETERS");
+		PopupPanel 	capPopupPanel = new PopupPanel(title);
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new BorderLayout());
-		capPopupPanel.expand();
+//		capPopupPanel.expand();
+		capPopupPanel.collapse();
 		capPopupPanel.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -75,13 +75,12 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 		ButtonGroup bgchoice = new ButtonGroup();
 		bgchoice.add(rbFilterbyColor);
 		bgchoice.add(rbFilterbyFunction);
-		panel0.add(detectMovementCheckBox);
+		panel0.add(overlayCheckBox);
 		capPanel.add(panel0, BorderLayout.PAGE_START);
 		
 		GridLayout capLayout = new GridLayout(3, 2);
 		dlgTabThresholdColors.init(tabbedPane, capLayout, areatrack);
 		dlgTabThresholdFunction.init(tabbedPane, capLayout, areatrack);
-		dlgTabThresholdMovement.init(tabbedPane, capLayout, areatrack);
 		dlgTabOverlay.init(tabbedPane, capLayout);
 		capPanel.add(tabbedPane, BorderLayout.CENTER);
 		
@@ -96,7 +95,6 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 		capPanel.add(panel2, BorderLayout.PAGE_END);
 		
 		detectAreaCheckBox.setSelected(true);
-		detectMovementCheckBox.setSelected(false);
 		tabbedPane.setSelectedIndex(0);
 		rbFilterbyColor.setSelected(true);
 		
@@ -136,8 +134,10 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	
 	private void loadParameters() {
 		
-		if (areatrack.detectionParameters.xmlLoadAreaTrackParameters(areatrack.vSequence))
+		if (areatrack.detectionParameters.xmlLoadAreaTrackParameters(areatrack.vSequence)) {
 			transferParametersToDialog(areatrack.detectionParameters);
+			updateThresholdOverlayParameters(tabbedPane.getSelectedIndex());
+		}
 	}
 	
 	private void saveParameters() {
@@ -148,6 +148,7 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 
 	@Override
 	public void stateChanged (ChangeEvent e) {
+		
 		if (e.getSource() == tabbedPane) {
 			int selectedTab = tabbedPane.getSelectedIndex();
 			updateThresholdOverlayParameters(selectedTab);
@@ -165,21 +166,14 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	public void updateThresholdOverlayParameters(int selectedTab) {
 		
 		switch( selectedTab) {
-		case 0:
-			dlgTabThresholdColors.updateThresholdOverlayParameters();
-			break;
-		case 1:
-			dlgTabThresholdFunction.updateThresholdOverlayParameters();
-			break;
-		case 2:
-			dlgTabThresholdMovement.updateThresholdOverlayParameters();
-			break;
-		case 3:
-			areatrack.setOverlayParameters(false, null, null, 0);
-			break;
-		default:
-			areatrack.setOverlayParameters(false, null, null, 0);
-			break;
+			case 1:
+				dlgTabThresholdFunction.updateThresholdOverlayParameters();
+				break;
+
+			case 0:
+			default:
+				dlgTabThresholdColors.updateThresholdOverlayParameters();
+				break;
 		}
 	}
 	
@@ -187,13 +181,11 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 			
 		dlgTabThresholdColors.transferParametersToDialog(detectionParameters);
 		dlgTabThresholdFunction.transferParametersToDialog(detectionParameters);
-		dlgTabThresholdMovement.transferParametersToDialog(detectionParameters);
 		
 		if (detectionParameters.areaDetectionMode == EnumAreaDetection.COLORARRAY)
 			rbFilterbyColor.setSelected(true);
 		else
 			rbFilterbyFunction.setSelected(true);
-		detectMovementCheckBox.setSelected(detectionParameters.detectMovement);
 		detectAreaCheckBox.setSelected(detectionParameters.detectArea);
 	}
 	
@@ -201,7 +193,6 @@ public void transferDialogToParameters(DetectionParameters detectionParameters) 
 		
 		dlgTabThresholdColors.transferDialogToParameters(detectionParameters);
 		dlgTabThresholdFunction.transferDialogToParameters(detectionParameters);
-		dlgTabThresholdMovement.transferDialogToParameters(detectionParameters);
 	}
 
 }

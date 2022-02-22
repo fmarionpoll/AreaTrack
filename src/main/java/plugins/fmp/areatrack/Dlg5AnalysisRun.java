@@ -20,7 +20,7 @@ import icy.roi.ROI2D;
 
 import plugins.fmp.fmpTools.EnumAreaDetection;
 
-public class Dlg4AnalysisRun extends JPanel 
+public class Dlg5AnalysisRun extends JPanel 
 {
 	/**
 	 * 
@@ -36,10 +36,10 @@ public class Dlg4AnalysisRun extends JPanel
 	Areatrack areatrack = null;
 
 
-	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
+	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel, String title) {
 		
 		this.areatrack = areatrack;
-		PopupPanel 	capPopupPanel = new PopupPanel("4 - RUN ANALYSIS");
+		PopupPanel 	capPopupPanel = new PopupPanel(title);
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new GridLayout(2, 2));
 		capPopupPanel.collapse();

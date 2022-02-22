@@ -167,7 +167,7 @@ public class Dlg3TabColors extends JPanel implements ChangeListener {
 		if (rbL2.isSelected()) 
 			areatrack.detectionParameters.colordistanceType = EnumColorDistanceType.L2;
 
-		areatrack.setOverlayParameters(true, areatrack.detectionParameters.colortransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.colorthreshold);
+		//areatrack.setOverlayParameters(true, areatrack.detectionParameters.colortransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.colorthreshold);
 	}
 	
 	private void pickColor() {

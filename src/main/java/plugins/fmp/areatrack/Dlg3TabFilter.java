@@ -78,7 +78,7 @@ public class Dlg3TabFilter extends JPanel implements ChangeListener{
 		areatrack.detectionParameters.simplethreshold = Integer.parseInt(thresholdSpinner.getValue().toString());
 		areatrack.detectionParameters.areaDetectionMode = EnumAreaDetection.SINGLE;
 		
-		areatrack.setOverlayParameters(true, areatrack.detectionParameters.simpletransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.simplethreshold);
+		//areatrack.setOverlayParameters(true, areatrack.detectionParameters.simpletransformop, areatrack.detectionParameters.areaDetectionMode, areatrack.detectionParameters.simplethreshold);
 	}
 	
 	public void transferParametersToDialog(DetectionParameters detectionParameters) {

@@ -37,10 +37,10 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 	Areatrack areatrack = null;
 
 	
-	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel) {
+	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel, String title) {
 		
 		this.areatrack = areatrack;
-		PopupPanel 	capPopupPanel = new PopupPanel("1 - IMAGES STACK");
+		PopupPanel 	capPopupPanel = new PopupPanel(title);
 		JPanel capPanel = capPopupPanel.getMainPanel();
 		capPanel.setLayout(new BorderLayout());
 		capPopupPanel.addComponentListener(new ComponentAdapter() {
@@ -106,7 +106,7 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 	private void updateGuiEndFrame () {
 		if (areatrack.vSequence == null) return;
 		areatrack.endFrame = areatrack.vSequence.nTotalFrames-1;
-		areatrack.dlg4AnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
+		areatrack.dlg5AnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
 	}
 
 	@Override

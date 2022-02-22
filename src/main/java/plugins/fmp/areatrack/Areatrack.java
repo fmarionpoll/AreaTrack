@@ -28,15 +28,16 @@ public class Areatrack extends PluginActionable implements ViewerListener
 	IcyFrame mainFrame = new IcyFrame("AreaTrack 19-02-2022", true, true, true, true);
 	GraphsWindow displayCharts = null;
 
-	Dlg1Source dlg1SourcePanel = new Dlg1Source();
-	Dlg2Grids dlg2RoisPanel = new Dlg2Grids();
-	Dlg3DetectionParameters dlg3AnalysisParameters = new Dlg3DetectionParameters();
-	Dlg4AnalysisRun dlg4AnalysisRun = new Dlg4AnalysisRun();
-	Dlg5ResultsExport dlg5Results = new Dlg5ResultsExport();
+	Dlg1Source dlg1Source = new Dlg1Source();
+	Dlg2Grids dlg2Grids = new Dlg2Grids();
+	Dlg3DetectionSurfaces dlg3AnalysisParameters = new Dlg3DetectionSurfaces();
+	Dlg4DetectionMovements dlg4DetectionMovements = new Dlg4DetectionMovements();
+	Dlg5AnalysisRun dlg5AnalysisRun = new Dlg5AnalysisRun();
+	Dlg6ResultsExport dlg6Results = new Dlg6ResultsExport();
 
-	int	 analyzeStep 				= 1;
-	int  startFrame 				= 1;
-	int  endFrame 					= 99999999;
+	int	 analyzeStep = 1;
+	int  startFrame = 1;
+	int  endFrame = 99999999;
 	DetectionParameters detectionParameters = new DetectionParameters();
 			
 	public 	SequencePlus vSequence 			= null;
@@ -51,11 +52,12 @@ public class Areatrack extends PluginActionable implements ViewerListener
 		mainFrame.add(mainPanel, BorderLayout.CENTER);
 			
 		DlgMenuBar.panelSetMenuBar(mainFrame, mainPanel);
-		dlg1SourcePanel.init(this, mainFrame, mainPanel);
-		dlg2RoisPanel.init(this, mainFrame, mainPanel);
-		dlg3AnalysisParameters.init(this, mainFrame, mainPanel);
-		dlg4AnalysisRun.init(this, mainFrame, mainPanel);
-		dlg5Results.init(this, mainFrame, mainPanel);
+		dlg1Source.init(this, mainFrame, mainPanel, "1 - IMAGES STACK");
+		dlg2Grids.init(this, mainFrame, mainPanel, "2 - DEFINE/LOAD GRID");
+		dlg3AnalysisParameters.init(this, mainFrame, mainPanel, "3 - PARAMETERS: SURFACE");
+		dlg4DetectionMovements.init(this, mainFrame, mainPanel, "4 - PARAMETERS: MOVEMENTS");
+		dlg5AnalysisRun.init(this, mainFrame, mainPanel, "5 - RUN ANALYSIS");
+		dlg6Results.init(this, mainFrame, mainPanel, "6 - RESULTS DISPLAY/EXPORT");
 		
 		mainFrame.pack();
 		mainFrame.center();
