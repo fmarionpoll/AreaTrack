@@ -1,5 +1,7 @@
 package plugins.fmp.areatrack;
 
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +17,7 @@ import javax.swing.SwingConstants;
 
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
-import icy.gui.util.GuiUtil;
+import icy.gui.util.FontUtil;
 import plugins.fmp.fmpTools.FmpTools;
 
 public class Dlg5ResultsExport extends JPanel {
@@ -38,7 +40,7 @@ public class Dlg5ResultsExport extends JPanel {
 		this.areatrack = areatrack;
 		PopupPanel 	capPopupPanel = new PopupPanel("5 - RESULTS DISPLAY/EXPORT");
 		JPanel capPanel = capPopupPanel.getMainPanel();
-		capPanel.setLayout(new GridLayout(3, 2));
+		capPanel.setLayout(new GridLayout(2, 2));
 		capPopupPanel.collapse();
 		capPopupPanel.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -49,13 +51,26 @@ public class Dlg5ResultsExport extends JPanel {
 			}});
 		mainPanel.add(capPopupPanel);
 		
-		JLabel outputLabel = new JLabel ("output ");
-		outputLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLabel spanLabel = new JLabel ("span ");
-		spanLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		capPanel.add(GuiUtil.besidesPanel(outputLabel, filterComboBox, spanLabel, spanTextField));
-		capPanel.add(GuiUtil.besidesPanel(updateChartsButton, setGraphsOverlayButton));
-		capPanel.add(GuiUtil.besidesPanel(exportToXLSButton)); 
+		JLabel outputLabel = new JLabel ("output ", SwingConstants.RIGHT);
+		JLabel spanLabel = new JLabel ("span ", SwingConstants.RIGHT);
+		FlowLayout layoutLeft = new FlowLayout(FlowLayout.LEFT); 
+		JPanel panel1 = new JPanel(layoutLeft);
+		panel1.add(updateChartsButton);
+		panel1.add(setGraphsOverlayButton);
+		setGraphsOverlayButton.setEnabled(false);
+		panel1.add(outputLabel);
+		panel1.add(filterComboBox);
+		panel1.add(spanLabel);
+		panel1.add(spanTextField);
+		capPanel.add(panel1);
+		
+		FlowLayout layoutRight = new FlowLayout(FlowLayout.RIGHT); 
+		JPanel panel3 = new JPanel(layoutRight);
+		JLabel emptyText1 = new JLabel ("-> File ", SwingConstants.RIGHT);
+		emptyText1.setFont(FontUtil.setStyle(emptyText1.getFont(), Font.ITALIC));
+		panel3.add(emptyText1);
+		panel3.add(exportToXLSButton);
+		capPanel.add(panel3); 
 		
 		filterComboBox.setSelectedIndex(0);
 		

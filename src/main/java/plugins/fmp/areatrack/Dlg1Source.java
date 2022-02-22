@@ -53,8 +53,7 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 		capPopupPanel.expand();
 		mainPanel.add(capPopupPanel);
 
-		JLabel loadsaveText1 = new JLabel ("-> File (jpg, jpeg, bmp, tiff) ");
-		loadsaveText1.setHorizontalAlignment(SwingConstants.RIGHT); 
+		JLabel loadsaveText1 = new JLabel ("-> File (jpg, jpeg, bmp, tiff) ", SwingConstants.RIGHT); 
 		loadsaveText1.setFont(FontUtil.setStyle(loadsaveText1.getFont(), Font.ITALIC));
 		FlowLayout layoutRight = new FlowLayout(FlowLayout.RIGHT); 
 		JPanel panel2 = new JPanel(layoutRight);

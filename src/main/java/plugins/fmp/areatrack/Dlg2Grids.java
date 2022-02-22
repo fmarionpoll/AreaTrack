@@ -1,5 +1,7 @@
 package plugins.fmp.areatrack;
 
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +15,7 @@ import javax.swing.SwingConstants;
 
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
-import icy.gui.util.GuiUtil;
+import icy.gui.util.FontUtil;
 import plugins.fmp.splitroitoarray.SplitRoiToArray;
 
 public class Dlg2Grids extends JPanel {
@@ -44,10 +46,21 @@ public class Dlg2Grids extends JPanel {
 			}});
 		mainPanel.add(capPopupPanel);
 		
-		JLabel emptyText0 = new JLabel ("Draw Polygon and split into array : ", SwingConstants.RIGHT);
-		capPanel.add(GuiUtil.besidesPanel(emptyText0, buildROISButton));
-		JLabel emptyText1 = new JLabel ("File  : ", SwingConstants.RIGHT);
-		capPanel.add(GuiUtil.besidesPanel(emptyText1, openROIsButton, addROIsButton, saveROIsButton));
+		JLabel emptyText0 = new JLabel ("Draw Polygon and split into array: ", SwingConstants.RIGHT); 
+		FlowLayout layoutRight = new FlowLayout(FlowLayout.RIGHT); 
+		JPanel panel1 = new JPanel(layoutRight);
+		panel1.add(emptyText0);
+		panel1.add(buildROISButton);
+		capPanel.add(panel1);
+		
+		JLabel emptyText1 = new JLabel ("-> File ", SwingConstants.RIGHT);
+		emptyText1.setFont(FontUtil.setStyle(emptyText1.getFont(), Font.ITALIC));
+		JPanel panel2 = new JPanel(layoutRight);
+		panel2.add(emptyText1);
+		panel2.add(openROIsButton);
+		panel2.add(addROIsButton);
+		panel2.add(saveROIsButton);
+		capPanel.add(panel2);
 		declareActionListeners();
 	}
 	
