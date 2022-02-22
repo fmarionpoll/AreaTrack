@@ -13,8 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-import icy.common.CollapsibleEvent;
-import icy.common.listener.ChangeListener;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
@@ -22,7 +20,7 @@ import icy.sequence.Sequence;
 import plugins.fmp.areatrack.Areatrack;
 import plugins.fmp.fmpSequence.SequenceVirtual;
 
-public class DlgDefineLinesManually extends JPanel implements ChangeListener {
+public class DlgDefineLinesManually extends JPanel {
 
 	/**
 	 * 
@@ -30,7 +28,7 @@ public class DlgDefineLinesManually extends JPanel implements ChangeListener {
 	private static final long serialVersionUID = -9143775308853070401L;
 		
 	JLabel txtSplitAsComboBox = new JLabel("Split polygon as ");
-	JComboBox<String> splitAsComboBox = new JComboBox<String> (new String[] {"vertical lines","polygons", "circles"});
+	JComboBox<String> splitAsComboBox = new JComboBox<String> (new String[] {"polygons", "ellipses"});
 	JLabel txtNumberOfColumns = new JLabel("N columns ");
 	JSpinner ezNumberOfColumns = new JSpinner(new SpinnerNumberModel(5, 1, 10000, 1));
 	JLabel txtColumnWidth = new JLabel ("column width");
@@ -100,22 +98,13 @@ public class DlgDefineLinesManually extends JPanel implements ChangeListener {
 		
 		int choice = splitAsComboBox.getSelectedIndex();
 		switch (choice) {
-			case 0:
-				DefineLinesManually.createROISFromSelectedPolygon(seq, 0, rootName, colSpan, colSize, nbcols, rowSpan, rowSize, nbrows);
-				break;
-			case 2:
+			case 1:
 				DefineLinesManually.createROISFromSelectedPolygon(seq, 2, rootName, colSpan, colSize, nbcols, rowSpan, rowSize, nbrows);
 				break;
 			default:
 				DefineLinesManually.createROISFromSelectedPolygon(seq, 1, rootName, colSpan, colSize, nbcols, rowSpan, rowSize, nbrows);
 				break;
 		}
-	}
-	
-	@Override
-	public void onChanged(CollapsibleEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
