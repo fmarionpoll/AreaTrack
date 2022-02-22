@@ -87,7 +87,7 @@ public class Dlg2Grids extends JPanel {
 	{
 		areatrack.startFrame = (int) areatrack.vSequence.analysisStart;
 		areatrack.endFrame = (int) areatrack.vSequence.analysisEnd;
-		areatrack.dlgAnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
-		areatrack.dlgAnalysisRun.startFrameTextField.setText( Integer.toString(areatrack.startFrame));
+		areatrack.dlg4AnalysisRun.endFrameTextField.setText( Integer.toString(areatrack.endFrame));
+		areatrack.dlg4AnalysisRun.startFrameTextField.setText( Integer.toString(areatrack.startFrame));
 	}
 }
