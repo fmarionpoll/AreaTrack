@@ -89,6 +89,8 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 			areatrack.vSequence.close();
 
 		SequencePlus sequencePlus = OpenSequencePlus.openImagesOrAvi(null);
+		if (sequencePlus == null)
+			return;
 		sequencePlus.seq.addListener(this);
 		Viewer v = OpenSequencePlus.initSequenceViewer(sequencePlus.seq);
 		v.addListener(areatrack);
