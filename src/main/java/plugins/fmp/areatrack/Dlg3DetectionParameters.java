@@ -108,12 +108,12 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	private void declareActionListeners() {
 		loadButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				xmlLoadParameters(); 
+				loadParameters(); 
 			} } );
 		
 		saveButton.addActionListener(new ActionListener () {
 			@Override public void actionPerformed( final ActionEvent e ) { 
-				xmlSaveParameters(); 
+				saveParameters(); 
 			} } );
 		
 		rbFilterbyColor.addActionListener(new ActionListener () { 
@@ -134,13 +134,13 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 		tabbedPane.setSelectedIndex(index);
 	}
 	
-	private void xmlLoadParameters() {
+	private void loadParameters() {
 		
 		if (areatrack.detectionParameters.xmlLoadAreaTrackParameters(areatrack.vSequence))
 			transferParametersToDialog(areatrack.detectionParameters);
 	}
 	
-	private void xmlSaveParameters() {
+	private void saveParameters() {
 		
 		transferDialogToParameters(areatrack.detectionParameters);
 		areatrack.detectionParameters.xmlSaveAreaTrackParameters(areatrack.vSequence);
@@ -184,16 +184,17 @@ public class Dlg3DetectionParameters extends JPanel implements ChangeListener {
 	}
 	
 	public void transferParametersToDialog(DetectionParameters detectionParameters) {
+			
+		dlgTabThresholdColors.transferParametersToDialog(detectionParameters);
+		dlgTabThresholdFunction.transferParametersToDialog(detectionParameters);
+		dlgTabThresholdMovement.transferParametersToDialog(detectionParameters);
+		
 		if (detectionParameters.areaDetectionMode == EnumAreaDetection.COLORARRAY)
 			rbFilterbyColor.setSelected(true);
 		else
 			rbFilterbyFunction.setSelected(true);
 		detectMovementCheckBox.setSelected(detectionParameters.detectMovement);
 		detectAreaCheckBox.setSelected(detectionParameters.detectArea);
-			
-		dlgTabThresholdColors.transferParametersToDialog(detectionParameters);
-		dlgTabThresholdFunction.transferParametersToDialog(detectionParameters);
-		dlgTabThresholdMovement.transferParametersToDialog(detectionParameters);
 	}
 	
 public void transferDialogToParameters(DetectionParameters detectionParameters) {
