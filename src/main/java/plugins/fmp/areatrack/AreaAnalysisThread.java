@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import javax.swing.SwingWorker;
+
 import icy.canvas.Canvas2D;
 import icy.gui.frame.progress.ProgressFrame;
 import icy.gui.viewer.Viewer;
@@ -30,7 +32,10 @@ import plugins.fmp.fmpTools.ImageOperations;
 
 
 
-public class AreaAnalysisThread extends Thread {
+public class AreaAnalysisThread extends SwingWorker<Integer, Integer>  {
+	
+	public	boolean 			stopFlag 		= false;
+	public 	boolean 			threadRunning 	= false;
 	
 	SequenceVirtual vSequence = null;
 	private ArrayList<ROI2D> roiList = null;
@@ -97,11 +102,19 @@ public class AreaAnalysisThread extends Thread {
 		prepareImagesForMovementDetection (sequenceVirtual, roiList, thresholdForHeatMap);
 		measureROIsMove = true;
 	}
-	
-	
+		
 	@Override
-	public void run()
+	protected Integer doInBackground() throws Exception 
 	{
+		threadRunning = true;
+		analyzeSequence();
+		threadRunning = false;
+		return 1;
+	}
+	
+	
+	protected void analyzeSequence()  
+	{	
 		// global parameters
 		analyzeStep = vSequence.analysisStep;
 		roiList = vSequence.seq.getROI2Ds();
@@ -130,7 +143,7 @@ public class AreaAnalysisThread extends Thread {
 //		ProgressFrame progressBar = new ProgressFrame("Processing with subthreads started");
 		
 		// loop over all images
-		for (int iiframe = startFrame ; iiframe <= endFrame && !isInterrupted(); iiframe  += analyzeStep ) 
+		for (int iiframe = startFrame ; iiframe <= endFrame; iiframe  += analyzeStep ) 
 		{				
 			final int iframe = iiframe;	
 			
@@ -307,5 +320,27 @@ public class AreaAnalysisThread extends Thread {
 			frame ++;
 		}
 	}
+
+	@Override
+	protected void done() 
+	{
+		int statusMsg = 0;
+		try 
+		{
+			statusMsg = get();
+		} 
+		catch (InterruptedException | ExecutionException e) 
+		{
+			e.printStackTrace();
+		} 
+		if (!threadRunning || stopFlag) 
+		{
+			firePropertyChange("thread_ended", null, statusMsg);
+		} 
+		else 
+		{
+			firePropertyChange("thread_done", null, statusMsg);
+		}
+    }
 
 }

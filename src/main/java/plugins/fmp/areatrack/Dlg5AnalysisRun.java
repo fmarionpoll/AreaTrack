@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -18,12 +20,13 @@ import javax.swing.SpinnerNumberModel;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.roi.ROI2D;
+import icy.util.StringUtil;
 import plugins.fmp.fmpSequence.SequencePlus;
 import plugins.fmp.fmpTools.EnumAreaDetection;
 
 
 
-public class Dlg5AnalysisRun extends JPanel 
+public class Dlg5AnalysisRun extends JPanel implements PropertyChangeListener
 {
 	/**
 	 * 
@@ -149,27 +152,29 @@ public class Dlg5AnalysisRun extends JPanel
 			analysisThread.initMovementDetection(areatrack.vSequence, 
 					getROIsToAnalyze(),
 					areatrack.detectionParameters.thresholdmovement);
-		}	
-		analysisThread.start();	
+		}
+		
+		analysisThread.addPropertyChangeListener(this);
+		analysisThread.execute();	
 	}
 	
 	private void stopAnalysisThread() {
 		
-		if (analysisThread != null && analysisThread.isAlive()) {
-			analysisThread.interrupt();
-			try {
-				analysisThread.join();
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
+		if (analysisThread != null && !analysisThread.stopFlag) {
+			analysisThread.stopFlag = true;
 		}
-		setButtonsStateAsAnalysisRunning(false);
+	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (StringUtil.equals("thread_ended", evt.getPropertyName())) {
+			setButtonsStateAsAnalysisRunning(false);
+		 }
 	}
 	
 	// TODO : filter out ROIS that are not defining a "cage"
-	private ArrayList<ROI2D> getROIsToAnalyze() {
-		return areatrack.vSequence.seq.getROI2Ds();
-	}
-	
-	
+		private ArrayList<ROI2D> getROIsToAnalyze() {
+			return areatrack.vSequence.seq.getROI2Ds();
+		}
+		
 }
