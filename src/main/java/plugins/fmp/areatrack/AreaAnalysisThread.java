@@ -153,6 +153,7 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer>  {
 //					IcyBufferedImage sourceImage = vSequence.imageIORead(vSequence.getFileName(iframe));
 					
 					viewer.setPositionT(iframe);
+					vSequence.currentFrame = iframe;
 					updateDisplay (iframe, nbframes, chrono, progress);
 		
 					if (measureROIsEvolution) 
@@ -215,7 +216,6 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer>  {
 	
 	void updateDisplay(int t, int nbframes, Chronometer chrono, ProgressFrame progress) {
 		
-		vSequence.currentFrame = t;
 		int pos = (int)(100d * (double)t / (double) nbframes);
 		progress.setPosition( pos );
 		int nbSeconds =  (int) (chrono.getNanos() / 1000000000f);
