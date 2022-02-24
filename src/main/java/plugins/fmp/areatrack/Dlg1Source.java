@@ -3,6 +3,7 @@ package plugins.fmp.areatrack;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -17,12 +18,13 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
 import icy.gui.viewer.Viewer;
+import icy.main.Icy;
 import icy.preferences.XMLPreferences;
 import icy.sequence.Sequence;
 import icy.sequence.SequenceEvent;
 import icy.sequence.SequenceListener;
 
-import plugins.fmp.fmpSequence.OpenSequencePlus;
+import plugins.fmp.fmpSequence.SequencePlusOpen;
 import plugins.fmp.fmpSequence.SequencePlus;
 
 
@@ -88,14 +90,14 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 		if (areatrack.vSequence != null)
 			areatrack.vSequence.close();
 
-		SequencePlus sequencePlus = OpenSequencePlus.openImagesOrAvi(null);
+		SequencePlus sequencePlus = SequencePlusOpen.openImagesOrAvi(null);
 		if (sequencePlus == null)
 			return;
 		sequencePlus.seq.addListener(this);
-		Viewer v = OpenSequencePlus.initSequenceViewer(sequencePlus.seq);
+		Viewer v = SequencePlusOpen.initSequenceViewer(sequencePlus.seq);
 		v.addListener(areatrack);
-		
-		
+		placeViewerNextToDialogBox(v, areatrack.mainFrame);
+			
 		areatrack.vSequence = sequencePlus;
 		path = areatrack.vSequence.getDirectory();
 		if (path != null) {
@@ -103,6 +105,18 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 			guiPrefs.put("lastUsedPath", path);
 		}
 		updateGuiEndFrame();
+	}
+	
+	
+	private void placeViewerNextToDialogBox(Viewer v, IcyFrame mainFrame) 
+	{
+		Rectangle rectv = v.getBoundsInternal();
+		Rectangle rect0 = mainFrame.getBoundsInternal();
+		if (rect0.x+ rect0.width < Icy.getMainInterface().getMainFrame().getDesktopWidth()) 
+		{
+			rectv.setLocation(rect0.x+ rect0.width, rect0.y);
+			v.setBounds(rectv);
+		}
 	}
 	
 	private void updateGuiEndFrame () {

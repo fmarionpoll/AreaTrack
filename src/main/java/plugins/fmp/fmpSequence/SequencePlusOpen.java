@@ -18,8 +18,10 @@ import icy.gui.viewer.Viewer;
 import icy.image.IcyBufferedImage;
 import icy.image.ImageUtil;
 import icy.main.Icy;
+
 import icy.sequence.Sequence;
 import icy.system.SystemUtil;
+import icy.system.profile.Chronometer;
 import icy.system.thread.Processor;
 import icy.system.thread.ThreadUtil;
 import plugins.fmp.fmpTools.StringSorter;
@@ -27,7 +29,8 @@ import plugins.stef.importer.xuggler.VideoImporter;
 
 
 
-public class OpenSequencePlus {
+
+public class SequencePlusOpen {
 	
 	public static EnumStatus statusSequence = EnumStatus.REGULAR;
 	protected static VideoImporter importer = null;
@@ -127,6 +130,7 @@ public class OpenSequencePlus {
 			importer = new VideoImporter();
 			statusSequence = EnumStatus.AVIFILE;
 			importer.open( fileName, 0 );
+			// TODO: when reading AVI, get number of frames
 //			OMEXMLMetadata metaData = importer.getOMEXMLMetaData();
 //			nTotalFrames = MetaDataUtil.getSizeT( metaData, 0 ) - 2 ; 
 			// get one frame less as there is a little bug in the decompression of the video in h264
@@ -159,9 +163,6 @@ public class OpenSequencePlus {
 	
 	private static String[] keepOnlyAcceptedNames(String[] rawlist) 
 	{
-		// -----------------------------------------------
-		// subroutines borrowed from FolderOpener
-		/* Keep only "accepted" names (file extension)*/
 		int count = 0;
 		for (int i = 0; i < rawlist.length; i++) {
 			String name = rawlist[i];
@@ -198,18 +199,25 @@ public class OpenSequencePlus {
 
 	public static Sequence loadSequenceFromImagesList_V1(List <String> imagesList) 
 	{
+		Chronometer chrono = new Chronometer("Tracking computation" );
+		int t0 =  (int) (chrono.getNanos() / 1000000000f);
 		SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
-		Sequence seq = Loader.loadSequence(seqFileImporter, imagesList, false);
+		Sequence seq = Loader.loadSequence(seqFileImporter, imagesList, true);
+		int t1 =  (int) (chrono.getNanos() / 1000000000f);
+		System.out.println( "Time elapsed: " + (t1-t0) + " s");
 		return seq;
 	}
 	
-	public static Sequence loadSequenceFromImagesList_V3(List <String> imagesList) 
+	public static Sequence loadSequenceFromImagesList_V2_old(List <String> imagesList) 
 	{
 		  SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
 		  Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);
 		  ThreadUtil.bgRun( new Runnable() { 
 			@Override public void run() 
 			{
+				Chronometer chrono = new Chronometer("Tracking computation" );
+				int t0 =  (int) (chrono.getNanos() / 1000000000f);
+				
 				ProgressFrame progress = new ProgressFrame("Loading images...");
 				seq.setVolatile(true);
 				seq.beginUpdate();
@@ -236,6 +244,8 @@ public class OpenSequencePlus {
 				{
 					seq.endUpdate();
 					progress.close();
+					int t1 =  (int) (chrono.getNanos() / 1000000000f);
+					System.out.println( "Time elapsed: " + (t1-t0) + " s");
 				}
 			}});	
 		return seq;
@@ -243,9 +253,9 @@ public class OpenSequencePlus {
 	
 	public static Sequence loadSequenceFromImagesList_V2(List <String> imagesList) 
 	{
-		  SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
-		  Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);
-		  ThreadUtil.bgRun( new Runnable() { 
+		SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
+		Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);
+		ThreadUtil.bgRun( new Runnable() { 
 			@Override public void run() 
 			{
 				seq.setVolatile(true);
@@ -287,14 +297,17 @@ public class OpenSequencePlus {
 	
 	protected static void waitFuturesCompletion(Processor processor, ArrayList<Future<?>> futuresArray) 
     {  	
-		ProgressFrame progressBar = new ProgressFrame("Loading images "); 
 		int nframes = futuresArray.size();
 		int iiframe = 1;
+		ProgressFrame progressFrame = new ProgressFrame("Loading "+nframes+ " images"); 
+		progressFrame.setLength(nframes);
+		
     	 while (!futuresArray.isEmpty())
          {
     		 int frame = futuresArray.size() -1;
              final Future<?> f = futuresArray.get(frame);
-   			 progressBar.setMessage("Loading images... " + (iiframe) + "//" + nframes);
+ 			 progressFrame.setMessage("Loading images... " + (iiframe) + "//" + nframes);
+   			 progressFrame.setPosition(iiframe);
    			 iiframe++;
              try
              {
@@ -310,7 +323,7 @@ public class OpenSequencePlus {
              }
              futuresArray.remove(f);
          }
-    	 progressBar.close();
+    	 progressFrame.close();
    }
 	
 }
