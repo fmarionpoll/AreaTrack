@@ -27,7 +27,7 @@ public class ExportToXLS {
 	private ArrayList<MeasureAndName> resultsHeatMap = null;
 	
 
-	private void exportToXLSWorksheet(WritableWorkbook xlsWorkBook, String worksheetname) {
+	private void exportToXLSWorksheet(WritableWorkbook xlsWorkBook, String worksheetname) throws InterruptedException {
 		
 		int it = 0;
 		int irow = 0;
@@ -128,7 +128,7 @@ public class ExportToXLS {
 		}
 	}
 	
-	public void exportToXLS(Areatrack areatrack, String filename) {
+	public void exportToXLS(Areatrack areatrack, String filename) throws InterruptedException {
 		
 		this.areatrack = areatrack;
 		vSequence = areatrack.vSequence;

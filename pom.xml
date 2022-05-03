@@ -13,7 +13,7 @@
 
     <!-- Project Information -->
     <artifactId>AreaTrack</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     
     <packaging>jar</packaging>
 
@@ -66,9 +66,10 @@
     <dependencies>
         <!-- The core of Icy -->
         <dependency>
-            <groupId>org.bioimageanalysis.icy</groupId>
-            <artifactId>icy-kernel</artifactId>
-            </dependency>
+        	<groupId>org.bioimageanalysis.icy</groupId>
+        	<artifactId>icy-kernel</artifactId>
+        	<version>2.4.1</version>
+        </dependency>
 
         <!-- The EzPlug library, simplifies writing UI for Icy plugins. -->
         <dependency>

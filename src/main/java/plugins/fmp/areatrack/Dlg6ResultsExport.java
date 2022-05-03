@@ -88,7 +88,12 @@ public class Dlg6ResultsExport extends JPanel {
 		
 		exportToXLSButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) {
-				exportToXLS();
+				try {
+					exportToXLS();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			} } );
 	}
 	
@@ -106,7 +111,7 @@ public class Dlg6ResultsExport extends JPanel {
 		displayGraphs.updateCharts(areatrack.vSequence, filteroption, span); 
 	}
 	
-	private void exportToXLS() {
+	private void exportToXLS() throws InterruptedException {
 		String file = FmpTools.saveFileAs(null, areatrack.vSequence.getDirectory(), "xls");
 		if (file != null) {	
 			ExportToXLS exportToXLS = new ExportToXLS();

@@ -67,12 +67,17 @@ public class OverlayThreshold extends Overlay
 			IcyBufferedImage thresholdedImage = imgOp.run(canvas.getPositionT());
 			if (thresholdedImage != null) {
 				thresholdedImage.setColorMap(0, map);
-				BufferedImage bufferedImage = IcyBufferedImageUtil.getARGBImage(thresholdedImage);
-				Composite bck = g.getComposite();
-				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
-				g.drawImage(bufferedImage, 0, 0, null);
-				g.setComposite(bck);
-
+				BufferedImage bufferedImage;
+				try {
+					bufferedImage = IcyBufferedImageUtil.getARGBImage(thresholdedImage);
+					Composite bck = g.getComposite();
+					g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, opacity));
+					g.drawImage(bufferedImage, 0, 0, null);
+					g.setComposite(bck);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
