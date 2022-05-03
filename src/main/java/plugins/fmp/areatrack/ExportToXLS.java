@@ -120,9 +120,10 @@ public class ExportToXLS {
 			double value = t; 
 			XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); 
 			icol0++;
+			int frameIndex = (t-startFrame)/analyzeStep;
 			for (int iroi=0; iroi < nrois; iroi++, icol0++) 
 			{
-				value = vSequence.data_filtered[iroi][t-startFrame];
+				value = vSequence.data_filtered[iroi][frameIndex];
 				XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); 
 			}
 		}
