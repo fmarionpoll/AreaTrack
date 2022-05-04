@@ -53,7 +53,7 @@
 </section>
 <section name="export"/>
 </section>
-<key name="lastUpdateCheckTime" value="1645513329292"/>
+<key name="lastUpdateCheckTime" value="1645597385273"/>
 <key name="virtualMode" value="true"/>
 <key name="loaderFolder" value="C:\Users\fred\Desktop\herbivory assay"/>
 <key name="sequencePersistence" value="true"/>
@@ -184,8 +184,8 @@
 </section>
 <section name="frame">
 <section name="main">
-<key name="XE" value="-2152"/>
-<key name="YE" value="177"/>
+<key name="XE" value="80"/>
+<key name="YE" value="47"/>
 <key name="WidthE" value="1842"/>
 <key name="HeightE" value="936"/>
 <key name="MaximizedE" value="false"/>
