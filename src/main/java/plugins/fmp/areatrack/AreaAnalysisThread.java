@@ -164,10 +164,16 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer>  {
 						for (int iiroi = 0; iiroi < areaMasks.size(); iiroi++ )
 						{
 							BooleanMask2D areaMask = areaMasks.get(iiroi);
-							BooleanMask2D intersectionMask = maskAll2D.getIntersection( areaMask );
-							int sum = intersectionMask.getNumberOfPoints();
-							int index = iframe - startFrame;
-							vSequence.data_raw[iiroi][index] = sum;
+							try {
+								BooleanMask2D intersectionMask = maskAll2D.getIntersection( areaMask );
+								int sum = intersectionMask.getNumberOfPoints();
+								int index = iframe - startFrame;
+								vSequence.data_raw[iiroi][index] = sum;
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+
 						}
 					}
 					
@@ -192,8 +198,13 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer>  {
 		progress.close();
 		vSequence.seq.endUpdate();
 		
-		if (measureROIsMove) 
-			detectMovements(areaMasks);
+		if (measureROIsMove)
+			try {
+				detectMovements(areaMasks);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		chrono.displayInSeconds();
 		System.out.println("Computation finished.");
@@ -208,7 +219,12 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer>  {
 		{
 			String csName = roi.getName();
 			vSequence.seriesname[iroi] = csName;
-			areaMasks.add(roi.getBooleanMask2D( 0 , 0, 1, true ));
+			try {
+				areaMasks.add(roi.getBooleanMask2D( 0 , 0, 1, true ));
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			iroi++;
 		}
 		return areaMasks;
@@ -223,7 +239,7 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer>  {
 		progress.setMessage( "Processing: " + pos + " % - Elapsed time: " + nbSeconds + " s - Estimated time left: " + timeleft + " s");
 	}
 	
-	private void detectMovements(ArrayList<BooleanMask2D> areaMasks) {
+	private void detectMovements(ArrayList<BooleanMask2D> areaMasks) throws InterruptedException {
 		// update resultIlmage to make it like a regular image and add heatmap scale to it
 		resultOFFImage.dataChanged();
 		resultOFFImage.setColorMap (0, new JETColorMap (), true);

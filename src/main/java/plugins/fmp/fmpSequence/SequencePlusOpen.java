@@ -1,6 +1,6 @@
 package plugins.fmp.fmpSequence;
 
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,15 +15,11 @@ import icy.gui.dialog.LoaderDialog;
 import icy.gui.dialog.MessageDialog;
 import icy.gui.frame.progress.ProgressFrame;
 import icy.gui.viewer.Viewer;
-import icy.image.IcyBufferedImage;
-import icy.image.ImageUtil;
 import icy.main.Icy;
 
 import icy.sequence.Sequence;
-import icy.system.SystemUtil;
 import icy.system.profile.Chronometer;
 import icy.system.thread.Processor;
-import icy.system.thread.ThreadUtil;
 import plugins.fmp.fmpTools.StringSorter;
 import plugins.stef.importer.xuggler.VideoImporter;
 
@@ -202,7 +198,16 @@ public class SequencePlusOpen {
 		Chronometer chrono = new Chronometer("Tracking computation" );
 		int t0 =  (int) (chrono.getNanos() / 1000000000f);
 		SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
-		Sequence seq = Loader.loadSequence(seqFileImporter, imagesList, true);
+		//Sequence seq = Loader.loadSequence(seqFileImporter, imagesList, true);
+		Sequence seq = Loader.loadSequences(seqFileImporter, imagesList, 
+				0, 		// series index to load
+				true,	// fore volatile 
+				false,	// separate  	
+				false, 	// auto-order
+				false, 	// directory
+				false, 	// add to recent
+				false	// show progress
+				).get(0);
 		int t1 =  (int) (chrono.getNanos() / 1000000000f);
 		System.out.println( "Time elapsed: " + (t1-t0) + " s");
 		return seq;
@@ -211,87 +216,106 @@ public class SequencePlusOpen {
 	public static Sequence loadSequenceFromImagesList_V2_old(List <String> imagesList) 
 	{
 		  SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
-		  Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);
-		  ThreadUtil.bgRun( new Runnable() { 
-			@Override public void run() 
-			{
-				Chronometer chrono = new Chronometer("Tracking computation" );
-				int t0 =  (int) (chrono.getNanos() / 1000000000f);
-				
-				ProgressFrame progress = new ProgressFrame("Loading images...");
-				seq.setVolatile(true);
-				seq.beginUpdate();
-				try
-				{
-					final int nbframes = imagesList.size();
-					for (int t = 1; t < nbframes; t++)
-					{
-						int pos = (int)(100d * (double)t / (double) nbframes);
-						progress.setPosition( pos );
-						
-						BufferedImage img = ImageUtil.load(imagesList.get(t));
-						progress.setMessage( "Loading image: " + pos + "/" + nbframes);
-							
-						if (img != null)
-						{
-							IcyBufferedImage icyImg = IcyBufferedImage.createFrom(img);
-							icyImg.setVolatile(true);
-							seq.setImage(t, 0, icyImg);
-						}
-					}
-				}
-				finally
-				{
-					seq.endUpdate();
-					progress.close();
-					int t1 =  (int) (chrono.getNanos() / 1000000000f);
-					System.out.println( "Time elapsed: " + (t1-t0) + " s");
-				}
-			}});	
+		  Sequence seq = Loader.loadSequences(seqFileImporter, imagesList, 
+					0, 		// series index to load
+					true,	// fore volatile 
+					false,	// separate  	
+					false, 	// auto-order
+					false, 	// directory
+					false, 	// add to recent
+					true	// show progress
+					).get(0);
+//		  final Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);
+//		  ThreadUtil.bgRun( new Runnable() { 
+//			@Override public void run() 
+//			{
+//				Chronometer chrono = new Chronometer("Tracking computation" );
+//				int t0 =  (int) (chrono.getNanos() / 1000000000f);
+//				
+//				ProgressFrame progress = new ProgressFrame("Loading images...");
+//				seq.setVolatile(true);
+//				seq.beginUpdate();
+//				try
+//				{
+//					final int nbframes = imagesList.size();
+//					for (int t = 1; t < nbframes; t++)
+//					{
+//						int pos = (int)(100d * (double)t / (double) nbframes);
+//						progress.setPosition( pos );
+//						
+//						BufferedImage img = ImageUtil.load(imagesList.get(t));
+//						progress.setMessage( "Loading image: " + pos + "/" + nbframes);
+//							
+//						if (img != null)
+//						{
+//							IcyBufferedImage icyImg = IcyBufferedImage.createFrom(img);
+//							icyImg.setVolatile(true);
+//							seq.setImage(t, 0, icyImg);
+//						}
+//					}
+//				}
+//				finally
+//				{
+//					seq.endUpdate();
+//					progress.close();
+//					int t1 =  (int) (chrono.getNanos() / 1000000000f);
+//					System.out.println( "Time elapsed: " + (t1-t0) + " s");
+//				}
+//			}});	
 		return seq;
 	 }
 	
 	public static Sequence loadSequenceFromImagesList_V2(List <String> imagesList) 
 	{
 		SequenceFileImporter seqFileImporter = Loader.getSequenceFileImporter(imagesList.get(0), true);
-		Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);
-		ThreadUtil.bgRun( new Runnable() { 
-			@Override public void run() 
-			{
-				seq.setVolatile(true);
-				seq.beginUpdate();
-				try
-				{
-					final int nframes = imagesList.size();
-					final Processor processor = new Processor(SystemUtil.getNumberOfCPUs());
-				    processor.setThreadName("loadimages");
-				    processor.setPriority(Processor.NORM_PRIORITY);
-			        ArrayList<Future<?>> futuresArray = new ArrayList<Future<?>>(nframes);
-					futuresArray.clear();
-					
-					for (int t = 1; t < nframes; t++)
-					{
-						final int t_index = t;
-						futuresArray.add(processor.submit(new Runnable () {
-							@Override
-							public void run() {	
-						
-								BufferedImage img = ImageUtil.load(imagesList.get(t_index));
-								if (img != null)
-								{
-									IcyBufferedImage icyImg = IcyBufferedImage.createFrom(img);
-									icyImg.setVolatile(true);
-									seq.setImage(t_index, 0, icyImg);
-								}
-							}}));
-					}
-					waitFuturesCompletion(processor, futuresArray);
-				}
-				finally
-				{
-					seq.endUpdate();
-				}
-			}});	
+		Sequence seq = Loader.loadSequences(seqFileImporter, imagesList, 
+				0, 		// series index to load
+				true,	// fore volatile 
+				false,	// separate  	
+				false, 	// auto-order
+				false, 	// directory
+				false, 	// add to recent
+				true	// show progress
+				).get(0);
+		
+//		Sequence seq = Loader.loadSequence(seqFileImporter, imagesList.get(0), 0, false);
+//		ThreadUtil.bgRun( new Runnable() { 
+//			@Override public void run() 
+//			{
+//				seq.setVolatile(true);
+//				seq.beginUpdate();
+//				try
+//				{
+//					final int nframes = imagesList.size();
+//					final Processor processor = new Processor(SystemUtil.getNumberOfCPUs());
+//				    processor.setThreadName("loadimages");
+//				    processor.setPriority(Processor.NORM_PRIORITY);
+//			        ArrayList<Future<?>> futuresArray = new ArrayList<Future<?>>(nframes);
+//					futuresArray.clear();
+//					
+//					for (int t = 1; t < nframes; t++)
+//					{
+//						final int t_index = t;
+//						futuresArray.add(processor.submit(new Runnable () {
+//							@Override
+//							public void run() {	
+//						
+//								BufferedImage img = ImageUtil.load(imagesList.get(t_index));
+//								if (img != null)
+//								{
+//									IcyBufferedImage icyImg = IcyBufferedImage.createFrom(img);
+//									icyImg.setVolatile(true);
+//									seq.setImage(t_index, 0, icyImg);
+//								}
+//							}}));
+//					}
+//					waitFuturesCompletion(processor, futuresArray);
+//				}
+//				finally
+//				{
+//					seq.endUpdate();
+//				}
+//			}});	
 		return seq;
 	 }
 	

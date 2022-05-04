@@ -27,7 +27,7 @@ public class ExportToXLS {
 	private ArrayList<MeasureAndName> resultsHeatMap = null;
 	
 
-	private void exportToXLSWorksheet(WritableWorkbook xlsWorkBook, String worksheetname) {
+	private void exportToXLSWorksheet(WritableWorkbook xlsWorkBook, String worksheetname) throws InterruptedException {
 		
 		int it = 0;
 		int irow = 0;
@@ -120,15 +120,16 @@ public class ExportToXLS {
 			double value = t; 
 			XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); 
 			icol0++;
+			int frameIndex = (t-startFrame)/analyzeStep;
 			for (int iroi=0; iroi < nrois; iroi++, icol0++) 
 			{
-				value = vSequence.data_filtered[iroi][t-startFrame];
+				value = vSequence.data_filtered[iroi][frameIndex];
 				XLSUtil.setCellNumber( filteredDataPage, icol0 , irow , value ); 
 			}
 		}
 	}
 	
-	public void exportToXLS(Areatrack areatrack, String filename) {
+	public void exportToXLS(Areatrack areatrack, String filename) throws InterruptedException {
 		
 		this.areatrack = areatrack;
 		vSequence = areatrack.vSequence;
