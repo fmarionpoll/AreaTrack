@@ -69,7 +69,6 @@ public class Dlg3TabFilter extends JPanel implements ChangeListener{
 	public void stateChanged(ChangeEvent e) {
 		if (e.getSource() == thresholdSpinner) 
 				updateThresholdOverlayParameters();
-		
 	}
 	
 	void updateThresholdOverlayParameters() {
