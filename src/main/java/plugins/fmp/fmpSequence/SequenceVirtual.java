@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -14,6 +15,7 @@ import icy.image.IcyBufferedImage;
 import icy.sequence.Sequence;
 
 import plugins.fmp.fmpTools.ImageOperationsStruct;
+
 
 
 
@@ -81,7 +83,10 @@ public class SequenceVirtual
 	
 	public void setV2ImagesList(List <String> extImagesList) 
 	{
-		imagesList.clear();
+		if (imagesList != null)
+			imagesList.clear();
+		else
+			imagesList = new ArrayList <String> (extImagesList.size());
 		imagesList.addAll(extImagesList);
 		nTotalFrames = imagesList.size();
 		statusSequenceVirtual = EnumStatus.FILESTACK;
@@ -149,6 +154,13 @@ public class SequenceVirtual
 		currentFrame = t;
 	}
 
+	public void attachSequence(Sequence seq)
+	{
+		this.seq = seq;
+		statusSequenceVirtual = EnumStatus.FILESTACK;	
+		analysisStart = 0;
+	}
+	
 	// --------------------------------------------------------------------
 
 	 public IcyBufferedImage imageIORead(String name) 

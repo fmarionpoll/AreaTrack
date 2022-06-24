@@ -28,8 +28,8 @@ import plugins.fmp.fmpSequence.SequencePlusOpen;
 import plugins.fmp.fmpSequence.SequencePlus;
 
 
-public class Dlg1Source extends JPanel implements SequenceListener {
-	
+public class Dlg1Source extends JPanel implements SequenceListener 
+{	
 	/**
 	 * 
 	 */
@@ -39,7 +39,8 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 	Areatrack areatrack = null;
 
 	
-	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel, String title) {
+	public void init (Areatrack areatrack, IcyFrame mainFrame, JPanel mainPanel, String title) 
+	{
 		
 		this.areatrack = areatrack;
 		PopupPanel 	capPopupPanel = new PopupPanel(title);
@@ -67,7 +68,8 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 		declareActionListeners();
 	}
 		
-	private void declareActionListeners() {
+	private void declareActionListeners() 
+	{
 		openButton.addActionListener(new ActionListener () { 
 			@Override public void actionPerformed( final ActionEvent e ) {
 				openVideoOrStack();
@@ -85,7 +87,8 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 			} } );
 	}
 	
-	public void openVideoOrStack() {
+	public void openVideoOrStack() 
+	{
 		String path = null;
 		if (areatrack.vSequence != null)
 			areatrack.vSequence.close();
@@ -119,19 +122,22 @@ public class Dlg1Source extends JPanel implements SequenceListener {
 		}
 	}
 	
-	private void updateGuiEndFrame () {
+	private void updateGuiEndFrame () 
+	{
 		if (areatrack.vSequence == null) return;
 		areatrack.vSequence.analysisEnd = areatrack.vSequence.nTotalFrames-1;
 		areatrack.dlg5AnalysisRun.updateStartAndEndFrameFromvSequence(areatrack.vSequence);
 	}
 
 	@Override
-	public void sequenceChanged(SequenceEvent sequenceEvent) {
+	public void sequenceChanged(SequenceEvent sequenceEvent) 
+	{
 		updateGuiEndFrame();
 	}
 
 	@Override
-	public void sequenceClosed(Sequence sequence) {
+	public void sequenceClosed(Sequence sequence) 
+	{
 		// TODO Auto-generated method stub
 		
 	}

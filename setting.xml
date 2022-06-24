@@ -53,9 +53,9 @@
 </section>
 <section name="export"/>
 </section>
-<key name="lastUpdateCheckTime" value="1655758475745"/>
+<key name="lastUpdateCheckTime" value="1656057314614"/>
 <key name="virtualMode" value="true"/>
-<key name="loaderFolder" value="C:\Users\fred\Desktop\240 min\Cam01\grabs"/>
+<key name="loaderFolder" value="C:\Users\fred\Desktop\240 min\Cam01"/>
 </section>
 <section name="canvas">
 <section name="Canvas2D"/>
@@ -80,7 +80,247 @@
 <key name="appFolder" value="C:/Users/fred/.m2/repository/org/bioimageanalysis/icy/icy-kernel/2.4.2"/>
 <section name="loader">
 <section name="entry0">
-<key name="nbFile" value="0"/>
+<key name="nbFile" value="240"/>
+<key name="file0" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-27-07.jpg"/>
+<key name="file1" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-28-08.jpg"/>
+<key name="file2" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-29-09.jpg"/>
+<key name="file3" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-30-10.jpg"/>
+<key name="file4" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-31-10.jpg"/>
+<key name="file5" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-32-11.jpg"/>
+<key name="file6" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-33-12.jpg"/>
+<key name="file7" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-34-13.jpg"/>
+<key name="file8" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-35-13.jpg"/>
+<key name="file9" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-36-14.jpg"/>
+<key name="file10" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-37-14.jpg"/>
+<key name="file11" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-38-15.jpg"/>
+<key name="file12" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-39-16.jpg"/>
+<key name="file13" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-40-17.jpg"/>
+<key name="file14" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-41-18.jpg"/>
+<key name="file15" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-42-18.jpg"/>
+<key name="file16" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-43-19.jpg"/>
+<key name="file17" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-44-20.jpg"/>
+<key name="file18" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-45-21.jpg"/>
+<key name="file19" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-46-22.jpg"/>
+<key name="file20" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-47-23.jpg"/>
+<key name="file21" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-48-24.jpg"/>
+<key name="file22" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-49-24.jpg"/>
+<key name="file23" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-50-25.jpg"/>
+<key name="file24" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-51-25.jpg"/>
+<key name="file25" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-52-26.jpg"/>
+<key name="file26" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-53-27.jpg"/>
+<key name="file27" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-54-27.jpg"/>
+<key name="file28" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-55-28.jpg"/>
+<key name="file29" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-56-28.jpg"/>
+<key name="file30" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-57-29.jpg"/>
+<key name="file31" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-58-30.jpg"/>
+<key name="file32" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_16-59-30.jpg"/>
+<key name="file33" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-00-31.jpg"/>
+<key name="file34" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-01-32.jpg"/>
+<key name="file35" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-02-32.jpg"/>
+<key name="file36" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-03-33.jpg"/>
+<key name="file37" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-04-34.jpg"/>
+<key name="file38" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-05-34.jpg"/>
+<key name="file39" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-06-35.jpg"/>
+<key name="file40" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-07-36.jpg"/>
+<key name="file41" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-08-37.jpg"/>
+<key name="file42" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-09-38.jpg"/>
+<key name="file43" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-10-39.jpg"/>
+<key name="file44" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-11-40.jpg"/>
+<key name="file45" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-12-41.jpg"/>
+<key name="file46" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-13-42.jpg"/>
+<key name="file47" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-14-43.jpg"/>
+<key name="file48" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-15-43.jpg"/>
+<key name="file49" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-16-43.jpg"/>
+<key name="file50" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-17-44.jpg"/>
+<key name="file51" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-18-45.jpg"/>
+<key name="file52" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-19-45.jpg"/>
+<key name="file53" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-20-46.jpg"/>
+<key name="file54" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-21-47.jpg"/>
+<key name="file55" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-22-48.jpg"/>
+<key name="file56" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-23-48.jpg"/>
+<key name="file57" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-24-48.jpg"/>
+<key name="file58" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-25-49.jpg"/>
+<key name="file59" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-26-50.jpg"/>
+<key name="file60" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-27-51.jpg"/>
+<key name="file61" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-28-52.jpg"/>
+<key name="file62" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-29-53.jpg"/>
+<key name="file63" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-30-54.jpg"/>
+<key name="file64" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-31-55.jpg"/>
+<key name="file65" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-32-56.jpg"/>
+<key name="file66" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-33-57.jpg"/>
+<key name="file67" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-34-58.jpg"/>
+<key name="file68" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-35-58.jpg"/>
+<key name="file69" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-36-59.jpg"/>
+<key name="file70" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-38-00.jpg"/>
+<key name="file71" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-39-01.jpg"/>
+<key name="file72" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-40-02.jpg"/>
+<key name="file73" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-41-03.jpg"/>
+<key name="file74" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-42-04.jpg"/>
+<key name="file75" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-43-05.jpg"/>
+<key name="file76" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-44-06.jpg"/>
+<key name="file77" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-45-06.jpg"/>
+<key name="file78" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-46-07.jpg"/>
+<key name="file79" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-47-08.jpg"/>
+<key name="file80" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-48-09.jpg"/>
+<key name="file81" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-49-10.jpg"/>
+<key name="file82" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-50-11.jpg"/>
+<key name="file83" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-51-12.jpg"/>
+<key name="file84" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-52-13.jpg"/>
+<key name="file85" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-53-13.jpg"/>
+<key name="file86" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-54-14.jpg"/>
+<key name="file87" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-55-15.jpg"/>
+<key name="file88" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-56-16.jpg"/>
+<key name="file89" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-57-17.jpg"/>
+<key name="file90" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-58-18.jpg"/>
+<key name="file91" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_17-59-19.jpg"/>
+<key name="file92" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-00-20.jpg"/>
+<key name="file93" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-01-21.jpg"/>
+<key name="file94" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-02-22.jpg"/>
+<key name="file95" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-03-23.jpg"/>
+<key name="file96" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-04-23.jpg"/>
+<key name="file97" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-05-24.jpg"/>
+<key name="file98" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-06-25.jpg"/>
+<key name="file99" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-07-26.jpg"/>
+<key name="file100" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-08-27.jpg"/>
+<key name="file101" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-09-28.jpg"/>
+<key name="file102" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-10-28.jpg"/>
+<key name="file103" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-11-29.jpg"/>
+<key name="file104" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-12-30.jpg"/>
+<key name="file105" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-13-31.jpg"/>
+<key name="file106" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-14-32.jpg"/>
+<key name="file107" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-15-33.jpg"/>
+<key name="file108" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-16-34.jpg"/>
+<key name="file109" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-17-34.jpg"/>
+<key name="file110" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-18-35.jpg"/>
+<key name="file111" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-19-36.jpg"/>
+<key name="file112" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-20-37.jpg"/>
+<key name="file113" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-21-38.jpg"/>
+<key name="file114" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-22-39.jpg"/>
+<key name="file115" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-23-40.jpg"/>
+<key name="file116" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-24-41.jpg"/>
+<key name="file117" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-25-42.jpg"/>
+<key name="file118" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-26-43.jpg"/>
+<key name="file119" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-27-44.jpg"/>
+<key name="file120" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-28-44.jpg"/>
+<key name="file121" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-29-45.jpg"/>
+<key name="file122" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-30-46.jpg"/>
+<key name="file123" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-31-46.jpg"/>
+<key name="file124" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-32-47.jpg"/>
+<key name="file125" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-33-48.jpg"/>
+<key name="file126" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-34-49.jpg"/>
+<key name="file127" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-35-50.jpg"/>
+<key name="file128" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-36-51.jpg"/>
+<key name="file129" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-37-52.jpg"/>
+<key name="file130" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-38-53.jpg"/>
+<key name="file131" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-39-54.jpg"/>
+<key name="file132" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-40-55.jpg"/>
+<key name="file133" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-41-56.jpg"/>
+<key name="file134" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-42-56.jpg"/>
+<key name="file135" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-43-57.jpg"/>
+<key name="file136" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-44-58.jpg"/>
+<key name="file137" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-45-59.jpg"/>
+<key name="file138" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-46-59.jpg"/>
+<key name="file139" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-47-59.jpg"/>
+<key name="file140" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-49-00.jpg"/>
+<key name="file141" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-50-01.jpg"/>
+<key name="file142" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-51-02.jpg"/>
+<key name="file143" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-52-03.jpg"/>
+<key name="file144" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-53-04.jpg"/>
+<key name="file145" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-54-05.jpg"/>
+<key name="file146" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-55-06.jpg"/>
+<key name="file147" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-56-07.jpg"/>
+<key name="file148" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-57-08.jpg"/>
+<key name="file149" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-58-08.jpg"/>
+<key name="file150" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_18-59-09.jpg"/>
+<key name="file151" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-00-10.jpg"/>
+<key name="file152" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-01-10.jpg"/>
+<key name="file153" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-02-11.jpg"/>
+<key name="file154" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-03-12.jpg"/>
+<key name="file155" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-04-12.jpg"/>
+<key name="file156" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-05-13.jpg"/>
+<key name="file157" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-06-14.jpg"/>
+<key name="file158" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-07-14.jpg"/>
+<key name="file159" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-08-15.jpg"/>
+<key name="file160" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-09-15.jpg"/>
+<key name="file161" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-10-15.jpg"/>
+<key name="file162" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-11-16.jpg"/>
+<key name="file163" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-12-17.jpg"/>
+<key name="file164" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-13-18.jpg"/>
+<key name="file165" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-14-19.jpg"/>
+<key name="file166" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-15-20.jpg"/>
+<key name="file167" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-16-21.jpg"/>
+<key name="file168" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-17-22.jpg"/>
+<key name="file169" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-18-23.jpg"/>
+<key name="file170" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-19-23.jpg"/>
+<key name="file171" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-20-24.jpg"/>
+<key name="file172" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-21-24.jpg"/>
+<key name="file173" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-22-25.jpg"/>
+<key name="file174" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-23-26.jpg"/>
+<key name="file175" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-24-26.jpg"/>
+<key name="file176" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-25-26.jpg"/>
+<key name="file177" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-26-27.jpg"/>
+<key name="file178" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-27-28.jpg"/>
+<key name="file179" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-28-29.jpg"/>
+<key name="file180" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-29-30.jpg"/>
+<key name="file181" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-30-31.jpg"/>
+<key name="file182" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-31-32.jpg"/>
+<key name="file183" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-32-32.jpg"/>
+<key name="file184" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-33-33.jpg"/>
+<key name="file185" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-34-34.jpg"/>
+<key name="file186" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-35-35.jpg"/>
+<key name="file187" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-36-36.jpg"/>
+<key name="file188" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-37-36.jpg"/>
+<key name="file189" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-38-37.jpg"/>
+<key name="file190" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-39-38.jpg"/>
+<key name="file191" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-40-39.jpg"/>
+<key name="file192" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-41-40.jpg"/>
+<key name="file193" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-42-41.jpg"/>
+<key name="file194" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-43-42.jpg"/>
+<key name="file195" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-44-43.jpg"/>
+<key name="file196" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-45-44.jpg"/>
+<key name="file197" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-46-45.jpg"/>
+<key name="file198" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-47-45.jpg"/>
+<key name="file199" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-48-46.jpg"/>
+<key name="file200" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-49-46.jpg"/>
+<key name="file201" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-50-47.jpg"/>
+<key name="file202" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-51-48.jpg"/>
+<key name="file203" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-52-49.jpg"/>
+<key name="file204" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-53-50.jpg"/>
+<key name="file205" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-54-51.jpg"/>
+<key name="file206" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-55-52.jpg"/>
+<key name="file207" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-56-53.jpg"/>
+<key name="file208" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-57-54.jpg"/>
+<key name="file209" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-58-54.jpg"/>
+<key name="file210" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_19-59-55.jpg"/>
+<key name="file211" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-00-55.jpg"/>
+<key name="file212" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-01-56.jpg"/>
+<key name="file213" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-02-57.jpg"/>
+<key name="file214" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-03-58.jpg"/>
+<key name="file215" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-04-59.jpg"/>
+<key name="file216" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-06-00.jpg"/>
+<key name="file217" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-07-00.jpg"/>
+<key name="file218" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-08-01.jpg"/>
+<key name="file219" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-09-02.jpg"/>
+<key name="file220" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-10-03.jpg"/>
+<key name="file221" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-11-04.jpg"/>
+<key name="file222" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-12-05.jpg"/>
+<key name="file223" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-13-06.jpg"/>
+<key name="file224" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-14-07.jpg"/>
+<key name="file225" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-15-08.jpg"/>
+<key name="file226" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-16-09.jpg"/>
+<key name="file227" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-17-09.jpg"/>
+<key name="file228" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-18-09.jpg"/>
+<key name="file229" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-19-10.jpg"/>
+<key name="file230" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-20-11.jpg"/>
+<key name="file231" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-21-12.jpg"/>
+<key name="file232" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-22-13.jpg"/>
+<key name="file233" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-23-14.jpg"/>
+<key name="file234" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-24-15.jpg"/>
+<key name="file235" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-25-15.jpg"/>
+<key name="file236" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-26-16.jpg"/>
+<key name="file237" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-27-17.jpg"/>
+<key name="file238" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-28-18.jpg"/>
+<key name="file239" value="C:/Users/fred/Desktop/240 min/Cam01/grabs/Frame_2022-06-17_20-29-19.jpg"/>
 </section>
 <section name="entry1">
 <key name="nbFile" value="0"/>
@@ -113,7 +353,7 @@
 <key name="version" value="2.4.2.0"/>
 <section name="frame">
 <section name="imageLoader">
-<key name="loadtype" value="0"/>
+<key name="loadtype" value="1"/>
 <key name="extension" value="All image files / Bio-Formats"/>
 <key name="width" value="600"/>
 <key name="heigth" value="400"/>
@@ -122,6 +362,7 @@
 <section name="gui.histo">
 <key name="logView" value="true"/>
 </section>
+<key name="lastUploadDate" value="1656057312174"/>
 </section>
 <section name="plugins">
 <section name="fmp">
@@ -136,20 +377,20 @@
 </section>
 <section name="frame">
 <section name="main">
-<key name="XE" value="-1889"/>
-<key name="YE" value="18"/>
-<key name="WidthE" value="1856"/>
+<key name="XE" value="-1780"/>
+<key name="YE" value="28"/>
+<key name="WidthE" value="1721"/>
 <key name="HeightE" value="1007"/>
 <key name="MaximizedE" value="false"/>
 </section>
 <section name="inspector">
-<key name="XC" value="1548"/>
+<key name="XC" value="1178"/>
 <key name="YC" value="0"/>
 <key name="XE" value="600"/>
 <key name="YE" value="140"/>
 <key name="XI" value="600"/>
 <key name="YI" value="140"/>
-<key name="WidthC" value="300"/>
+<key name="WidthC" value="535"/>
 <key name="HeightC" value="845"/>
 <key name="WidthE" value="300"/>
 <key name="HeightE" value="600"/>
@@ -167,7 +408,7 @@
 <key name="YE" value="100"/>
 <key name="XI" value="100"/>
 <key name="YI" value="100"/>
-<key name="WidthC" value="292"/>
+<key name="WidthC" value="527"/>
 <key name="HeightC" value="755"/>
 <key name="WidthE" value="400"/>
 <key name="HeightE" value="600"/>
@@ -185,7 +426,7 @@
 <key name="YE" value="200"/>
 <key name="XI" value="200"/>
 <key name="YI" value="200"/>
-<key name="WidthC" value="292"/>
+<key name="WidthC" value="527"/>
 <key name="HeightC" value="755"/>
 <key name="WidthE" value="400"/>
 <key name="HeightE" value="300"/>
