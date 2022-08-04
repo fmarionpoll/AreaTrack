@@ -53,7 +53,7 @@
 </section>
 <section name="export"/>
 </section>
-<key name="lastUpdateCheckTime" value="1656057314614"/>
+<key name="lastUpdateCheckTime" value="1659538873927"/>
 <key name="virtualMode" value="true"/>
 <key name="loaderFolder" value="C:\Users\fred\Desktop\240 min\Cam01"/>
 </section>
@@ -73,10 +73,10 @@
 </section>
 <section name="online"/>
 </section>
-<key name="id" value="20249450"/>
+<key name="id" value="140222095"/>
 <key name="os" value="win64"/>
-<key name="clientCpuNumber" value="12"/>
-<key name="clientTotalMemory" value="34308153344"/>
+<key name="clientCpuNumber" value="20"/>
+<key name="clientTotalMemory" value="34078789632"/>
 <key name="appFolder" value="C:/Users/fred/.m2/repository/org/bioimageanalysis/icy/icy-kernel/2.4.2"/>
 <section name="loader">
 <section name="entry0">
@@ -377,21 +377,21 @@
 </section>
 <section name="frame">
 <section name="main">
-<key name="XE" value="-1780"/>
+<key name="XE" value="80"/>
 <key name="YE" value="28"/>
-<key name="WidthE" value="1721"/>
-<key name="HeightE" value="1007"/>
+<key name="WidthE" value="2388"/>
+<key name="HeightE" value="1302"/>
 <key name="MaximizedE" value="false"/>
 </section>
 <section name="inspector">
-<key name="XC" value="1178"/>
+<key name="XC" value="1845"/>
 <key name="YC" value="0"/>
 <key name="XE" value="600"/>
 <key name="YE" value="140"/>
 <key name="XI" value="600"/>
 <key name="YI" value="140"/>
 <key name="WidthC" value="535"/>
-<key name="HeightC" value="845"/>
+<key name="HeightC" value="1140"/>
 <key name="WidthE" value="300"/>
 <key name="HeightE" value="600"/>
 <key name="WidthI" value="300"/>
@@ -409,7 +409,7 @@
 <key name="XI" value="100"/>
 <key name="YI" value="100"/>
 <key name="WidthC" value="527"/>
-<key name="HeightC" value="755"/>
+<key name="HeightC" value="1050"/>
 <key name="WidthE" value="400"/>
 <key name="HeightE" value="600"/>
 <key name="WidthI" value="400"/>
@@ -427,7 +427,7 @@
 <key name="XI" value="200"/>
 <key name="YI" value="200"/>
 <key name="WidthC" value="527"/>
-<key name="HeightC" value="755"/>
+<key name="HeightC" value="1050"/>
 <key name="WidthE" value="400"/>
 <key name="HeightE" value="300"/>
 <key name="WidthI" value="400"/>
