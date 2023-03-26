@@ -114,85 +114,6 @@ public class ExperimentDirectories {
 			return isOK;
 		}
 
-//		public boolean getDirectoriesFromDialog(ExperimentCombo expListCombo, String rootDirectory, boolean createResults)
-//		{
-//			cameraImagesList = getV2ImagesListFromDialog(rootDirectory);
-//			if (!checkCameraImagesList()) 
-//				return false;
-//			
-//			cameraImagesDirectory = Directories.getDirectoryFromName(cameraImagesList.get(0));
-//			
-//			resultsDirectory = getV2ResultsDirectoryDialog(cameraImagesDirectory, Experiment.RESULTS, createResults);
-//			binSubDirectory = getV2BinSubDirectory(expListCombo.expListBinSubDirectory, resultsDirectory, null);
-//			
-//			String kymosDir = resultsDirectory + File.separator + binSubDirectory;
-//			kymosImagesList = getV2ImagesListFromPath(kymosDir);
-//			kymosImagesList = keepOnlyAcceptedNames_List(kymosImagesList, "tiff");
-//			// TODO wrong if any bin
-//			return true;
-//		}
-//		
-//		public boolean getDirectoriesFromExptPath(ExperimentCombo expListCombo, String exptDirectory, String binSubDirectory)
-//		{
-//			String strDirectory = getImagesDirectoryAsParentFromFileName(exptDirectory);
-//			cameraImagesList = getV2ImagesListFromPath(strDirectory);
-//			cameraImagesList = keepOnlyAcceptedNames_List(cameraImagesList, "jpg");
-//			cameraImagesDirectory = strDirectory; //Directories.getDirectoryFromName(cameraImagesList.get(0));
-//			
-//			resultsDirectory =  getV2ResultsDirectory(cameraImagesDirectory, exptDirectory);
-//			this.binSubDirectory = getV2BinSubDirectory(expListCombo.expListBinSubDirectory, resultsDirectory, binSubDirectory);
-//			
-//			String kymosDir = resultsDirectory + File.separator + this.binSubDirectory;
-//			kymosImagesList = getV2ImagesListFromPath(kymosDir);
-//			kymosImagesList = keepOnlyAcceptedNames_List(kymosImagesList, "tiff"); 
-//			// TODO wrong if any bin
-//			return true;
-//		}
-		
-//		public boolean getDirectoriesFromGrabPath(String grabsDirectory)
-//		{
-//			cameraImagesList = getV2ImagesListFromPath(grabsDirectory);
-//			cameraImagesList = keepOnlyAcceptedNames_List(cameraImagesList, "jpg");
-//			cameraImagesDirectory = grabsDirectory; 
-//			
-//			resultsDirectory = getV2ResultsDirectory(cameraImagesDirectory, Experiment.RESULTS);
-//			binSubDirectory = getV2BinSubDirectory(null, resultsDirectory, null);
-//			
-//			String kymosDir = resultsDirectory + File.separator + this.binSubDirectory;
-//			kymosImagesList = getV2ImagesListFromPath(kymosDir);
-//			kymosImagesList = keepOnlyAcceptedNames_List(kymosImagesList, "tiff"); 
-//			// TODO wrong if any bin
-//			return true;
-//		}
-
-//		private String getV2BinSubDirectory(String expListBinSubDirectory, String parentDirectory, String binSubDirectory) 
-//		{
-//			List<String> expList = Directories.getSortedListOfSubDirectoriesWithTIFF(parentDirectory);
-//			move_TIFFandLINEfiles_From_Results_to_BinDirectory(parentDirectory, expList);
-//			String subDirectory = binSubDirectory;
-//		    if (subDirectory == null) 
-//		    {
-//			    if (expList.size() > 1) 
-//			    {
-//			    	if (expListBinSubDirectory == null)
-//			    		subDirectory = selectSubDirDialog(expList, "Select item", Experiment.BIN, false);
-//			    }
-//			    else if (expList.size() == 1 ) 
-//			    {
-//			    	subDirectory = expList.get(0).toLowerCase(); 
-//				    if (!subDirectory.contains(Experiment.BIN)) 
-//				    	subDirectory = Experiment.BIN + "60";
-//			    }
-//			    else 
-//			    	subDirectory = Experiment.BIN + "60";
-//		    }
-//		    if (expListBinSubDirectory != null) 
-//		    	subDirectory = expListBinSubDirectory;
-//		    
-//		    move_XML_From_Bin_to_Results(parentDirectory, subDirectory);
-//		    
-//		    return subDirectory;
-//		}
 		
 		static public String getParentIf(String filename, String filter) 
 		{
@@ -210,32 +131,6 @@ public class ExperimentDirectories {
 			filename = getParentIf(filename, RESULTS);
 			return filename;
 		}
-//		
-//		private String getV2ResultsDirectory(String parentDirectory, String resultsSubDirectory) 
-//		{
-//			resultsSubDirectory = getParentIf(resultsSubDirectory, Experiment.BIN);
-//			
-//			 if (!resultsSubDirectory.contains(Experiment.RESULTS) || !resultsSubDirectory.contains(parentDirectory))
-//				 resultsSubDirectory = parentDirectory + File.separator + Experiment.RESULTS;
-//		    return resultsSubDirectory;
-//		}
-		
-//		private String getV2ResultsDirectoryDialog(String parentDirectory, String filter, boolean createResults) 
-//		{
-//			List<String> expList = Directories.fetchSubDirectoriesMatchingFilter(parentDirectory, filter);
-//			expList = Directories.reduceFullNameToLastDirectory(expList);
-//		    String name = null;
-//		    if (createResults || expList.size() > 1) 
-//		    {
-//		    	name = selectSubDirDialog(expList, "Select item or type "+Experiment.RESULTS+"xxx", Experiment.RESULTS, true);
-//		    }
-//		    else if (expList.size() == 1)
-//		    	name = expList.get(0);
-//		    else 
-//		    	name = filter;
-//		    return parentDirectory + File.separator + name;
-//		}
-//		
 
 		
 
