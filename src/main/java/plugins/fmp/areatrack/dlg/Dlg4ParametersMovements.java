@@ -15,6 +15,8 @@ import javax.swing.event.ChangeListener;
 
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
+import plugins.fmp.areatrack.Areatrack;
+import plugins.fmp.areatrack.DetectionParameters;
 
 
 public class Dlg4ParametersMovements extends JPanel implements ChangeListener {

@@ -21,6 +21,8 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.roi.ROI2D;
 import icy.util.StringUtil;
+import plugins.fmp.areatrack.AreaAnalysisThread;
+import plugins.fmp.areatrack.Areatrack;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
@@ -38,7 +40,7 @@ public class Dlg5AnalysisRun extends JPanel implements PropertyChangeListener
 	JSpinner analysisEndSpinner = new JSpinner(new SpinnerNumberModel(9999999, 0, 9999999, 1));
 	private JSpinner analyzeStepSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 10000, 1));
 	
-	AreaAnalysisThread analysisThread = null;
+	public AreaAnalysisThread analysisThread = null;
 	Areatrack areatrack = null;
 
 

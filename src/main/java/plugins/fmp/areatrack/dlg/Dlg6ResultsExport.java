@@ -1,4 +1,4 @@
-package plugins.fmp.areatrack;
+package plugins.fmp.areatrack.dlg;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -18,6 +18,10 @@ import javax.swing.SwingConstants;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
+import plugins.fmp.areatrack.Areatrack;
+import plugins.fmp.areatrack.ExportToXLS;
+import plugins.fmp.areatrack.GraphsOverlay;
+import plugins.fmp.areatrack.GraphsWindow;
 import plugins.fmp.areatrack.tools.FmpTools;
 
 public class Dlg6ResultsExport extends JPanel {
@@ -27,7 +31,7 @@ public class Dlg6ResultsExport extends JPanel {
 	 */
 	private static final long serialVersionUID = 487691225410920887L;
 	JComboBox<String> filterComboBox = new JComboBox<String> (new String[] {"raw data", "average", "median"});
-	JTextField 	spanTextField = new JTextField("10");
+	public JTextField 	spanTextField = new JTextField("10");
 	private JButton updateChartsButton = new JButton("Chart window");
 	private JButton setGraphsOverlayButton	= new JButton("Curves");
 	private JButton exportToXLSButton = new JButton("Save XLS file..");

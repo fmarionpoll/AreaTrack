@@ -23,6 +23,7 @@ import icy.preferences.XMLPreferences;
 import icy.sequence.Sequence;
 import icy.sequence.SequenceEvent;
 import icy.sequence.SequenceListener;
+import plugins.fmp.areatrack.Areatrack;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.sequence.SequencePlusOpen;
 

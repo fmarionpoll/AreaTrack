@@ -14,6 +14,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import plugins.fmp.areatrack.Areatrack;
+import plugins.fmp.areatrack.DetectionParameters;
 import plugins.fmp.areatrack.tools.EnumImageOp;
 
 

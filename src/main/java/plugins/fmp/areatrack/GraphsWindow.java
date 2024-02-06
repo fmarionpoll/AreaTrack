@@ -25,7 +25,7 @@ import plugins.fmp.areatrack.sequence.SequencePlus;
 
 public class GraphsWindow {
 	
-	IcyFrame mainChartFrame = null;
+	public IcyFrame mainChartFrame = null;
 	JPanel 	mainChartPanel = null;
 	
 	

@@ -21,6 +21,7 @@ import plugins.fmp.areatrack.dlg.Dlg2Grids;
 import plugins.fmp.areatrack.dlg.Dlg3ParametersArea;
 import plugins.fmp.areatrack.dlg.Dlg4ParametersMovements;
 import plugins.fmp.areatrack.dlg.Dlg5AnalysisRun;
+import plugins.fmp.areatrack.dlg.Dlg6ResultsExport;
 import plugins.fmp.areatrack.dlg.DlgMenuBar;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
@@ -29,17 +30,17 @@ import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
 public class Areatrack extends PluginActionable implements ViewerListener
 {	
-	IcyFrame mainFrame = new IcyFrame("AreaTrack 4-Jul-2022", true, true, true, true);
-	GraphsWindow displayCharts = null;
+	public IcyFrame mainFrame = new IcyFrame("AreaTrack 4-Jul-2022", true, true, true, true);
+	public GraphsWindow displayCharts = null;
 
 	Dlg1Source dlg1Source = new Dlg1Source();
 	Dlg2Grids dlg2Grids = new Dlg2Grids();
 	Dlg3ParametersArea dlg3ParametersArea = new Dlg3ParametersArea();
 	Dlg4ParametersMovements dlg4ParametersMovements = new Dlg4ParametersMovements();
-	Dlg5AnalysisRun dlg5AnalysisRun = new Dlg5AnalysisRun();
+	public Dlg5AnalysisRun dlg5AnalysisRun = new Dlg5AnalysisRun();
 	Dlg6ResultsExport dlg6ResultsExport = new Dlg6ResultsExport();
 
-	DetectionParameters detectionParameters = new DetectionParameters();
+	public DetectionParameters detectionParameters = new DetectionParameters();
 			
 	public 	SequencePlus vSequence 			= null;
 		
