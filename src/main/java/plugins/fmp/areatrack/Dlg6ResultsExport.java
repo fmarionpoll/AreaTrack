@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
-import plugins.fmp.fmpTools.FmpTools;
+import plugins.fmp.areatrack.tools.FmpTools;
 
 public class Dlg6ResultsExport extends JPanel {
 

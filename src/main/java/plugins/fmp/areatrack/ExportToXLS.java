@@ -10,8 +10,8 @@ import icy.util.XLSUtil;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
-import plugins.fmp.fmpSequence.SequencePlus;
-import plugins.fmp.fmpTools.FmpTools;
+import plugins.fmp.areatrack.sequence.SequencePlus;
+import plugins.fmp.areatrack.tools.FmpTools;
 
 public class ExportToXLS {
 

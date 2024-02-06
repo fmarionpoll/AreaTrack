@@ -2,7 +2,7 @@ package plugins.fmp.areatrack;
 
 import java.util.Arrays;
 
-import plugins.fmp.fmpSequence.SequencePlus;
+import plugins.fmp.areatrack.sequence.SequencePlus;
 
 
 

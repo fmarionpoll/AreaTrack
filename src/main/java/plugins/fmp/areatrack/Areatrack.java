@@ -16,9 +16,14 @@ import icy.plugin.PluginLauncher;
 import icy.plugin.PluginLoader;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.DimensionId;
-
-import plugins.fmp.fmpTools.EnumAreaDetection;
-import plugins.fmp.fmpSequence.SequencePlus;
+import plugins.fmp.areatrack.dlg.Dlg1Source;
+import plugins.fmp.areatrack.dlg.Dlg2Grids;
+import plugins.fmp.areatrack.dlg.Dlg3ParametersArea;
+import plugins.fmp.areatrack.dlg.Dlg4ParametersMovements;
+import plugins.fmp.areatrack.dlg.Dlg5AnalysisRun;
+import plugins.fmp.areatrack.dlg.DlgMenuBar;
+import plugins.fmp.areatrack.sequence.SequencePlus;
+import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
 
 

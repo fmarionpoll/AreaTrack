@@ -23,11 +23,11 @@ import icy.system.profile.Chronometer;
 import icy.system.thread.Processor;
 import icy.type.DataType;
 import icy.type.collection.array.Array1DUtil;
-import plugins.fmp.fmpSequence.SequenceVirtual;
-import plugins.fmp.fmpTools.FmpTools;
-import plugins.fmp.fmpTools.EnumColorDistanceType;
-import plugins.fmp.fmpTools.EnumImageOp;
-import plugins.fmp.fmpTools.ImageOperations;
+import plugins.fmp.areatrack.sequence.SequenceVirtual;
+import plugins.fmp.areatrack.tools.EnumColorDistanceType;
+import plugins.fmp.areatrack.tools.EnumImageOp;
+import plugins.fmp.areatrack.tools.FmpTools;
+import plugins.fmp.areatrack.tools.ImageOperations;
 
 
 

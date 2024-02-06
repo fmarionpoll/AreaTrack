@@ -20,7 +20,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
-import plugins.fmp.fmpSequence.SequencePlus;
+import plugins.fmp.areatrack.sequence.SequencePlus;
 
 
 public class GraphsWindow {

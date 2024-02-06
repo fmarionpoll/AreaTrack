@@ -10,11 +10,11 @@ import org.w3c.dom.Node;
 
 import icy.gui.frame.progress.AnnounceFrame;
 import icy.util.XMLUtil;
-import plugins.fmp.fmpSequence.SequencePlus;
-import plugins.fmp.fmpTools.EnumImageOp;
-import plugins.fmp.fmpTools.EnumAreaDetection;
-import plugins.fmp.fmpTools.EnumColorDistanceType;
-import plugins.fmp.fmpTools.FmpTools;
+import plugins.fmp.areatrack.sequence.SequencePlus;
+import plugins.fmp.areatrack.tools.EnumAreaDetection;
+import plugins.fmp.areatrack.tools.EnumColorDistanceType;
+import plugins.fmp.areatrack.tools.EnumImageOp;
+import plugins.fmp.areatrack.tools.FmpTools;
 
 public class DetectionParameters {
 	

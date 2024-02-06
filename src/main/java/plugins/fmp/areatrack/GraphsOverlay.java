@@ -1,6 +1,6 @@
 package plugins.fmp.areatrack;
 
-import plugins.fmp.fmpSequence.SequencePlus;
+import plugins.fmp.areatrack.sequence.SequencePlus;
 
 public class GraphsOverlay {
 	
