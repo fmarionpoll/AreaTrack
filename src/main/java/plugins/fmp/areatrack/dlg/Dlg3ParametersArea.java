@@ -59,6 +59,7 @@ public class Dlg3ParametersArea extends JPanel implements ChangeListener {
 		capPanel.setLayout(new BorderLayout());
 //		capPopupPanel.expand();
 		capPopupPanel.collapse();
+		
 		capPopupPanel.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
