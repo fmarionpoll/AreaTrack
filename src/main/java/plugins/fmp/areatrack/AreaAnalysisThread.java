@@ -112,7 +112,6 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer>  {
 		return 1;
 	}
 	
-	
 	protected void analyzeSequence()  
 	{	
 		// global parameters
