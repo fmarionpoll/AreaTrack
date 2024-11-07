@@ -1,6 +1,5 @@
 package plugins.fmp.areatrack;
 
-
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -26,11 +25,8 @@ import plugins.fmp.areatrack.dlg.DlgMenuBar;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
-
-
-public class Areatrack extends PluginActionable implements ViewerListener
-{	
-	public IcyFrame mainFrame = new IcyFrame("AreaTrack 4-Jul-2022", true, true, true, true);
+public class Areatrack extends PluginActionable implements ViewerListener {
+	public IcyFrame mainFrame = new IcyFrame("AreaTrack 7-Nov-2024", true, true, true, true);
 	public GraphsWindow displayCharts = null;
 
 	Dlg1Source dlg1Source = new Dlg1Source();
@@ -41,37 +37,37 @@ public class Areatrack extends PluginActionable implements ViewerListener
 	Dlg6ResultsExport dlg6ResultsExport = new Dlg6ResultsExport();
 
 	public DetectionParameters detectionParameters = new DetectionParameters();
-			
-	public 	SequencePlus vSequence 			= null;
-		
+
+	public SequencePlus vSequence = null;
+
 	// --------------------------------------------------------------------------
 
 	@Override
 	public void run() {
-		
+
 		JPanel mainPanel = GuiUtil.generatePanelWithoutBorder();
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.add(mainPanel, BorderLayout.CENTER);
-			
+
 		DlgMenuBar.panelSetMenuBar(mainFrame, mainPanel);
-		dlg1Source.init(this, mainFrame, mainPanel, "1 - IMAGES STACK");
-		dlg2Grids.init(this, mainFrame, mainPanel, "2 - DEFINE/LOAD GRID");
-		dlg3ParametersArea.init(this, mainFrame, mainPanel, "3 - PARAMETERS: AREA");
-		dlg4ParametersMovements.init(this, mainFrame, mainPanel, "4 - PARAMETERS: MOVEMENTS");
-		dlg5AnalysisRun.init(this, mainFrame, mainPanel, "5 - RUN ANALYSIS");
-		dlg6ResultsExport.init(this, mainFrame, mainPanel, "6 - RESULTS DISPLAY/EXPORT");
-		
+		dlg1Source.init(this, mainFrame, mainPanel, "1 - Images stack");
+		dlg2Grids.init(this, mainFrame, mainPanel, "2 - Cells grid define/load");
+		dlg3ParametersArea.init(this, mainFrame, mainPanel, "3 - Area measure parameters");
+		dlg4ParametersMovements.init(this, mainFrame, mainPanel, "4 - Movements detection parameters");
+		dlg5AnalysisRun.init(this, mainFrame, mainPanel, "5 - Run analysis");
+		dlg6ResultsExport.init(this, mainFrame, mainPanel, "6 - Display/export results");
+
 		mainFrame.pack();
 		mainFrame.center();
 		mainFrame.setVisible(true);
 		mainFrame.addToDesktopPane();
-		mainFrame.requestFocus();	
+		mainFrame.requestFocus();
 	}
-	
+
 	@Override
 	public void viewerChanged(ViewerEvent event) {
-		if ((event.getType() == ViewerEventType.POSITION_CHANGED) && (event.getDim() == DimensionId.T))        
-			vSequence.currentFrame = event.getSource().getPositionT() ; 
+		if ((event.getType() == ViewerEventType.POSITION_CHANGED) && (event.getDim() == DimensionId.T))
+			vSequence.currentFrame = event.getSource().getPositionT();
 	}
 
 	@Override
@@ -85,7 +81,8 @@ public class Areatrack extends PluginActionable implements ViewerListener
 	}
 
 	public void setOverlay(boolean displayOverlay) {
-		if (vSequence == null) return;
+		if (vSequence == null)
+			return;
 		detectionParameters.displayOverlay = displayOverlay;
 		vSequence.setThresholdOverlay(displayOverlay);
 		if (displayOverlay) {
@@ -95,6 +92,5 @@ public class Areatrack extends PluginActionable implements ViewerListener
 				vSequence.setThresholdOverlayParametersColors(detectionParameters);
 		}
 	}
-	
-	
+
 }

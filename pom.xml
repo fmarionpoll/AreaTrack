@@ -13,7 +13,7 @@
 
     <!-- Project Information -->
     <artifactId>AreaTrack</artifactId>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     
     <packaging>jar</packaging>
 
@@ -22,8 +22,8 @@
     <inceptionYear>2022</inceptionYear>
 
     <organization>
-        <name>EGCE</name>
-        <url>https://www.egce.cnrs-gif.fr</url>
+        <name>IDEEV UMR EGCE (CNRS-IRD-Paris-Saclay)</name>
+        <url>https://www.egce.universite-paris-saclay.fr/</url>
     </organization>
 
     <licenses>
