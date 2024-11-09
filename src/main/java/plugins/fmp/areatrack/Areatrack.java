@@ -15,6 +15,8 @@ import icy.plugin.PluginLauncher;
 import icy.plugin.PluginLoader;
 import icy.plugin.abstract_.PluginActionable;
 import icy.sequence.DimensionId;
+import plugins.fmp.areatrack.commons.DetectionParameters;
+import plugins.fmp.areatrack.commons.GraphsWindow;
 import plugins.fmp.areatrack.dlg.Dlg1Source;
 import plugins.fmp.areatrack.dlg.Dlg2Grids;
 import plugins.fmp.areatrack.dlg.Dlg3ParametersArea;
@@ -26,7 +28,7 @@ import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
 public class Areatrack extends PluginActionable implements ViewerListener {
-	public IcyFrame mainFrame = new IcyFrame("AreaTrack 7-Nov-2024", true, true, true, true);
+	public IcyFrame mainFrame = new IcyFrame("AreaTrack 8-Nov-2024", true, true, true, true);
 	public GraphsWindow displayCharts = null;
 
 	Dlg1Source dlg1Source = new Dlg1Source();
@@ -34,7 +36,7 @@ public class Areatrack extends PluginActionable implements ViewerListener {
 	Dlg3ParametersArea dlg3ParametersArea = new Dlg3ParametersArea();
 	Dlg4ParametersMovements dlg4ParametersMovements = new Dlg4ParametersMovements();
 	public Dlg5AnalysisRun dlg5AnalysisRun = new Dlg5AnalysisRun();
-	Dlg6ResultsExport dlg6ResultsExport = new Dlg6ResultsExport();
+	public Dlg6ResultsExport dlg6ResultsExport = new Dlg6ResultsExport();
 
 	public DetectionParameters detectionParameters = new DetectionParameters();
 

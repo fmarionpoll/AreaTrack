@@ -21,8 +21,8 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.roi.ROI2D;
 import icy.util.StringUtil;
-import plugins.fmp.areatrack.AreaAnalysisThread;
 import plugins.fmp.areatrack.Areatrack;
+import plugins.fmp.areatrack.commons.AreaAnalysisThread;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
 

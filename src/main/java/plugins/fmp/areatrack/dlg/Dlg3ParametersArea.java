@@ -24,7 +24,7 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
 import plugins.fmp.areatrack.Areatrack;
-import plugins.fmp.areatrack.DetectionParameters;
+import plugins.fmp.areatrack.commons.DetectionParameters;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
 

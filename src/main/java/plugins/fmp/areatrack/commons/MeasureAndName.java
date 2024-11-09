@@ -1,4 +1,4 @@
-package plugins.fmp.areatrack;
+package plugins.fmp.areatrack.commons;
 
 // simple container for 2 values and a string descriptor
 public class MeasureAndName {

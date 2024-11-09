@@ -1,4 +1,4 @@
-package plugins.fmp.areatrack;
+package plugins.fmp.areatrack.commons;
 
 
 import plugins.fmp.areatrack.sequence.SequencePlus;

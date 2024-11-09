@@ -19,9 +19,9 @@ import icy.gui.component.PopupPanel;
 import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
 import plugins.fmp.areatrack.Areatrack;
-import plugins.fmp.areatrack.ExportToXLS;
-import plugins.fmp.areatrack.GraphsOverlay;
-import plugins.fmp.areatrack.GraphsWindow;
+import plugins.fmp.areatrack.commons.ExportToXLS;
+import plugins.fmp.areatrack.commons.GraphsOverlay;
+import plugins.fmp.areatrack.commons.GraphsWindow;
 import plugins.fmp.areatrack.tools.FmpTools;
 
 public class Dlg6ResultsExport extends JPanel {

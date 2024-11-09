@@ -1,4 +1,4 @@
-package plugins.fmp.areatrack;
+package plugins.fmp.areatrack.commons;
 
 import java.util.Arrays;
 
