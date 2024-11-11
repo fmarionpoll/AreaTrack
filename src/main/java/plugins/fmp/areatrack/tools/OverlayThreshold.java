@@ -15,55 +15,48 @@ import icy.painter.Overlay;
 import icy.sequence.Sequence;
 import plugins.fmp.areatrack.sequence.SequenceVirtual;
 
+public class OverlayThreshold extends Overlay {
+	private ImageOperations imgOp = null;
+	private float opacity = 0.3f;
+	private OverlayColorMask map = new OverlayColorMask("", new Color(0x00FF0000, true));
 
-public class OverlayThreshold extends Overlay
-{
-	private ImageOperations 	imgOp 	= null;
-	private float 				opacity = 0.3f;
-	private OverlayColorMask	map 	= new OverlayColorMask ("", new Color(0x00FF0000, true));
-	
 	// ---------------------------------------------
-	
-	public OverlayThreshold()
-	{
-		super("ThresholdOverlay");	
+
+	public OverlayThreshold() {
+		super("ThresholdOverlay");
 	}
-	
+
 	public OverlayThreshold(SequenceVirtual seq) {
 		super("ThresholdOverlay");
 		setSequence(seq);
 	}
-	
-	public void setSequence (SequenceVirtual seq)
-	{
+
+	public void setSequence(SequenceVirtual seq) {
 		if (seq == null)
 			return;
 		if (imgOp == null)
-			imgOp = new ImageOperations (seq);
+			imgOp = new ImageOperations(seq);
 		imgOp.setSequence(seq);
 	}
-	
-	public void setTransform (EnumImageOp transf) {
-		imgOp.setTransform( transf);
+
+	public void setTransform(EnumImageOp transf) {
+		imgOp.setTransform(transf);
 	}
-	
-	public void setThresholdSingle (int threshold)
-	{
-		imgOp.setThresholdToSingleValue(threshold);
+
+	public void setThresholdSingle(int threshold, boolean thresholdUp) {
+		imgOp.setThresholdToSingleValue(threshold, thresholdUp);
 	}
-	
-	public void setThresholdColor (ArrayList <Color> colorarray, EnumColorDistanceType distancetype, int threshold)
-	{
+
+	public void setThresholdColor(ArrayList<Color> colorarray, EnumColorDistanceType distancetype, int threshold) {
 		imgOp.setThresholdToColorArray(colorarray, distancetype, threshold);
 	}
-	
+
 	@Override
-	public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas)
-	{
-		// check if we are dealing with a 2D canvas and if we have a valid Graphics object
-		if ((canvas instanceof IcyCanvas2D) && (g != null))
-		{
-			
+	public void paint(Graphics2D g, Sequence sequence, IcyCanvas canvas) {
+		// check if we are dealing with a 2D canvas and if we have a valid Graphics
+		// object
+		if ((canvas instanceof IcyCanvas2D) && (g != null)) {
+
 			IcyBufferedImage thresholdedImage = imgOp.run(canvas.getPositionT());
 			if (thresholdedImage != null) {
 				thresholdedImage.setColorMap(0, map);
@@ -83,4 +76,3 @@ public class OverlayThreshold extends Overlay
 	}
 
 }
-

@@ -26,6 +26,7 @@ public class DetectionParameters {
 	public EnumAreaDetection areaDetectionMode = EnumAreaDetection.COLORARRAY;
 	public EnumImageOp simpletransformop = EnumImageOp.R2MINUS_GB;
 	public int simplethreshold = 20;
+	public boolean thresholdUp = true;
 
 	public EnumImageOp colortransformop = EnumImageOp.NONE;
 	public EnumColorDistanceType colordistanceType = EnumColorDistanceType.L2;
@@ -42,6 +43,7 @@ public class DetectionParameters {
 	String ID_THRESHOLDMOVEMENT = "thresholdmovement";
 	String ID_COLORDISTANCETYPE = "colordistanceType";
 	String ID_COLORTHRESHOLD = "colorthreshold";
+	String ID_THRESHOLDUP = "thresholdUp";
 	String ID_SIMPLETHRESHOLD = "simplethreshold";
 	String ID_NBCOLORS = "ncolors";
 	String ID_COLOR = "color";
@@ -102,6 +104,9 @@ public class DetectionParameters {
 		String codestring = XMLUtil.getAttributeValue(xmlVal, "descriptor", "none");
 		simpletransformop = EnumImageOp.findByText(codestring);
 
+		xmlVal = XMLUtil.getElement(xmlElement, ID_THRESHOLDUP);
+		thresholdUp = XMLUtil.getElementBooleanValue(xmlVal, "value", true);
+
 		xmlVal = XMLUtil.getElement(xmlElement, ID_SIMPLETHRESHOLD);
 		simplethreshold = XMLUtil.getAttributeIntValue(xmlVal, "value", 35);
 
@@ -150,6 +155,9 @@ public class DetectionParameters {
 
 		xmlVal = XMLUtil.addElement(xmlElement, ID_SIMPLETRANSFORMOP);
 		XMLUtil.setAttributeValue(xmlVal, "descriptor", simpletransformop.toString());
+
+		xmlVal = XMLUtil.addElement(xmlElement, ID_THRESHOLDUP);
+		XMLUtil.setAttributeBooleanValue(xmlVal, "value", thresholdUp);
 
 		xmlVal = XMLUtil.addElement(xmlElement, ID_SIMPLETHRESHOLD);
 		XMLUtil.setAttributeIntValue(xmlVal, "value", simplethreshold);

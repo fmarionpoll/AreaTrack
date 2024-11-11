@@ -23,12 +23,11 @@ import plugins.fmp.areatrack.dlg.Dlg3ParametersArea;
 import plugins.fmp.areatrack.dlg.Dlg4ParametersMovements;
 import plugins.fmp.areatrack.dlg.Dlg5AnalysisRun;
 import plugins.fmp.areatrack.dlg.Dlg6ResultsExport;
-import plugins.fmp.areatrack.dlg.DlgMenuBar;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
 public class Areatrack extends PluginActionable implements ViewerListener {
-	public IcyFrame mainFrame = new IcyFrame("AreaTrack 8-Nov-2024", true, true, true, true);
+	public IcyFrame mainFrame = new IcyFrame("AreaTrack 9-Nov-2024", true, true, true, true);
 	public GraphsWindow displayCharts = null;
 
 	Dlg1Source dlg1Source = new Dlg1Source();
@@ -37,9 +36,7 @@ public class Areatrack extends PluginActionable implements ViewerListener {
 	Dlg4ParametersMovements dlg4ParametersMovements = new Dlg4ParametersMovements();
 	public Dlg5AnalysisRun dlg5AnalysisRun = new Dlg5AnalysisRun();
 	public Dlg6ResultsExport dlg6ResultsExport = new Dlg6ResultsExport();
-
 	public DetectionParameters detectionParameters = new DetectionParameters();
-
 	public SequencePlus vSequence = null;
 
 	// --------------------------------------------------------------------------
@@ -48,10 +45,7 @@ public class Areatrack extends PluginActionable implements ViewerListener {
 	public void run() {
 
 		JPanel mainPanel = GuiUtil.generatePanelWithoutBorder();
-		mainFrame.setLayout(new BorderLayout());
-		mainFrame.add(mainPanel, BorderLayout.CENTER);
 
-		DlgMenuBar.panelSetMenuBar(mainFrame, mainPanel);
 		dlg1Source.init(this, mainFrame, mainPanel, "1 - Images stack");
 		dlg2Grids.init(this, mainFrame, mainPanel, "2 - Cells grid define/load");
 		dlg3ParametersArea.init(this, mainFrame, mainPanel, "3 - Area measure parameters");
@@ -59,11 +53,13 @@ public class Areatrack extends PluginActionable implements ViewerListener {
 		dlg5AnalysisRun.init(this, mainFrame, mainPanel, "5 - Run analysis");
 		dlg6ResultsExport.init(this, mainFrame, mainPanel, "6 - Display/export results");
 
+		mainFrame.setLayout(new BorderLayout());
+		mainFrame.add(mainPanel, BorderLayout.WEST);
+
 		mainFrame.pack();
 		mainFrame.center();
 		mainFrame.setVisible(true);
 		mainFrame.addToDesktopPane();
-		mainFrame.requestFocus();
 	}
 
 	@Override

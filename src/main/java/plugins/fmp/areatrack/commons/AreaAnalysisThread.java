@@ -61,7 +61,7 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer> {
 	// --------------------------------------------------------------------------------------
 
 	public void initAreaDetectionFromFunction(SequenceVirtual sequenceVirtual, ArrayList<ROI2D> roiList,
-			EnumImageOp transformOpForOperation1, int thresholdForSurface) {
+			EnumImageOp transformOpForOperation1, int thresholdForSurface, boolean thresholdUp) {
 
 		vSequence = sequenceVirtual;
 		this.roiList = roiList;
@@ -71,7 +71,7 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer> {
 		imgOp1 = new ImageOperations(sequenceVirtual);
 		imgOp1.setTransform(transformOpForOperation1);
 
-		imgOp1.setThresholdToSingleValue(thresholdForSurface);
+		imgOp1.setThresholdToSingleValue(thresholdForSurface, thresholdUp);
 		measureROIsEvolution = true;
 	}
 
@@ -283,7 +283,7 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer> {
 
 		imgOp2 = new ImageOperations(sequenceVirtual);
 		imgOp2.setTransform(EnumImageOp.REF_PREVIOUS);
-		imgOp2.setThresholdToSingleValue(thresholdForHeatMap);
+		imgOp2.setThresholdToSingleValue(thresholdForHeatMap, true);
 
 		IcyBufferedImage image = vSequence.seq.getImage(vSequence.currentFrame, 0);
 		resultOFFImage = new IcyBufferedImage(image.getSizeX(), image.getSizeY(), 1, DataType.DOUBLE);
