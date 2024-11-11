@@ -38,6 +38,7 @@ public class ImageThresholdTools {
 	public IcyBufferedImage getBinaryInt_FromThreshold(IcyBufferedImage sourceImage) {
 		if (sourceImage == null)
 			return null;
+
 		IcyBufferedImage binaryMap = new IcyBufferedImage(sourceImage.getSizeX(), sourceImage.getSizeY(), 1,
 				DataType.UBYTE);
 		byte[] binaryMapDataBuffer = binaryMap.getDataXYAsByte(0);

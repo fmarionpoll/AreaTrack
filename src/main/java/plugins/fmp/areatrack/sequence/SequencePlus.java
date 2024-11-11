@@ -53,7 +53,6 @@ public class SequencePlus extends SequenceVirtual {
 	}
 
 	public void setThresholdOverlayParametersColors(DetectionParameters detectionParameters) {
-
 		thresholdOverlay.setTransform(detectionParameters.colortransformop);
 		thresholdOverlay.setThresholdColor(detectionParameters.colorarray, detectionParameters.colordistanceType,
 				detectionParameters.colorthreshold);

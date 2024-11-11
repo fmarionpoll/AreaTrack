@@ -90,7 +90,6 @@ public class Dlg3TabFilter extends JPanel implements ChangeListener {
 	}
 
 	public void transferParametersToDialog(DetectionParameters detectionParameters) {
-
 		transformsComboBox.setSelectedItem(detectionParameters.simpletransformop);
 		directionComboBox.setSelectedItem(detectionParameters.thresholdUp ? 0 : 1);
 		thresholdSpinner.setValue(detectionParameters.simplethreshold);

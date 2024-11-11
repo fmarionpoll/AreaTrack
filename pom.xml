@@ -85,10 +85,6 @@
         	<groupId>org.bioimageanalysis.icy</groupId>
         	<artifactId>jfreechart</artifactId>
         </dependency>
-        <dependency>
-        	<groupId>org.bioimageanalysis.icy</groupId>
-        	<artifactId>video-importer</artifactId>
-        	</dependency>
     </dependencies>
 
     <!-- Icy Maven repository (to find parent POM) -->

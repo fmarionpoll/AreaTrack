@@ -89,6 +89,8 @@ public class ImageOperationsStruct {
 		} else {
 			if (op.simplethreshold != this.simplethreshold)
 				return false;
+			if (op.thresholdUp != this.thresholdUp)
+				return false;
 		}
 		return true;
 	}

@@ -9,11 +9,9 @@ import icy.gui.viewer.Viewer;
 import icy.main.Icy;
 import icy.sequence.Sequence;
 import plugins.fmp.areatrack.tools.StringSorter;
-import plugins.stef.importer.xuggler.VideoImporter;
 
 public class SequencePlusOpen {
 	public static EnumStatus statusSequence = EnumStatus.REGULAR;
-	protected static VideoImporter importer = null;
 	private static final String[] acceptedTypes = { ".jpg", ".jpeg", ".bmp", "tiff" };
 
 	public static Viewer initSequenceViewer(Sequence seq) {
