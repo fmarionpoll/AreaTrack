@@ -28,7 +28,6 @@ public class ExportToXLS {
 	private ArrayList<MeasureAndName> resultsHeatMap = null;
 
 	private void exportToXLSWorksheet(WritableWorkbook xlsWorkBook, String worksheetname) throws InterruptedException {
-
 		int it = 0;
 		int irow = 0;
 		int nrois = vSequence.data_filtered.length;
@@ -126,7 +125,6 @@ public class ExportToXLS {
 	}
 
 	public void exportToXLS(Areatrack areatrack, String filename) throws InterruptedException {
-
 		this.areatrack = areatrack;
 		vSequence = areatrack.vSequence;
 		startFrame = vSequence.analysisStart;
@@ -139,17 +137,17 @@ public class ExportToXLS {
 		threshold2String = String.valueOf(areatrack.detectionParameters.thresholdmovement);
 		detectMovement = areatrack.detectionParameters.detectMovement;
 
-		System.out.println("XLS output");
+		System.out.println("XLSX output");
 		try {
 			WritableWorkbook xlsWorkBook = XLSUtil.createWorkbook(filename);
 			FilterTimeSeries.filterMeasures(vSequence, 0, span);
 			exportToXLSWorksheet(xlsWorkBook, "raw");
-			if (span / 2 < (endFrame - startFrame)) {
-				FilterTimeSeries.filterMeasures(vSequence, 1, span);
-				exportToXLSWorksheet(xlsWorkBook, "avg");
-				FilterTimeSeries.filterMeasures(vSequence, 2, span);
-				exportToXLSWorksheet(xlsWorkBook, "median");
-			}
+//			if (span / 2 < (endFrame - startFrame)) {
+//				FilterTimeSeries.filterMeasures(vSequence, 1, span);
+//				exportToXLSWorksheet(xlsWorkBook, "avg");
+//				FilterTimeSeries.filterMeasures(vSequence, 2, span);
+//				exportToXLSWorksheet(xlsWorkBook, "median");
+//			}
 
 			// --------------
 			XLSUtil.saveAndClose(xlsWorkBook);
