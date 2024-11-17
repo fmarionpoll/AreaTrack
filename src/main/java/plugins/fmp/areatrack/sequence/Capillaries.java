@@ -198,19 +198,4 @@ public class Capillaries {
 		return false;
 	}
 
-	public Capillaries copy(Capillaries cap) {
-		analysisStart = cap.analysisStart;
-		analysisEnd = cap.analysisEnd;
-		analysisStep = cap.analysisStep;
-		return cap;
-	}
-
-	public boolean isChanged(Capillaries cap) {
-		boolean flag = false;
-		flag = (cap.analysisStart != analysisStart) || flag;
-		flag = (cap.analysisEnd != analysisEnd) || flag;
-		flag = (cap.analysisStep != analysisStep) || flag;
-		return flag;
-	}
-
 }

@@ -126,7 +126,7 @@ public class Dlg1_Source extends JPanel implements SequenceListener {
 
 	@Override
 	public void sequenceChanged(SequenceEvent sequenceEvent) {
-		updateGuiEndFrame();
+		// updateGuiEndFrame();
 	}
 
 	@Override

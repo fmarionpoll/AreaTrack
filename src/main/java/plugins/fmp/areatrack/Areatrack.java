@@ -27,7 +27,7 @@ import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
 public class Areatrack extends PluginActionable implements ViewerListener {
-	public IcyFrame mainFrame = new IcyFrame("AreaTrack 9-Nov-2024", true, true, true, true);
+	public IcyFrame mainFrame = new IcyFrame("AreaTrack 17-Nov-2024", true, true, true, true);
 	public GraphsWindow displayCharts = null;
 
 	Dlg1_Source dlg1_Source = new Dlg1_Source();

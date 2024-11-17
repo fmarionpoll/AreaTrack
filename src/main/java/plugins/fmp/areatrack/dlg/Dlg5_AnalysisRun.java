@@ -35,7 +35,7 @@ public class Dlg5_AnalysisRun extends JPanel implements PropertyChangeListener {
 	private JButton stopComputationButton = new JButton("Stop");
 	JSpinner analysisStartSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
 	JSpinner analysisEndSpinner = new JSpinner(new SpinnerNumberModel(9999999, 0, 9999999, 1));
-	private JSpinner analyzeStepSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 10000, 1));
+	private JSpinner analysisStepSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 10000, 1));
 
 	public AreaAnalysisThread analysisThread = null;
 	Areatrack areatrack = null;
@@ -73,7 +73,7 @@ public class Dlg5_AnalysisRun extends JPanel implements PropertyChangeListener {
 		int bHeight = 21;
 		analysisStartSpinner.setPreferredSize(new Dimension(bWidth, bHeight));
 		analysisEndSpinner.setPreferredSize(new Dimension(100, bHeight));
-		analyzeStepSpinner.setPreferredSize(new Dimension(bWidth, bHeight));
+		analysisStepSpinner.setPreferredSize(new Dimension(bWidth, bHeight));
 
 		JPanel panel0 = new JPanel(layoutLeft);
 		((FlowLayout) panel0.getLayout()).setVgap(0);
@@ -82,7 +82,7 @@ public class Dlg5_AnalysisRun extends JPanel implements PropertyChangeListener {
 		panel0.add(endLabel);
 		panel0.add(analysisEndSpinner);
 		panel0.add(stepLabel);
-		panel0.add(analyzeStepSpinner);
+		panel0.add(analysisStepSpinner);
 		capPanel.add(panel0);
 
 		declareActionListeners();
@@ -117,7 +117,7 @@ public class Dlg5_AnalysisRun extends JPanel implements PropertyChangeListener {
 			return;
 		analysisEndSpinner.setValue(vSequence.analysisEnd);
 		analysisStartSpinner.setValue(vSequence.analysisStart);
-		analyzeStepSpinner.setValue(vSequence.analysisStep);
+		analysisStepSpinner.setValue(vSequence.analysisStep);
 	}
 
 	private void startAnalysisThread() {
@@ -128,7 +128,7 @@ public class Dlg5_AnalysisRun extends JPanel implements PropertyChangeListener {
 
 		areatrack.vSequence.analysisStart = (int) analysisStartSpinner.getValue();
 		areatrack.vSequence.analysisEnd = (int) analysisEndSpinner.getValue();
-		areatrack.vSequence.analysisStep = (int) analyzeStepSpinner.getValue();
+		areatrack.vSequence.analysisStep = (int) analysisStepSpinner.getValue();
 
 		if (areatrack.detectionParameters.detectArea) {
 			if (areatrack.detectionParameters.areaDetectionMode == EnumAreaDetection.SINGLE) {

@@ -19,7 +19,7 @@ public class FilterTimeSeries {
 	private static void filterMeasures_run(SequencePlus vSequence, int filteroption, int span) {
 		int nrois = vSequence.seq.getROI2Ds().size();
 		if (vSequence.data_filtered == null || vSequence.data_filtered[0].length != vSequence.data_raw.length) {
-			int nbins = (vSequence.analysisEnd - vSequence.analysisStart + 1) / vSequence.analysisStep + 1;
+			int nbins = 1 + (vSequence.analysisEnd - vSequence.analysisStart + 1) / vSequence.analysisStep;
 			vSequence.data_filtered = new double[nrois][nbins];
 		}
 
@@ -41,14 +41,14 @@ public class FilterTimeSeries {
 
 	private static void filterMeasures_RunningAverage(SequencePlus vSequence, int span) {
 		int nrois = vSequence.data_filtered.length;
-		int npoints = vSequence.analysisEnd - vSequence.analysisStart;
+		int npoints = (vSequence.analysisEnd - vSequence.analysisStart + 1) / vSequence.analysisStep;
 
 		for (int iroi = 0; iroi < nrois; iroi++) {
 			int nsum = span / 2;
 			int bin = 0;
 			double sum = vSequence.data_raw[iroi][0] * (nsum - 1);
 
-			for (int t = 0; t < npoints; t++) {
+			for (int t = 0; t < npoints; t += vSequence.analysisStep) {
 				sum += vSequence.data_raw[iroi][t];
 				nsum++;
 				if (nsum >= span) {
@@ -74,7 +74,7 @@ public class FilterTimeSeries {
 			int[] tempArraySorted = new int[sizeTempArray];
 			int[] tempArrayCircular = new int[sizeTempArray];
 
-			for (int t = 0; t < sizeTempArray; t++) {
+			for (int t = 0; t < sizeTempArray; t += vSequence.analysisStep) {
 				int bin = t / vSequence.analysisStep;
 				int value = vSequence.data_raw[iroi][bin];
 				tempArrayCircular[bin] = value;
@@ -101,8 +101,8 @@ public class FilterTimeSeries {
 
 	private static void filterMeasures_copy(SequencePlus vSequence, int span) {
 		int nrois = vSequence.data_filtered.length;
-		for (int t = 0; t < vSequence.analysisEnd - vSequence.analysisStart + 1; t += vSequence.analysisStep) {
-			int bin = t / vSequence.analysisStep;
+		int bin = 0;
+		for (int t = vSequence.analysisStart; t <= vSequence.analysisEnd; bin++, t += vSequence.analysisStep) {
 			for (int iroi = 0; iroi < nrois; iroi++)
 				vSequence.data_filtered[iroi][bin] = vSequence.data_raw[iroi][t];
 		}

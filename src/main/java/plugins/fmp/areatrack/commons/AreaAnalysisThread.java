@@ -18,6 +18,7 @@ import icy.roi.BooleanMask2D;
 import icy.roi.ROI2D;
 import icy.sequence.Sequence;
 import icy.sequence.SequenceDataIterator;
+import icy.system.SystemUtil;
 import icy.system.profile.Chronometer;
 import icy.system.thread.Processor;
 import icy.type.DataType;
@@ -38,7 +39,7 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer> {
 
 	private int startFrame = 0;
 	private int endFrame = 1;
-	private int analyzeStep = 1;
+	private int analysisStep = 1;
 	private boolean measureROIsEvolution = false;
 	private boolean measureROIsMove = false;
 //	private int thresholdForHeatMap = 230;
@@ -106,12 +107,12 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer> {
 
 	protected void analyzeSequence() {
 		// global parameters
-		analyzeStep = vSequence.analysisStep;
+		analysisStep = vSequence.analysisStep;
 		roiList = vSequence.seq.getROI2Ds();
 		Collections.sort(roiList, new FmpTools.ROI2DNameComparator());
 		if (vSequence.nTotalFrames < endFrame + 1)
 			endFrame = (int) vSequence.nTotalFrames - 1;
-		int nbframes = (int) (endFrame - startFrame + 1);
+		int nbframes = (int) (endFrame + 1); // (int) (endFrame - startFrame + 1);
 		int nrois = roiList.size();
 		vSequence.data_raw = new int[nrois][nbframes];
 		ArrayList<BooleanMask2D> areaMasks = getMasksFromRois();
@@ -125,46 +126,43 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer> {
 			viewer = resultOFFViewer;
 		vSequence.seq.beginUpdate();
 
-//		final Processor processor = new Processor(SystemUtil.getNumberOfCPUs());
-//	    processor.setThreadName("buildkymo2");
-//	    processor.setPriority(Processor.NORM_PRIORITY);
-//        ArrayList<Future<?>> futuresArray = new ArrayList<Future<?>>(nbframes);
-//		futuresArray.clear();
-//		ProgressFrame progressBar = new ProgressFrame("Processing with subthreads started");
+		final Processor processor = new Processor(SystemUtil.getNumberOfCPUs());
+		processor.setThreadName("build_raw_data_array");
+		processor.setPriority(Processor.NORM_PRIORITY);
+		ArrayList<Future<?>> futuresArray = new ArrayList<Future<?>>(nbframes / analysisStep);
+		futuresArray.clear();
 
 		// loop over all images
-		for (int iiframe = startFrame; iiframe <= endFrame; iiframe += analyzeStep) {
-			final int iframe = iiframe;
-
-//			futuresArray.add(processor.submit(new Runnable () {
-//				@Override
-//				public void run() {						
-//					IcyBufferedImage sourceImage = vSequence.imageIORead(vSequence.getFileName(iframe));
-
-			viewer.setPositionT(iframe);
-			vSequence.currentFrame = iframe;
-			updateDisplay(iframe, nbframes, chrono, progress);
+		for (int frame = startFrame; frame <= endFrame; frame += analysisStep) {
+			viewer.setPositionT(frame);
+			vSequence.currentFrame = frame;
+			updateDisplay(frame, nbframes, chrono, progress);
 
 			if (measureROIsEvolution) {
-				IcyBufferedImage binaryMap = imgOp1.run(iframe);
-				boolean[] boolMap = imgOp1.convertToBoolean(binaryMap);
-				BooleanMask2D maskAll2D = new BooleanMask2D(binaryMap.getBounds(), boolMap);
-				for (int iiroi = 0; iiroi < areaMasks.size(); iiroi++) {
-					BooleanMask2D areaMask = areaMasks.get(iiroi);
-					try {
-						BooleanMask2D intersectionMask = maskAll2D.getIntersection(areaMask);
-						int sum = intersectionMask.getNumberOfPoints();
-						int index = iframe - startFrame;
-						vSequence.data_raw[iiroi][index] = sum;
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				final int iframe = frame;
+				futuresArray.add(processor.submit(new Runnable() {
+					@Override
+					public void run() {
+//						IcyBufferedImage sourceImage = vSequence.imageIORead(vSequence.getFileName(iframe));
+						IcyBufferedImage binaryMap = imgOp1.run(iframe);
+						boolean[] boolMap = imgOp1.convertToBoolean(binaryMap);
+						BooleanMask2D maskAll2D = new BooleanMask2D(binaryMap.getBounds(), boolMap);
+						for (int iiroi = 0; iiroi < areaMasks.size(); iiroi++) {
+							BooleanMask2D areaMask = areaMasks.get(iiroi);
+							try {
+								BooleanMask2D intersectionMask = maskAll2D.getIntersection(areaMask);
+								int sum = intersectionMask.getNumberOfPoints();
+								vSequence.data_raw[iiroi][iframe] = sum;
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
 					}
-
-				}
+				}));
 			}
 
-			if (measureROIsMove && iframe < startFrame + 20) {
+			if (measureROIsMove && frame < startFrame + 20) {
 				IcyBufferedImage binaryMap = imgOp2.run_nocache();
 				int[] binaryArray = Array1DUtil.arrayToIntArray(binaryMap.getDataXY(0), binaryMap.isSignedDataType());
 				double[] resultOFFArray = resultOFFImage.getDataXYAsDouble(0);
@@ -176,9 +174,9 @@ public class AreaAnalysisThread extends SwingWorker<Integer, Integer> {
 						resultONArray[i] += 1;
 				}
 			}
-//				}}));
+
 		}
-//		waitFuturesCompletion(processor, futuresArray, progressBar);
+		waitFuturesCompletion(processor, futuresArray, progress);
 
 		progress.close();
 		vSequence.seq.endUpdate();
