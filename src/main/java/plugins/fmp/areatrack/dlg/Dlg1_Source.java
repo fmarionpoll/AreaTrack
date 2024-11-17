@@ -27,7 +27,7 @@ import plugins.fmp.areatrack.Areatrack;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.sequence.SequencePlusOpen;
 
-public class Dlg1Source extends JPanel implements SequenceListener {
+public class Dlg1_Source extends JPanel implements SequenceListener {
 	/**
 	 * 
 	 */

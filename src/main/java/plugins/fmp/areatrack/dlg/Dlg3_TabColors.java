@@ -27,7 +27,7 @@ import plugins.fmp.areatrack.tools.ComboBoxColorRenderer;
 import plugins.fmp.areatrack.tools.EnumColorDistanceType;
 import plugins.fmp.areatrack.tools.EnumImageOp;
 
-public class Dlg3TabColors extends JPanel implements ChangeListener {
+public class Dlg3_TabColors extends JPanel implements ChangeListener {
 
 	/**
 	 * 

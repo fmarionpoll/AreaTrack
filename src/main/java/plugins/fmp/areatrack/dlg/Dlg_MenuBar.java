@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import icy.gui.frame.IcyFrame;
 
-public class DlgMenuBar {
+public class Dlg_MenuBar {
 	
 	public static void panelSetMenuBar (IcyFrame mainFrame, JPanel mainPanel) {
 		JMenuBar menuBar = new JMenuBar();

@@ -9,7 +9,7 @@ import javax.swing.JTabbedPane;
 
 import icy.gui.util.GuiUtil;
 
-public class Dlg3TabOverlay extends JPanel {
+public class Dlg3_TabOverlay extends JPanel {
 
 	/**
 	 * 

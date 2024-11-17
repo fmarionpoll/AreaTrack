@@ -20,7 +20,6 @@ import icy.gui.frame.IcyFrame;
 import icy.gui.util.FontUtil;
 import plugins.fmp.areatrack.Areatrack;
 import plugins.fmp.areatrack.commons.ExportToXLS;
-import plugins.fmp.areatrack.commons.GraphsOverlay;
 import plugins.fmp.areatrack.commons.GraphsWindow;
 import plugins.fmp.areatrack.tools.FmpTools;
 
@@ -33,7 +32,7 @@ public class Dlg6ResultsExport extends JPanel {
 	JComboBox<String> filterComboBox = new JComboBox<String>(new String[] { "raw data", "average", "median" });
 	public JTextField spanTextField = new JTextField("10");
 	private JButton updateChartsButton = new JButton("Chart window");
-	private JButton setGraphsOverlayButton = new JButton("Curves");
+//	private JButton setGraphsOverlayButton = new JButton("Curves");
 	private JButton exportToXLSButton = new JButton("Save XLS file..");
 	Areatrack areatrack = null;
 
@@ -59,8 +58,8 @@ public class Dlg6ResultsExport extends JPanel {
 		FlowLayout layoutLeft = new FlowLayout(FlowLayout.LEFT);
 		JPanel panel1 = new JPanel(layoutLeft);
 		panel1.add(updateChartsButton);
-		panel1.add(setGraphsOverlayButton);
-		setGraphsOverlayButton.setEnabled(false);
+//		panel1.add(setGraphsOverlayButton);
+//		setGraphsOverlayButton.setEnabled(false);
 		panel1.add(outputLabel);
 		panel1.add(filterComboBox);
 		panel1.add(spanLabel);
@@ -88,13 +87,6 @@ public class Dlg6ResultsExport extends JPanel {
 			}
 		});
 
-		setGraphsOverlayButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				setGraphsOverlay();
-			}
-		});
-
 		exportToXLSButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
@@ -106,6 +98,14 @@ public class Dlg6ResultsExport extends JPanel {
 				}
 			}
 		});
+
+//		setGraphsOverlayButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(final ActionEvent e) {
+//				setGraphsOverlay();
+//			}
+//		});
+
 	}
 
 	private void updateCharts() {
@@ -113,13 +113,6 @@ public class Dlg6ResultsExport extends JPanel {
 		int span = Integer.parseInt(spanTextField.getText());
 		int filteroption = filterComboBox.getSelectedIndex();
 		areatrack.displayCharts.updateCharts(areatrack.vSequence, filteroption, span);
-	}
-
-	private void setGraphsOverlay() {
-		GraphsOverlay displayGraphs = new GraphsOverlay();
-		int span = Integer.parseInt(spanTextField.getText());
-		int filteroption = filterComboBox.getSelectedIndex();
-		displayGraphs.updateCharts(areatrack.vSequence, filteroption, span);
 	}
 
 	private void exportToXLS() throws InterruptedException {
@@ -130,5 +123,12 @@ public class Dlg6ResultsExport extends JPanel {
 			exportToXLS.exportToXLS(areatrack, filename);
 		}
 	}
+
+//	private void setGraphsOverlay() {
+//		GraphsOverlay displayGraphs = new GraphsOverlay();
+//		int span = Integer.parseInt(spanTextField.getText());
+//		int filteroption = filterComboBox.getSelectedIndex();
+//		displayGraphs.updateCharts(areatrack.vSequence, filteroption, span);
+//	}
 
 }

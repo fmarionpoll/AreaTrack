@@ -29,15 +29,15 @@ import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
 
 
-public class Dlg3ParametersArea extends JPanel implements ChangeListener {
+public class Dlg3_ParametersArea extends JPanel implements ChangeListener {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -359095233032653215L;
-	Dlg3TabColors dlgTabThresholdColors = new Dlg3TabColors();
-	Dlg3TabFilter dlgTabThresholdFunction = new Dlg3TabFilter();
-	Dlg3TabOverlay dlgTabOverlay = new Dlg3TabOverlay();
+	Dlg3_TabColors dlgTabThresholdColors = new Dlg3_TabColors();
+	Dlg3_TabFilter dlgTabThresholdFunction = new Dlg3_TabFilter();
+	Dlg3_TabOverlay dlgTabOverlay = new Dlg3_TabOverlay();
 	
 	JCheckBox detectAreaCheckBox = new JCheckBox("Detect ");
 	JRadioButton rbFilterbyColor = new JRadioButton("color array");

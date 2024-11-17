@@ -26,7 +26,7 @@ import plugins.fmp.areatrack.commons.AreaAnalysisThread;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
-public class Dlg5AnalysisRun extends JPanel implements PropertyChangeListener {
+public class Dlg5_AnalysisRun extends JPanel implements PropertyChangeListener {
 	/**
 	 * 
 	 */

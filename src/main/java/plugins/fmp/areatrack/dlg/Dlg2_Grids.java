@@ -20,7 +20,7 @@ import plugins.fmp.areatrack.Areatrack;
 import plugins.fmp.areatrack.commons.LoadRois;
 import plugins.fmp.areatrack.splitroitoarray.SplitRoiToArray;
 
-public class Dlg2Grids extends JPanel {
+public class Dlg2_Grids extends JPanel {
 
 	/**
 	 * 

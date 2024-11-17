@@ -19,7 +19,7 @@ import plugins.fmp.areatrack.Areatrack;
 import plugins.fmp.areatrack.commons.DetectionParameters;
 
 
-public class Dlg4ParametersMovements extends JPanel implements ChangeListener {
+public class Dlg4_ParametersMovements extends JPanel implements ChangeListener {
 	/**
 	 * 
 	 */

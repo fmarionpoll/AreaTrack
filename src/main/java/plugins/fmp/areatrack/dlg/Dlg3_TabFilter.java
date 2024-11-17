@@ -19,7 +19,7 @@ import plugins.fmp.areatrack.Areatrack;
 import plugins.fmp.areatrack.commons.DetectionParameters;
 import plugins.fmp.areatrack.tools.EnumImageOp;
 
-public class Dlg3TabFilter extends JPanel implements ChangeListener {
+public class Dlg3_TabFilter extends JPanel implements ChangeListener {
 
 	/**
 	 * 
