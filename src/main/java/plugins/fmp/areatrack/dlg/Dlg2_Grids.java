@@ -108,6 +108,6 @@ public class Dlg2_Grids extends JPanel {
 	}
 
 	private void updateStartAndEndFrameFromvSequence() {
-		areatrack.dlg5AnalysisRun.updateStartAndEndFrameFromvSequence(areatrack.vSequence);
+		areatrack.dlg5_AnalysisRun.updateStartAndEndFrameFromvSequence(areatrack.vSequence);
 	}
 }

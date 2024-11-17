@@ -30,12 +30,12 @@ public class Areatrack extends PluginActionable implements ViewerListener {
 	public IcyFrame mainFrame = new IcyFrame("AreaTrack 9-Nov-2024", true, true, true, true);
 	public GraphsWindow displayCharts = null;
 
-	Dlg1_Source dlg1Source = new Dlg1_Source();
-	Dlg2_Grids dlg2Grids = new Dlg2_Grids();
-	Dlg3_ParametersArea dlg3ParametersArea = new Dlg3_ParametersArea();
-	Dlg4_ParametersMovements dlg4ParametersMovements = new Dlg4_ParametersMovements();
-	public Dlg5_AnalysisRun dlg5AnalysisRun = new Dlg5_AnalysisRun();
-	public Dlg6_ResultsExport dlg6ResultsExport = new Dlg6_ResultsExport();
+	Dlg1_Source dlg1_Source = new Dlg1_Source();
+	Dlg2_Grids dlg2_Grids = new Dlg2_Grids();
+	Dlg3_ParametersArea dlg3_ParametersArea = new Dlg3_ParametersArea();
+	Dlg4_ParametersMovements dlg4_ParametersMovements = new Dlg4_ParametersMovements();
+	public Dlg5_AnalysisRun dlg5_AnalysisRun = new Dlg5_AnalysisRun();
+	public Dlg6_ResultsExport dlg6_ResultsExport = new Dlg6_ResultsExport();
 	public DetectionParameters detectionParameters = new DetectionParameters();
 	public SequencePlus vSequence = null;
 
@@ -46,12 +46,12 @@ public class Areatrack extends PluginActionable implements ViewerListener {
 
 		JPanel mainPanel = GuiUtil.generatePanelWithoutBorder();
 
-		dlg1Source.init(this, mainFrame, mainPanel, "1 - Images stack");
-		dlg2Grids.init(this, mainFrame, mainPanel, "2 - Cells grid define/load");
-		dlg3ParametersArea.init(this, mainFrame, mainPanel, "3 - Area measure parameters");
-		dlg4ParametersMovements.init(this, mainFrame, mainPanel, "4 - Movements detection parameters");
-		dlg5AnalysisRun.init(this, mainFrame, mainPanel, "5 - Run analysis");
-		dlg6ResultsExport.init(this, mainFrame, mainPanel, "6 - Display/export results");
+		dlg1_Source.init(this, mainFrame, mainPanel, "1 - Images stack");
+		dlg2_Grids.init(this, mainFrame, mainPanel, "2 - Cells grid define/load");
+		dlg3_ParametersArea.init(this, mainFrame, mainPanel, "3 - Area measure parameters");
+		dlg4_ParametersMovements.init(this, mainFrame, mainPanel, "4 - Movements detection parameters");
+		dlg5_AnalysisRun.init(this, mainFrame, mainPanel, "5 - Run analysis");
+		dlg6_ResultsExport.init(this, mainFrame, mainPanel, "6 - Display/export results");
 
 		mainFrame.setLayout(new BorderLayout());
 		mainFrame.add(mainPanel, BorderLayout.WEST);

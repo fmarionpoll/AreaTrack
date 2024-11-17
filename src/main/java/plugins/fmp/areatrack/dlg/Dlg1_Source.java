@@ -121,7 +121,7 @@ public class Dlg1_Source extends JPanel implements SequenceListener {
 		if (areatrack.vSequence == null)
 			return;
 		areatrack.vSequence.analysisEnd = areatrack.vSequence.nTotalFrames - 1;
-		areatrack.dlg5AnalysisRun.updateStartAndEndFrameFromvSequence(areatrack.vSequence);
+		areatrack.dlg5_AnalysisRun.updateStartAndEndFrameFromvSequence(areatrack.vSequence);
 	}
 
 	@Override
