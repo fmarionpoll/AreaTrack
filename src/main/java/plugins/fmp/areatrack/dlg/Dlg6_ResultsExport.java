@@ -23,7 +23,7 @@ import plugins.fmp.areatrack.commons.ExportToXLS;
 import plugins.fmp.areatrack.commons.GraphsWindow;
 import plugins.fmp.areatrack.tools.FmpTools;
 
-public class Dlg6ResultsExport extends JPanel {
+public class Dlg6_ResultsExport extends JPanel {
 
 	/**
 	 * 

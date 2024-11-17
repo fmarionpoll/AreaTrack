@@ -44,6 +44,7 @@ public class ExportToXLS {
 		WritableSheet filteredDataPage = XLSUtil.createNewPage(xlsWorkBook, worksheetname);
 		XLSUtil.setCellString(filteredDataPage, 0, irow, "name:");
 		XLSUtil.setCellString(filteredDataPage, 1, irow, vSequence.seq.getName());
+
 		// write type of data exported
 		irow++;
 		String cs = worksheetname;
@@ -51,6 +52,7 @@ public class ExportToXLS {
 			cs = cs + " - over " + span + " points - ";
 		}
 		XLSUtil.setCellString(filteredDataPage, 0, irow, worksheetname);
+
 		// write filter and threshold applied
 		irow++;
 		cs = "Detect surface: colors array with distance=" + distanceString;
@@ -58,13 +60,13 @@ public class ExportToXLS {
 		irow++;
 		cs = "Detect movement using image (n) - (n-1) threshold=" + threshold2String;
 		XLSUtil.setCellString(filteredDataPage, 0, irow, cs);
+
 		// write table
 		irow = 4;
 		// table header
 		icol0 = 0;
 		if (blistofFiles)
 			icol0 = 1;
-
 		XLSUtil.setCellString(filteredDataPage, icol0, irow, "index");
 		icol0++;
 		int icol1 = icol0;
@@ -137,17 +139,18 @@ public class ExportToXLS {
 		threshold2String = String.valueOf(areatrack.detectionParameters.thresholdmovement);
 		detectMovement = areatrack.detectionParameters.detectMovement;
 
-		System.out.println("XLSX output");
+		System.out.println("XLS output");
 		try {
 			WritableWorkbook xlsWorkBook = XLSUtil.createWorkbook(filename);
 			FilterTimeSeries.filterMeasures(vSequence, 0, span);
 			exportToXLSWorksheet(xlsWorkBook, "raw");
-//			if (span / 2 < (endFrame - startFrame)) {
-//				FilterTimeSeries.filterMeasures(vSequence, 1, span);
-//				exportToXLSWorksheet(xlsWorkBook, "avg");
-//				FilterTimeSeries.filterMeasures(vSequence, 2, span);
-//				exportToXLSWorksheet(xlsWorkBook, "median");
-//			}
+
+			if (span / 2 < (endFrame - startFrame)) {
+				FilterTimeSeries.filterMeasures(vSequence, 1, span);
+				exportToXLSWorksheet(xlsWorkBook, "avg");
+				FilterTimeSeries.filterMeasures(vSequence, 2, span);
+				exportToXLSWorksheet(xlsWorkBook, "median");
+			}
 
 			// --------------
 			XLSUtil.saveAndClose(xlsWorkBook);

@@ -22,7 +22,7 @@ import plugins.fmp.areatrack.dlg.Dlg2_Grids;
 import plugins.fmp.areatrack.dlg.Dlg3_ParametersArea;
 import plugins.fmp.areatrack.dlg.Dlg4_ParametersMovements;
 import plugins.fmp.areatrack.dlg.Dlg5_AnalysisRun;
-import plugins.fmp.areatrack.dlg.Dlg6ResultsExport;
+import plugins.fmp.areatrack.dlg.Dlg6_ResultsExport;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 import plugins.fmp.areatrack.tools.EnumAreaDetection;
 
@@ -35,7 +35,7 @@ public class Areatrack extends PluginActionable implements ViewerListener {
 	Dlg3_ParametersArea dlg3ParametersArea = new Dlg3_ParametersArea();
 	Dlg4_ParametersMovements dlg4ParametersMovements = new Dlg4_ParametersMovements();
 	public Dlg5_AnalysisRun dlg5AnalysisRun = new Dlg5_AnalysisRun();
-	public Dlg6ResultsExport dlg6ResultsExport = new Dlg6ResultsExport();
+	public Dlg6_ResultsExport dlg6ResultsExport = new Dlg6_ResultsExport();
 	public DetectionParameters detectionParameters = new DetectionParameters();
 	public SequencePlus vSequence = null;
 
