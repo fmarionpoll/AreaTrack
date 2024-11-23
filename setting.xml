@@ -53,9 +53,9 @@
 </section>
 <section name="export"/>
 </section>
-<key name="lastUpdateCheckTime" value="1731311087215"/>
+<key name="lastUpdateCheckTime" value="1732383071081"/>
 <key name="virtualMode" value="true"/>
-<key name="loaderFolder" value="C:\Users\fred\Desktop\Inoussa\pyrale 2018\disques_foliaires_preleves_au_champ\PRELEVEMENT 12-07-18\FP-FT-MT_2"/>
+<key name="loaderFolder" value="E:\Inoussa\pyrale 2018\test de choix\T_10-4; T_10-3"/>
 </section>
 <section name="canvas">
 <section name="Canvas2D"/>
@@ -73,11 +73,11 @@
 </section>
 <section name="online"/>
 </section>
-<key name="id" value="102661442"/>
+<key name="id" value="286248744"/>
 <key name="os" value="win64"/>
 <key name="clientCpuNumber" value="16"/>
 <key name="clientTotalMemory" value="67880230912"/>
-<key name="appFolder" value="C:/Users/fred/.m2/repository/org/bioimageanalysis/icy/icy-kernel/2.5.1"/>
+<key name="appFolder" value="C:/Users/fred/.m2/repository/org/bioimageanalysis/icy/icy-kernel/2.4.2"/>
 <section name="loader">
 <section name="entry0">
 <key name="nbFile" value="0"/>
@@ -110,7 +110,7 @@
 <key name="nbFile" value="0"/>
 </section>
 </section>
-<key name="version" value="2.5.1.0"/>
+<key name="version" value="2.4.2.0"/>
 <section name="frame">
 <section name="imageLoader">
 <key name="loadtype" value="1"/>
@@ -122,14 +122,14 @@
 <section name="gui.histo">
 <key name="logView" value="true"/>
 </section>
-<key name="lastUploadDate" value="1731311085760"/>
+<key name="lastUploadDate" value="1732384165550"/>
 </section>
 <section name="plugins">
 <section name="fmp">
 <section name="areatrack">
 <section name="Areatrack">
 <section name="gui">
-<key name="lastUsedPath" value="C:\Users\fred\Desktop\Inoussa\pyrale 2018\disques_foliaires_preleves_au_champ\PRELEVEMENT 12-07-18\FP-FT-MT_2"/>
+<key name="lastUsedPath" value="E:\Inoussa\pyrale 2018\test de choix\T_10-4; T_10-3"/>
 </section>
 </section>
 </section>
@@ -144,13 +144,13 @@
 <key name="MaximizedE" value="false"/>
 </section>
 <section name="inspector">
-<key name="XC" value="1409"/>
+<key name="XC" value="1265"/>
 <key name="YC" value="0"/>
 <key name="XE" value="600"/>
 <key name="YE" value="140"/>
 <key name="XI" value="600"/>
 <key name="YI" value="140"/>
-<key name="WidthC" value="300"/>
+<key name="WidthC" value="444"/>
 <key name="HeightC" value="938"/>
 <key name="WidthE" value="300"/>
 <key name="HeightE" value="600"/>
@@ -168,7 +168,7 @@
 <key name="YE" value="100"/>
 <key name="XI" value="100"/>
 <key name="YI" value="100"/>
-<key name="WidthC" value="292"/>
+<key name="WidthC" value="436"/>
 <key name="HeightC" value="848"/>
 <key name="WidthE" value="400"/>
 <key name="HeightE" value="600"/>
@@ -186,7 +186,7 @@
 <key name="YE" value="200"/>
 <key name="XI" value="200"/>
 <key name="YI" value="200"/>
-<key name="WidthC" value="292"/>
+<key name="WidthC" value="436"/>
 <key name="HeightC" value="848"/>
 <key name="WidthE" value="400"/>
 <key name="HeightE" value="300"/>

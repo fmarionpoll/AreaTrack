@@ -18,10 +18,12 @@ public class FilterTimeSeries {
 
 	private static void filterMeasures_run(SequencePlus vSequence, int filteroption, int span) {
 		int nrois = vSequence.seq.getROI2Ds().size();
-		if (vSequence.data_filtered == null || vSequence.data_filtered[0].length != vSequence.data_raw.length) {
-			int nbins = 1 + (vSequence.analysisEnd - vSequence.analysisStart + 1) / vSequence.analysisStep;
-			vSequence.data_filtered = new double[nrois][nbins];
-		}
+		int nbins = 1 + (vSequence.analysisEnd - vSequence.analysisStart + 1) / vSequence.analysisStep;
+		vSequence.data_filtered = new double[nrois][nbins];
+//		if (vSequence.data_filtered == null || vSequence.data_filtered[0].length != vSequence.data_raw.length) {
+//			int nbins = 1 + (vSequence.analysisEnd - vSequence.analysisStart + 1) / vSequence.analysisStep;
+//			vSequence.data_filtered = new double[nrois][nbins];
+//		}
 
 		if (span / 2 > vSequence.analysisEnd - vSequence.analysisStart + 1)
 			filteroption = 0;
@@ -39,27 +41,41 @@ public class FilterTimeSeries {
 		}
 	}
 
+	private static void filterMeasures_copy(SequencePlus vSequence, int span) {
+		int nrois = vSequence.data_filtered.length;
+		for (int iroi = 0; iroi < nrois; iroi++) {
+			int bin = 0;
+			int binLast = vSequence.data_filtered[iroi].length;
+			for (int t = vSequence.analysisStart; t <= vSequence.analysisEnd; bin++, t += vSequence.analysisStep) {
+				if (bin <= binLast)
+					vSequence.data_filtered[iroi][bin] = vSequence.data_raw[iroi][t];
+			}
+		}
+	}
+
 	private static void filterMeasures_RunningAverage(SequencePlus vSequence, int span) {
 		int nrois = vSequence.data_filtered.length;
-		int npoints = (vSequence.analysisEnd - vSequence.analysisStart + 1) / vSequence.analysisStep;
 
 		for (int iroi = 0; iroi < nrois; iroi++) {
-			int nsum = span / 2;
-			int bin = 0;
-			double sum = vSequence.data_raw[iroi][0] * (nsum - 1);
 
-			for (int t = 0; t < npoints; t += vSequence.analysisStep) {
-				sum += vSequence.data_raw[iroi][t];
-				nsum++;
-				if (nsum >= span) {
-					vSequence.data_filtered[iroi][bin] = sum / nsum;
-					bin++;
-					nsum = 0;
-					sum = 0.;
-				}
+			// init circular array
+			int sizeBuffer = span * 2 + 1;
+			double sum = 0;
+			int[] buffer = new int[sizeBuffer];
+			int value = vSequence.data_raw[iroi][0];
+			for (int i = 0; i < sizeBuffer; i++) {
+				buffer[i] = value;
+				sum += value;
 			}
-			if (nsum > 0) {
-				vSequence.data_filtered[iroi][bin] = sum / nsum;
+
+			int bin = 0;
+			for (int t = vSequence.analysisStart; t <= vSequence.analysisEnd; bin++, t += vSequence.analysisStep) {
+				int head = (bin + 1) % buffer.length;
+
+				sum -= buffer[head];
+				buffer[head] = vSequence.data_raw[iroi][t];
+				sum += buffer[head];
+				vSequence.data_filtered[iroi][bin] = sum / buffer.length;
 			}
 		}
 	}
@@ -96,15 +112,6 @@ public class FilterTimeSeries {
 				if (iarraycircular >= sizeTempArray)
 					iarraycircular = 0;
 			}
-		}
-	}
-
-	private static void filterMeasures_copy(SequencePlus vSequence, int span) {
-		int nrois = vSequence.data_filtered.length;
-		int bin = 0;
-		for (int t = vSequence.analysisStart; t <= vSequence.analysisEnd; bin++, t += vSequence.analysisStep) {
-			for (int iroi = 0; iroi < nrois; iroi++)
-				vSequence.data_filtered[iroi][bin] = vSequence.data_raw[iroi][t];
 		}
 	}
 
