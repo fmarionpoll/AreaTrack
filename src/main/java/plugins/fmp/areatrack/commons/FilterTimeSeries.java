@@ -20,16 +20,12 @@ public class FilterTimeSeries {
 		int nrois = vSequence.seq.getROI2Ds().size();
 		int nbins = 1 + (vSequence.analysisEnd - vSequence.analysisStart + 1) / vSequence.analysisStep;
 		vSequence.data_filtered = new double[nrois][nbins];
-//		if (vSequence.data_filtered == null || vSequence.data_filtered[0].length != vSequence.data_raw.length) {
-//			int nbins = 1 + (vSequence.analysisEnd - vSequence.analysisStart + 1) / vSequence.analysisStep;
-//			vSequence.data_filtered = new double[nrois][nbins];
-//		}
 
 		if (span / 2 > vSequence.analysisEnd - vSequence.analysisStart + 1)
 			filteroption = 0;
 
 		switch (filteroption) {
-		case 1: // running average over "span" points
+		case 1: 
 			filterMeasures_RunningAverage(vSequence, span);
 			break;
 		case 2:
@@ -82,35 +78,27 @@ public class FilterTimeSeries {
 
 	private static void filterMeasures_RunningMedian(SequencePlus vSequence, int span) {
 		int nrois = vSequence.data_filtered.length;
-		int nbspan = span / 2;
 
 		for (int iroi = 0; iroi < nrois; iroi++) {
 
-			int sizeTempArray = nbspan * 2 + 1;
-			int[] tempArraySorted = new int[sizeTempArray];
-			int[] tempArrayCircular = new int[sizeTempArray];
+			int sizeBuffer = span * 2 + 1;
+			int[] bufferSorted = new int[sizeBuffer];
+			int[] buffer = new int[sizeBuffer];
 
-			for (int t = 0; t < sizeTempArray; t += vSequence.analysisStep) {
-				int bin = t / vSequence.analysisStep;
-				int value = vSequence.data_raw[iroi][bin];
-				tempArrayCircular[bin] = value;
-				vSequence.data_filtered[iroi][bin] = value;
+			int value = vSequence.data_raw[iroi][0];
+			for (int i = 0; i < sizeBuffer; i++) {
+				buffer[i] = value;
 			}
 
-			int iarraycircular = sizeTempArray - 1;
-			for (int t = nbspan; t < vSequence.analysisEnd - vSequence.analysisStart - nbspan; t++) {
-				int bin = (t + nbspan) / vSequence.analysisStep;
-				int newvalue = vSequence.data_raw[iroi][t];
-				tempArrayCircular[iarraycircular] = newvalue;
-				tempArraySorted = tempArrayCircular.clone();
-				Arrays.sort(tempArraySorted);
-				int median = tempArraySorted[nbspan];
-				bin = t / vSequence.analysisStep;
+			int bin = 0;
+			for (int t = vSequence.analysisStart; t <= vSequence.analysisEnd; bin++, t += vSequence.analysisStep) {
+				int head = (bin + 1) % buffer.length;
+				buffer[head] = vSequence.data_raw[iroi][t];
+				
+				bufferSorted = buffer.clone();
+				Arrays.sort(bufferSorted);
+				int median = bufferSorted[span];
 				vSequence.data_filtered[iroi][bin] = median;
-
-				iarraycircular++;
-				if (iarraycircular >= sizeTempArray)
-					iarraycircular = 0;
 			}
 		}
 	}
