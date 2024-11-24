@@ -112,7 +112,8 @@ public class Dlg6_ResultsExport extends JPanel {
 		areatrack.displayCharts = new GraphsWindow();
 		int span = Integer.parseInt(spanTextField.getText());
 		int filteroption = filterComboBox.getSelectedIndex();
-		areatrack.displayCharts.updateCharts(areatrack.vSequence, filteroption, span);
+		String titleString = (String) filterComboBox.getSelectedItem();
+		areatrack.displayCharts.updateCharts(titleString, areatrack.vSequence, filteroption, span);
 	}
 
 	private void exportToXLS() throws InterruptedException {

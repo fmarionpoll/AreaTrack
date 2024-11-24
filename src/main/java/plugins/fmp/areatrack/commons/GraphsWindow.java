@@ -22,59 +22,54 @@ import icy.gui.frame.IcyFrame;
 import icy.gui.util.GuiUtil;
 import plugins.fmp.areatrack.sequence.SequencePlus;
 
-
 public class GraphsWindow {
-	
+
 	public IcyFrame mainChartFrame = null;
-	JPanel 	mainChartPanel = null;
-	
-	
-	public void updateCharts(SequencePlus vSequence,  int filteroption, int span) {
-		
-		FilterTimeSeries.filterMeasures (vSequence, filteroption, span);
-		
+	JPanel mainChartPanel = null;
+
+	public void updateCharts(String titleString, SequencePlus vSequence, int filteroption, int span) {
+
+		FilterTimeSeries.filterMeasures(vSequence, filteroption, span);
+
 		String title = "Measures from " + vSequence.getFileName(0);
 		Point pt = new Point(10, 10);
-		
+
 		// create window or get handle to it
-		if (mainChartFrame != null)
-		{
+		if (mainChartFrame != null) {
 			mainChartFrame.removeAll();
 			mainChartFrame.close();
 		}
-		mainChartFrame = GuiUtil.generateTitleFrame(title, new JPanel(), new Dimension(300, 70), true, true, true, true);
-		mainChartPanel = new JPanel(); 
-		mainChartPanel.setLayout( new BoxLayout( mainChartPanel, BoxLayout.LINE_AXIS ) );
+		mainChartFrame = GuiUtil.generateTitleFrame(title, new JPanel(), new Dimension(300, 70), true, true, true,
+				true);
+		mainChartPanel = new JPanel();
+		mainChartPanel.setLayout(new BoxLayout(mainChartPanel, BoxLayout.LINE_AXIS));
 		mainChartFrame.add(mainChartPanel);
-		
+
 		mainChartPanel.removeAll();
 		int rows = 1;
 		int cols = 1;
 		XYSeriesCollection xyDataset = new XYSeriesCollection();
 		mainChartPanel.setLayout(new GridLayout(rows, cols));
-		
+
 		int nrois = vSequence.data_filtered.length;
-		XYSeries [] cropSeries = new XYSeries [nrois];
+		XYSeries[] cropSeries = new XYSeries[nrois];
 		int startFrame = vSequence.analysisStart;
 		int endFrame = vSequence.analysisEnd;
 		int step = vSequence.analysisStep;
 		for (int iroi = 0; iroi < nrois; iroi++) {
-			cropSeries[iroi] = new XYSeries (vSequence.seriesname[iroi]);
+			cropSeries[iroi] = new XYSeries(vSequence.seriesname[iroi]);
 			cropSeries[iroi].clear();
 			for (int t = startFrame; t <= endFrame; t += step) {
-				int bin = (t-startFrame) / step;
+				int bin = (t - startFrame) / step;
 				cropSeries[iroi].add(t, vSequence.data_filtered[iroi][bin]);
 			}
 			xyDataset.addSeries(cropSeries[iroi]);
 		}
-				
-		String TitleString = "Results";
-		boolean displayLegend = false; //true;
-		JFreeChart chart = ChartFactory.createXYLineChart(
-				TitleString, "time", "pixels",
-				xyDataset,
-				PlotOrientation.VERTICAL, displayLegend,true,false ); 
-		
+
+		boolean displayLegend = false; // true;
+		JFreeChart chart = ChartFactory.createXYLineChart(titleString, "time", "pixels", xyDataset,
+				PlotOrientation.VERTICAL, displayLegend, true, false);
+
 		int minWidth = 800;
 		int minHeight = 200;
 		int width = 800;
@@ -85,20 +80,19 @@ public class GraphsWindow {
 		ValueAxis axis = plot.getDomainAxis();
 		axis.setRange(startFrame, endFrame);
 		// TODO step between xpoints?
-		
+
 		LegendTitle legendTitle = chart.getLegend();
 
 		if (legendTitle != null)
-			legendTitle.setPosition(RectangleEdge.RIGHT); 
-		mainChartPanel.add( new ChartPanel( chart, 
-				width, height, minWidth, minHeight, maxWidth, maxHeight, 
-				false , false, true , true , true, true));
+			legendTitle.setPosition(RectangleEdge.RIGHT);
+		mainChartPanel.add(new ChartPanel(chart, width, height, minWidth, minHeight, maxWidth, maxHeight, false, false,
+				true, true, true, true));
 		mainChartPanel.validate();
 		mainChartPanel.repaint();
-		
+
 		mainChartFrame.pack();
-		mainChartFrame.setLocation(pt );
-		mainChartFrame.addToDesktopPane ();
+		mainChartFrame.setLocation(pt);
+		mainChartFrame.addToDesktopPane();
 		mainChartFrame.setVisible(true);
 		mainChartFrame.toFront();
 	}

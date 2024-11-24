@@ -145,12 +145,12 @@ public class ExportToXLS {
 			FilterTimeSeries.filterMeasures(vSequence, 0, span);
 			exportToXLSWorksheet(xlsWorkBook, "raw");
 
-//			if (span / 2 < (endFrame - startFrame)) {
-//				FilterTimeSeries.filterMeasures(vSequence, 1, span);
-//				exportToXLSWorksheet(xlsWorkBook, "avg");
-//				FilterTimeSeries.filterMeasures(vSequence, 2, span);
-//				exportToXLSWorksheet(xlsWorkBook, "median");
-//			}
+			if (span / 2 < (endFrame - startFrame)) {
+				FilterTimeSeries.filterMeasures(vSequence, 1, span);
+				exportToXLSWorksheet(xlsWorkBook, "avg");
+				FilterTimeSeries.filterMeasures(vSequence, 2, span);
+				exportToXLSWorksheet(xlsWorkBook, "median");
+			}
 
 			// --------------
 			XLSUtil.saveAndClose(xlsWorkBook);
