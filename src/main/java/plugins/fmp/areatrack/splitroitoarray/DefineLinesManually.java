@@ -353,8 +353,8 @@ public class DefineLinesManually
 	
 	public static void createROISFromSelectedPolygon(Sequence seq, int ioption,
 			String rootName,
-			double colSpan, double colSize, double nbcols,
-			double rowSpan, double rowSize, double nbrows) 
+			double colSpace, double colSize, double nbcols,
+			double rowSpace, double rowSize, double nbrows) 
 	{
 		ROI2D roi = seq.getSelectedROI2D();
 		if ( ! ( roi instanceof ROI2DPolygon ) ) {
@@ -366,14 +366,14 @@ public class DefineLinesManually
 		seq.removeAllROI();
 		seq.addROI(roi, true);
 		
-		double colsSum = nbcols * (colSize + colSpan) + colSpan;
-		double rowsSum = nbrows * (rowSize + rowSpan) + rowSpan;
+		double colsSum = nbcols * (colSize + colSpace) + colSpace;
+		double rowsSum = nbrows * (rowSize + rowSpace) + rowSpace;
 
 		String baseName = null;
 
 		for (int column=0; column< nbcols; column++) {
 			
-			double ratioX0 = ((colSize + colSpan)*column + colSpan) /colsSum;
+			double ratioX0 = ((colSize + colSpace)*column + colSpace) /colsSum;
 			
 			double x = roiPolygon.xpoints[0] + (roiPolygon.xpoints[3]-roiPolygon.xpoints[0]) * ratioX0;
 			double y = roiPolygon.ypoints[0] + (roiPolygon.ypoints[3]-roiPolygon.ypoints[0]) * ratioX0;
@@ -383,7 +383,7 @@ public class DefineLinesManually
 			y = roiPolygon.ypoints[1] + (roiPolygon.ypoints[2]-roiPolygon.ypoints[1]) * ratioX0 ;
 			Point2D.Double ipoint1 = new Point2D.Double (x, y);
 
-			double ratioX1 = ((colSize + colSpan)*(column+1)) / colsSum;
+			double ratioX1 = ((colSize + colSpace)*(column+1)) / colsSum;
 
 			x = roiPolygon.xpoints[1]+ (roiPolygon.xpoints[2]-roiPolygon.xpoints[1]) * ratioX1;
 			y = roiPolygon.ypoints[1]+ (roiPolygon.ypoints[2]-roiPolygon.ypoints[1]) * ratioX1;
@@ -395,7 +395,7 @@ public class DefineLinesManually
 			
 			for (int row=0; row < nbrows; row++) {
 				
-				double ratioY0 = ( (rowSize + rowSpan)*row + rowSpan)/rowsSum;
+				double ratioY0 = ( (rowSize + rowSpace)*row + rowSpace)/rowsSum;
 
 				x = ipoint0.x + (ipoint1.x - ipoint0.x) * ratioY0;
 				y = ipoint0.y + (ipoint1.y - ipoint0.y) * ratioY0;
@@ -405,7 +405,7 @@ public class DefineLinesManually
 				y = ipoint3.y + (ipoint2.y - ipoint3.y) * ratioY0;
 				Point2D.Double point3 = new Point2D.Double (x, y);
 				
-				double ratioY1 = ( (rowSize + rowSpan)*(row+1)) / rowsSum;
+				double ratioY1 = ( (rowSize + rowSpace)*(row+1)) / rowsSum;
 				x = ipoint0.x + (ipoint1.x - ipoint0.x) * ratioY1;
 				y = ipoint0.y + (ipoint1.y - ipoint0.y) * ratioY1;
 				Point2D.Double point1 = new Point2D.Double (x, y);
