@@ -362,7 +362,7 @@ public class DefineLinesManually
 			return;
 		}
 
-		Polygon roiPolygon = FmpTools.orderVerticesofPolygon (((ROI2DPolygon) roi).getPolygon());
+		Polygon spotsPolygon = FmpTools.orderVerticesofPolygon (((ROI2DPolygon) roi).getPolygon());
 		seq.removeAllROI();
 		seq.addROI(roi, true);
 		
@@ -375,22 +375,22 @@ public class DefineLinesManually
 			
 			double ratioX0 = ((colSize + colSpace)*column + colSpace) /colsSum;
 			
-			double x = roiPolygon.xpoints[0] + (roiPolygon.xpoints[3]-roiPolygon.xpoints[0]) * ratioX0;
-			double y = roiPolygon.ypoints[0] + (roiPolygon.ypoints[3]-roiPolygon.ypoints[0]) * ratioX0;
+			double x = spotsPolygon.xpoints[0] + (spotsPolygon.xpoints[3]-spotsPolygon.xpoints[0]) * ratioX0;
+			double y = spotsPolygon.ypoints[0] + (spotsPolygon.ypoints[3]-spotsPolygon.ypoints[0]) * ratioX0;
 			Point2D.Double ipoint0 = new Point2D.Double (x, y);
 			
-			x = roiPolygon.xpoints[1] + (roiPolygon.xpoints[2]-roiPolygon.xpoints[1]) * ratioX0 ;
-			y = roiPolygon.ypoints[1] + (roiPolygon.ypoints[2]-roiPolygon.ypoints[1]) * ratioX0 ;
+			x = spotsPolygon.xpoints[1] + (spotsPolygon.xpoints[2]-spotsPolygon.xpoints[1]) * ratioX0 ;
+			y = spotsPolygon.ypoints[1] + (spotsPolygon.ypoints[2]-spotsPolygon.ypoints[1]) * ratioX0 ;
 			Point2D.Double ipoint1 = new Point2D.Double (x, y);
 
 			double ratioX1 = ((colSize + colSpace)*(column+1)) / colsSum;
 
-			x = roiPolygon.xpoints[1]+ (roiPolygon.xpoints[2]-roiPolygon.xpoints[1]) * ratioX1;
-			y = roiPolygon.ypoints[1]+ (roiPolygon.ypoints[2]-roiPolygon.ypoints[1]) * ratioX1;
+			x = spotsPolygon.xpoints[1]+ (spotsPolygon.xpoints[2]-spotsPolygon.xpoints[1]) * ratioX1;
+			y = spotsPolygon.ypoints[1]+ (spotsPolygon.ypoints[2]-spotsPolygon.ypoints[1]) * ratioX1;
 			Point2D.Double ipoint2 = new Point2D.Double (x, y);
 			
-			x = roiPolygon.xpoints[0]+ (roiPolygon.xpoints[3]-roiPolygon.xpoints[0]) * ratioX1;
-			y = roiPolygon.ypoints[0]+ (roiPolygon.ypoints[3]-roiPolygon.ypoints[0]) * ratioX1;
+			x = spotsPolygon.xpoints[0]+ (spotsPolygon.xpoints[3]-spotsPolygon.xpoints[0]) * ratioX1;
+			y = spotsPolygon.ypoints[0]+ (spotsPolygon.ypoints[3]-spotsPolygon.ypoints[0]) * ratioX1;
 			Point2D.Double ipoint3 = new Point2D.Double (x, y);
 			
 			for (int row=0; row < nbrows; row++) {
