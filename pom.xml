@@ -75,8 +75,7 @@
         <dependency>
             <groupId>org.bioimageanalysis.icy</groupId>
             <artifactId>ezplug</artifactId>
-            <version>${ezplug.version}</version>
-        </dependency>
+            </dependency>
 
         <dependency>
         	<groupId>org.bioimageanalysis.icy</groupId>
