@@ -28,7 +28,6 @@ public class ExportToXLS {
 	private ArrayList<MeasureAndName> resultsHeatMap = null;
 
 	private void exportToXLSWorksheet(WritableWorkbook xlsWorkBook, String worksheetname) throws InterruptedException {
-		int it = 0;
 		int irow = 0;
 		int nrois = vSequence.data_filtered.length;
 		int icol0 = 0;
@@ -108,11 +107,10 @@ public class ExportToXLS {
 		irow++;
 
 		// data
-		it = 1;
-		for (int t = startFrame; t <= endFrame; t += analyzeStep, it++, irow++) {
+		for (int t = startFrame; t <= endFrame; t += analyzeStep, irow++) {
 			icol0 = 0;
 			if (blistofFiles) {
-				XLSUtil.setCellString(filteredDataPage, icol0, irow, listofFiles.get(it));
+				XLSUtil.setCellString(filteredDataPage, icol0, irow, listofFiles.get(t));
 				icol0++;
 			}
 			double value = t;
